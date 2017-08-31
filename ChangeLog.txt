@@ -1,0 +1,29 @@
+ChangeLog HEventos
+
+HEventos ChangeLog version=1.5
+
+31/08/2017
+Frog 100% completo
+Corrigido BUG que crashava o plugin quando tentava iniciar um evento que não existe
+Metodo de parar evento agora é controlado por listener
+Mensagens dos arquivos estão mais organizados
+Frog 80% completo
+
+30/08/2017
+Frog iniciou sua implementação
+BowSpleef funcionando em partes, talvez seja removido em breve
+Killer corrigido, e agora esta funcionando 100%
+Um pequeno guia foi criado para ensinar a criar itens
+Algumas instruções adicionada para ajudar os owner
+Novo recurso ItemStackFormat adicionado para dar itens ao players
+Nome de classes e pacotes alterados, para melhor visão do código
+Uma git própria para o plugin, fork removido
+
+29/08/2017
+Removidas algumas listeners que não estavam sendo usadas
+Arquivos dos eventos organizados
+Evento Batata Quente agora esta funcionando
+Corrigido qualquer erro relativo ClassCastException, o plugin nao estava consegindo acessar os eventos private
+Corrigido BUG do evento semaforo que bugava o PlayerMoveEvent
+Mensagens melhoradas para melhor modificação dos server-owners
+ChangeLog criada XD

@@ -1,0 +1,69 @@
+Config:
+  Nome: "Batata Quente"
+  Evento_Type: "batataquente"
+  Chamadas: 5
+  Tempo_Entre_As_Chamadas: 10
+  PVP: false
+  VIP: false
+  Assistir_Ativado: true
+  Contar_Vitoria: true
+  Contar_Participacao: true
+  Tempo_Batata_Explodir: 15
+  Tempo_Batata_Avisos: [15, 10, 5, 4, 3, 2, 1]
+  Inv_Vazio: true
+
+Premios:
+  Itens:
+    - 263 1
+    - 384 15
+  Comandos:
+    - give $player$ diamond 3
+  Money: 5000
+
+Localizacoes:
+  Saida: world;730.5459035905383;23.0;799.3592766825633;-180.41382;18.932465
+  Camarote: VIP;-839;8;1109;30.50;226.10
+  Entrada: eventos;-343.79226010126416;4.0;-354.4200700258467;-264.9014;28.050018
+  Aguardando: eventos;-386.4421140772715;4.0;-478.270175242292;-0.60113525;29.700024
+
+Mensagens:
+  Aberto:
+    - '  '
+    - '&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!'
+    - '&9[$EventoName$] &fPara participar digite &6/evento entrar'
+    - '&9[$EventoName$] &fEsse evento e pvp &a[OFF]'
+    - '&9[$EventoName$] &fRisco de morte &a[OFF]'
+    - '  '
+  Aberto_VIP:
+    - '  '
+    - '&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!'
+    - '&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar'
+    - '&9[$EventoName$ VIP] &fEsse evento e pvp &a[OFF]'
+    - '&9[$EventoName$ VIP] &fRisco de morte &a[OFF]'
+    - '  '
+  Iniciando:
+    - '  '
+    - '&9[$EventoName$] &fEvento fechado, iniciando!'
+    - '  '
+  Vencedor:
+    - '  '
+    - '&9[$EventoName$] &fO evento &6$EventoName$ &ffoi finalizado!'
+    - '&9[$EventoName$] &fO vencedor foi &6$player$&f!'
+    - '&9[$EventoName$] &fPremio pago e jogadores teleportados para a saida!'
+    - '  '
+  Sem_Vencedor:
+    - '  '
+    - '&9[$EventoName$] &fO evento &6$EventoName$ &ffinalizado!'
+    - '&9[$EventoName$] &fNao houve vencedores!'
+    - '  '
+  Cancelado:
+    - '  '
+    - '&4[$EventoName$] &cEvento &6$EventoName$ &ccancelado!'
+    - '  '
+  Esta_Com_Batata:
+    - '  '
+    - '&9[$EventoName$] &fO jogador &6$player$ &festa com a batata!'
+    - '  '
+  Tempo: "&9[$EventoName$] &fA batata vai explodir em &6$tempo$ &fsegundos!"
+  FoiEliminado: "&9[$EventoName$] &fO jogador &6$player$ &ffoi eliminado!"
+  VcFoiEliminado: "&9[$EventoName$] &fVocê foi eliminado!"

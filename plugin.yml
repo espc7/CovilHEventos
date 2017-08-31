@@ -1,0 +1,11 @@
+main: me.herobrinedobem.heventos.HEventos
+name: HEventos
+version: 1.5.0
+author: GabrielDev
+description: Plugin de eventos automaticos
+
+commands:
+    evento:
+        description: Todos os comandos do plugin
+    eventos:
+        description: Lista de eventos

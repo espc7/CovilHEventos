@@ -1,0 +1,4 @@
+# ID:DATA, QUANTIDADE, nome:ItemName, lore:LoreName, enchant:level
+# (nome, lore, enchant) são opcionais
+# Use "_" para fazer espaço em nome: e lore:
+# Exemplo: 276 1 nome:Espada_Encantada lore:Espada_S5 sharpness:5 fireaspect:2

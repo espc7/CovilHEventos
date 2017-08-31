@@ -1,0 +1,78 @@
+Horarios:
+  - "segunda-03:00-subida_mortal"
+  - "terca-04:00-escalada"
+  - "05:00-buraco273"
+  - "06:00-parkour"
+  - "09:00-speed"
+  - "09:30-air"
+  - "11:00-batataquente"
+  - "12:00-subida_mortal"
+  - "13:00-parkour2"
+  - "13:30-batataquente"
+  - "14:00-corrida1"
+  - "15:00-speed2"
+  - "16:00-parkour3"
+  - "17:00-batataquente"
+  - "18:00-buraco273"
+  - "19:00-parkour"
+  - "20:00-speed"
+  - "21:00-air"
+  - "22:00-corrida1"
+
+Money_Multiplicador: 1
+
+Ativar_Configs_Exemplos: true
+
+MySQL:
+  Ativado: false
+  Usuario: "user"
+  Senha: "pass"
+  Database: "database"
+  Host: "localhost"
+
+Comandos_Liberados:
+  - "/g"
+  - "/l"
+  - "/tell"
+  - "/clan"
+  - "/evento"
+
+Mensagens:
+  Morreu: "&9[Evento] &fO jogador &6$player$ &fmorreu no evento!"
+  Desconectou: "&9[Evento] &fO jogador &6$player$ &fdesconectou no evento!"
+  Saiu: "&9[Evento] &fO jogador &6$player$ &fsaiu do evento!"
+  Comando_Bloqueado: "&9[Evento] &fEsse comando e bloqueado no evento!"
+  Nenhum_Evento: "&9[Evento] &fNao ha nenhum evento ocorrendo no momento!"
+  Evento_Fechado: "&9[Evento] &fO evento esta fechado, para ver digite /evento camarote"
+  Ja_Participa: "&9[Evento] &fVoce ja esta participando desse evento!"
+  Entrou: "&9[Evento] &fO jogador &6$player$ &fentrou no evento!"
+  Nao_Participa: "&9[Evento] &fVoce nao esta participando desse evento!"
+  Ja_Esta_Camarote: "&9[Evento] &fVoce ja esta no camarote!"
+  Inventario_Vazio: "&9[Evento] &fVoce precisa estar com o invetario vazio!"
+  Assistir_Desativado: "&9[Evento] &fNao e possivel assistir a esse evento!"
+  Assistir_SemPermission: "&9[Evento] &fVocê não tem permissão para assistir eventos!"
+  Assistindo: "&9[Evento] &fO jogador &6$player$ &festa assistindo ao evento!"
+  Evento_VIP: "&9[Evento] &fEsse evento esta habilitado apenas para players VIP's!"
+  Top_Vencedores: "&9[Eventos] TOP Vencedores"
+  Top_Vencedores_Posicao: "&9[&f$posicao$&9] - &f$player$ &9- &f$vitorias$ &9vitorias"
+  Top_Participacoes: "&9[Eventos] TOP Participantes"
+  Top_Participacoes_Posicao: "&9[&f$posicao$&9] - &f$player$ &9- &f$participacoes$ &9participacoes"
+  Default:
+    - "&9[Eventos] Comandos"
+    - "&9/evento entrar &f- Entra em um evento"
+    - "&9/evento assistir &f- Assisti ao evento"
+    - "&9/evento sair &f- Sai do evento"
+    - "&9/evento top vencedores &f- Mostra quem mais venceu eventos"
+    - "&9/evento top participacoes &f- Mostra quem mais participou de eventos"
+  DefaultAdmin:
+    - "&4/evento iniciar <nome> &c- Inicia um evento"
+    - "&4/evento cancelar &c- Cancela um evento"
+    - "&4/evento setentrada <evento> &c- Seta a entrada de um evento"
+    - "&4/evento setsaida <evento> &c- Seta a saida de um evento"
+    - "&4/evento setcamarote <evento> &c- Seta o camarote de um evento"
+    - "&4/evento setaguardando <evento> &c- Seta local de espera de um evento"
+    - "&4/evento multiplicador &c- Altera o multiplicador de money"
+    - "&4/evento multiplicador reset &c- Reseta o multiplicador"
+    - "&4/evento reload &c- Recarrega a config do plugin"
+    - "&4/evento tool <evento> &c- Pega uma ferramenta para setar locs"
+    - "&4/evento lista &c- Mostra a lista de eventos"

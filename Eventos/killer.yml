@@ -1,0 +1,82 @@
+Config:
+  Nome: "Killer"
+  Evento_Type: "killer"
+  Chamadas: 5
+  Tempo_Entre_As_Chamadas: 10
+  Tempo_Pegar_Itens: 60
+  Tempo_Entre_Avisos: 120
+  Tempo_PVP_Off: 60
+  PVP: true
+  VIP: false
+  Assistir_Ativado: true
+  Contar_Vitoria: true
+  Contar_Participacao: true
+  Inv_Vazio: false
+
+Premios:
+  Itens:
+    - 263 1
+    - 384 15
+  Comandos:
+    - "setmito $player$"
+  Money: 100000.0
+
+Localizacoes:
+  Saida: world;730.5575815847915;23.0;799.2918872306126;180.03613;31.98245
+  Camarote: VIP;-639;5;743;30.50;226.10
+  Entrada: eventos;-352.955614084821;4.0;-352.19972196396594;-0.15137777;28.949957
+  Aguardando: eventos;-332.30000001192093;4.0;-355.95954690692525;88.34854;32.849953
+
+Mensagens:
+  Aberto:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
+    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fEsse evento e pvp &c[ON]"
+    - "&9[$EventoName$] &fRisco de morte &c[ON]"
+    - "  "
+  Aberto_VIP:
+    - "  "
+    - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
+    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$ VIP] &fEsse evento e pvp &c[ON]"
+    - "&9[$EventoName$ VIP] &fRisco de morte &c[ON]"
+    - "  "
+  Iniciando:
+    - "  "
+    - "&9[$EventoName$] &fEvento fechado, iniciando!"
+    - "&9[$EventoName$] &fBoa sorte aos participantes!"
+    - "  "
+  Vencedor:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &ffoi finalizado!"
+    - "&9[$EventoName$] &fO vencedor do evento foi: &6$player$"
+    - "&9[$EventoName$] &fEle recebeu &6100k &fe a tag &5[MitoDoPVP]"
+    - "  "
+  Sem_Vencedor:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &ffoi finalizado!"
+    - "&9[$EventoName$] &fNao houve um vencedor!"
+    - "  "
+  Cancelado:
+    - "  "
+    - "&4[$EventoName$] &cEvento &6$EventoName$ &cfoi cancelado!"
+    - "  "
+  IniciandoEm:
+    - "  "
+    - "&9[$EventoName$] &fEvento iniciado, &cPVP ON &fem $tempo$ segundos!"
+    - "  "
+  PVPON:
+    - "  "
+    - "&9[$EventoName$] &cPVP ON &fboa sorte aos participantes!"
+    - "  "
+  Status:
+    - " "
+    - "&9[$EventoName$] &fEvento ocorrendo no momento!"
+    - "&9[$EventoName$] &fPara assistir utilize &6/evento assistir"
+    - "&9[$EventoName$] &fJogadores vivos no evento: &6$jogadores$"
+    - " "
+  Tempo_Pegar_Itens:
+    - " "
+    - "&9[$EventoName$] &fVoce tem &660 &fsegundos para pegar os itens!"
+    - " "

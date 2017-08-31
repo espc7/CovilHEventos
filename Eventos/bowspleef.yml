@@ -1,0 +1,72 @@
+Config:
+  Nome: "BowSpleef"
+  Evento_Type: "bowspleef"
+  Chamadas: 5
+  Tempo_Entre_As_Chamadas: 10
+  Regenerar_Chao: true
+  Tempo_Chao_Regenera: 60
+  PVP: false
+  VIP: false
+  Assistir_Ativado: true
+  Contar_Vitoria: true
+  Contar_Participacao: true
+  Chao_ID: 46
+  Inv_Vazio: true
+
+Premios:
+  Itens:
+    - 263 1
+    - 384 15
+  Comandos:
+    - "give $player$ diamond 3"
+  Money: 5000.0
+
+Itens_Ao_Iniciar:
+  - 261 1 infinity:1 flame:1
+  - 262 1
+
+Localizacoes:
+  Saida: world;730.5459035905383;23.0;799.3592766825633;-180.41382;18.932465
+  Camarote: eventos;-299.59976105454285;23.0;-453.5261703489258;-90.03866;36.291595
+  Entrada: eventos;-295.5;15.0;-453.5;-90.03866;36.291595
+  Aguardando: eventos;-386.4970554985263;4.0;-478.1259645221466;-0.052978516;9.722265
+  Chao_1: eventos;-268;14;-477
+  Chao_2: eventos;-300;14;-429
+
+Mensagens:
+  Aberto:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
+    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fEsse evento e pvp &a[OFF]"
+    - "&9[$EventoName$] &fRisco de morte &a[OFF]"
+    - "  "
+  Aberto_VIP:
+    - "  "
+    - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
+    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$ VIP] &fEsse evento e pvp &a[OFF]"
+    - "&9[$EventoName$ VIP] &fRisco de morte &a[OFF]"
+    - "  "
+  Iniciando:
+    - "  "
+    - "&9[$EventoName$] &fEvento fechado, iniciando!"
+    - "&9[$EventoName$] &fBoa sorte aos participantes!"
+    - "  "
+  Vencedor:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &ffoi finalizado!"
+    - "&9[$EventoName$] &fO vencedor foi &6$player$&f!"
+    - "&9[$EventoName$] &fPremio pago e jogadores teleportados para a saida!"
+    - "  "
+  Cancelado:
+    - "  "
+    - "&4[$EventoName$] &cEvento &6$EventoName$ &cfoi cancelado!"
+    - "  "
+  Sem_Vencedor:
+    - "  "
+    - "&4[$EventoName$] &cO evento &6$EventoName$ &ffoi finalizado!"
+    - "&4[$EventoName$] &cNao houve vencedores!"
+    - "  "
+  FoiEliminado: "&9[$EventoName$] &fO jogador &6$player$ &ffoi eliminado!"
+  VcFoiEliminado: "&9[$EventoName$] &fVocê foi eliminado!"

@@ -1,0 +1,57 @@
+Config:
+  Nome: "Mina Mortal"
+  Evento_Type: "minamortal"
+  Chamadas: 5
+  Tempo_Entre_As_Chamadas: 10
+  Evento_Tempo_Minutos: 10
+  Mensagens_Tempo_Minutos: 1
+  PVP: true
+  VIP: false
+  Assistir_Ativado: true
+  Contar_Participacao: true
+  Minerios: "56;14;15;16;73;129"
+  Porcentagem_De_Minerios: 20
+  Inv_Vazio: false
+
+Localizacoes:
+  Saida: world;730.5459035905383;23.0;799.3592766825633;-180.41382;18.932465
+  Camarote: eventos;-423.5472574502734;34.0;-553.5138793404053;-0.046889577;40.07081
+  Entrada: eventos;-423.47626309147586;4.0;-574.3846450202442;0.37268358;26.644442
+  Aguardando: eventos;-386.4970554985263;4.0;-478.1259645221466;-0.052978516;9.722265
+  Mina_1: eventos;-443;4;-523
+  Mina_2: eventos;-404;23;-548
+
+Mensagens:
+  Aberto:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
+    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fEsse evento e pvp &c[ON]"
+    - "&9[$EventoName$] &fRisco de morte &c[ON]"
+    - "  "
+  Aberto_VIP:
+    - "  "
+    - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
+    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$ VIP] &fEsse evento e pvp &c[ON]"
+    - "&9[$EventoName$ VIP] &fRisco de morte &c[ON]"
+    - "  "
+  Iniciando:
+    - "  "
+    - "&9[$EventoName$] &fEvento fechado, iniciando!"
+    - "&9[$EventoName$] &fBoa sorte aos participantes!"
+    - "  "
+  Fim:
+    - "  "
+    - "&9[$EventoName$] &fO evento &6$EventoName$ &ffoi finalizado!"
+    - "  "
+  Cancelado:
+    - "  "
+    - "&4[$EventoName$] &cEvento &6$EventoName$ &cfoi cancelado!"
+    - "  "
+  Status:
+    - " "
+    - "&9[$EventoName$] &fEvento ocorrendo no momento!"
+    - "&9[$EventoName$] &fPara assistir utilize &6/evento assistir"
+    - "&9[$EventoName$] &fO evento sera encerrado em &6$tempo$ &fsegundos!"
+    - " "
