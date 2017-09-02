@@ -21,7 +21,7 @@ public class EventoNormalListener extends EventoBaseListener {
 		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
 			return;
 		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName()))
+				.contains(e.getPlayer()))
 			return;
 		if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK))
 			return;

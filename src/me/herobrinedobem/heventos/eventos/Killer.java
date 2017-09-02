@@ -1,5 +1,8 @@
 package me.herobrinedobem.heventos.eventos;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -15,8 +18,9 @@ import me.herobrinedobem.heventos.utils.BukkitEventHelper;
 public class Killer extends EventoBaseAPI {
 
 	private KillerListener listener;
-	private boolean PvpOff;
 	private int tempoMensagens, tempoMensagensCurrent, tempoPegarItens, tempoPvpOff;
+	private int etapa;
+	private Set<String> clans = new HashSet<String>();
 
 	public Killer(YamlConfiguration config) {
 		super(config);
@@ -24,24 +28,24 @@ public class Killer extends EventoBaseAPI {
 		HEventos.getHEventos().getServer().getPluginManager().registerEvents(listener, HEventos.getHEventos());
 		tempoPegarItens = config.getInt("Config.Tempo_Pegar_Itens");
 		tempoMensagens = config.getInt("Config.Tempo_Entre_Avisos");
-		tempoPvpOff = config.getInt("Config.Tempo_PVP_Off");
-		PvpOff = true;
+		etapa = 1;
 		tempoMensagensCurrent = tempoMensagens;
 	}
 
 	@Override
 	public void startEventMethod() {
 		getEntrada().getWorld().setTime(17000);
-		for (String s : getParticipantes()) {
-			getPlayerByName(s).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
-			Player p = getPlayerByName(s);
+		for (Player p : getParticipantes()) {
+			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 			if (HEventos.getHEventos().getSc() != null) {
 				if (HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p) != null) {
 					HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).setFriendlyFire(true);
+					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
 				}
 			} else if (HEventos.getHEventos().getCore() != null) {
 				if (HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p) != null) {
 					HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p).setFriendlyFire(true);
+					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
 				}
 			}
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
@@ -55,18 +59,19 @@ public class Killer extends EventoBaseAPI {
 	public void scheduledMethod() {
 		if ((isOcorrendo()) && (!isAberto())) {
 			if (getParticipantes().size() > 1) {
-				if (tempoPvpOff > 0 && PvpOff) {
-					tempoPvpOff--;
-					return;
-				} else if (tempoPvpOff == 0 && PvpOff) {
-					for (String p : getParticipantes()) {
-						for (String s1 : getConfig().getStringList("Mensagens.PVPON")) {
-							getPlayerByName(p).sendMessage(s1.replace("&", "§")
-									.replace("$tempo$", String.valueOf(tempoPvpOff)).replace("$EventoName$", getNome()));
+				if (etapa == 1) {
+					if (tempoPvpOff > 0) {
+						tempoPvpOff--;
+						return;
+					} else {
+						for (Player p : getParticipantes()) {
+							for (String s1 : getConfig().getStringList("Mensagens.PVPON")) {
+								p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoPvpOff))
+										.replace("$EventoName$", getNome()));
+							}
 						}
+						etapa = 2;
 					}
-					PvpOff = false;
-					tempoPvpOff--;
 				}
 				if (tempoMensagensCurrent == 0) {
 					for (String s : getConfig().getStringList("Mensagens.Status")) {
@@ -81,17 +86,17 @@ public class Killer extends EventoBaseAPI {
 			} else if (getParticipantes().size() == 1) {
 				if (tempoPegarItens == 0) {
 					Player player = null;
-					for (String s : getParticipantes()) {
-						player = getPlayerByName(s);
+					for (Player s : getParticipantes()) {
+						player = s;
 					}
 					PlayerWinEvent event = new PlayerWinEvent(player, this, false);
 					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 					stopEvent();
 				} else if (tempoPegarItens > 0) {
 					if (tempoPegarItens == getConfig().getInt("Config.Tempo_Pegar_Itens")) {
-						for (String s : getParticipantes()) {
+						for (Player s : getParticipantes()) {
 							for (String p : getConfig().getStringList("Mensagens.Tempo_Pegar_Itens")) {
-								getPlayerByName(s).sendMessage(p.replace("&", "§").replace("$EventoName$", getNome()));
+								s.sendMessage(p.replace("&", "§").replace("$EventoName$", getNome()));
 							}
 						}
 					}
@@ -116,12 +121,20 @@ public class Killer extends EventoBaseAPI {
 
 	@Override
 	public void resetEvent() {
+		for (String string : clans) {
+			if (HEventos.getHEventos().getSc() != null) {
+				HEventos.getHEventos().getSc().getClanManager().getClan(string).setFriendlyFire(false);
+			} else if (HEventos.getHEventos().getCore() != null) {
+				HEventos.getHEventos().getCore().getClanManager().getClan(string).setFriendlyFire(false);
+			}
+		}
+		clans.clear();
 		super.resetEvent();
 		BukkitEventHelper.unregisterEvents(listener, HEventos.getHEventos());
 	}
 
-	public boolean isPvpOff() {
-		return PvpOff;
+	public int getEtapa() {
+		return etapa;
 	}
 
 	public KillerListener getListener() {

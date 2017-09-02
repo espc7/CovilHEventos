@@ -25,8 +25,7 @@ public class MainListeners implements Listener {
 
 	@EventHandler
 	public void onStopEvent(StopEvent e) {
-		for (String s : e.getEvento().getParticipantes()) {
-			Player p = e.getEvento().getPlayerByName(s);
+		for (Player p : e.getEvento().getParticipantes()) {
 			if (e.getEvento().isInventoryEmpty()) {
 				p.getInventory().setHelmet(null);
 				p.getInventory().setChestplate(null);
@@ -36,8 +35,8 @@ public class MainListeners implements Listener {
 			}
 			p.teleport(e.getEvento().getSaida());
 		}
-		for (String s : e.getEvento().getCamarotePlayers()) {
-			e.getEvento().getPlayerByName(s).teleport(e.getEvento().getSaida());
+		for (Player p : e.getEvento().getCamarotePlayers()) {
+			p.teleport(e.getEvento().getSaida());
 		}
 		e.getEvento().getParticipantes().clear();
 		e.getEvento().getCamarotePlayers().clear();
@@ -52,7 +51,7 @@ public class MainListeners implements Listener {
 	@EventHandler
 	private void onEventoPlayerOutEvent(PlayerLeaveEvent e) {
 		if (e.isAssistindo()) {
-			HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().remove(e.getPlayer().getName());
+			HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().remove(e.getPlayer());
 			e.getPlayer().teleport(HEventos.getHEventos().getEventosController().getEvento().getSaida());
 			return;
 		}
@@ -71,13 +70,12 @@ public class MainListeners implements Listener {
 			e.getPlayer().getInventory().clear();
 		}
 		e.getPlayer().teleport(e.getEvento().getSaida());
-		e.getEvento().getParticipantes().remove(e.getPlayer().getName());
+		e.getEvento().getParticipantes().remove(e.getPlayer());
 	}
 
 	@EventHandler
 	private void onTimeWinEvent(TeamWinEvent e) {
-		for (String p1 : e.getList()) {
-			Player p = e.getEvento().getPlayerByName(p1);
+		for (Player p : e.getList()) {
 			PlayerWinEvent event = new PlayerWinEvent(p,
 					HEventos.getHEventos().getEventosController().getEvento(), true);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
@@ -117,7 +115,7 @@ public class MainListeners implements Listener {
 						.broadcastMessage(s.replaceAll("&", "§").replace("$player$", e.getPlayer().getName()).replace("$EventoName$", e.getEvento().getNome()));
 			}
 		}
-		e.getEvento().getParticipantes().remove(e.getPlayer().getName());
+		e.getEvento().getParticipantes().remove(e.getPlayer());
 		e.getPlayer().teleport(e.getEvento().getSaida());
 	}
 
@@ -245,7 +243,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 do paintball setada!");
+				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 (Vermelho) do paintball setada!");
 				e.setCancelled(true);
 			} else if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				File fileEvento = new File(
@@ -261,7 +259,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do paintball setada!");
+				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 (Azul) do paintball setada!");
 				e.setCancelled(true);
 			}
 		} else if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Frog")) {

@@ -45,17 +45,16 @@ public class BatataQuente extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String s : getParticipantes()) {
-			getPlayerByName(s).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
+		for (Player s : getParticipantes()) {
+			s.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 		}
 		Random r = new Random();
-		playerComBatata = getPlayerByName(getParticipantes().get(r.nextInt(getParticipantes().size())));
+		playerComBatata = getParticipantes().get(r.nextInt(getParticipantes().size()));
 		playerComBatata.getInventory().addItem(new ItemStack(Material.POTATO_ITEM, 1));
-		for (String sa : getParticipantes()) {
-			getPlayerByName(sa).setFoodLevel(20);
-
+		for (Player sa : getParticipantes()) {
+			sa.setFoodLevel(20);
 			for (String s : getConfig().getStringList("Mensagens.Esta_Com_Batata")) {
-				getPlayerByName(sa).sendMessage(s.replace("&", "§").replace("$player$", playerComBatata.getName())
+				sa.sendMessage(s.replace("&", "§").replace("$player$", playerComBatata.getName())
 						.replace("$EventoName$", getNome()));
 			}
 		}
@@ -66,8 +65,8 @@ public class BatataQuente extends EventoBaseAPI {
 		if ((isOcorrendo()) && !(isAberto()) && (playerComBatata != null)) {
 			if (getParticipantes().size() == 1) {
 				Player player = null;
-				for (String s : getParticipantes()) {
-					player = getPlayerByName(s);
+				for (Player s : getParticipantes()) {
+					player = s;
 				}
 				PlayerWinEvent event = new PlayerWinEvent(player, this, false);
 				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
@@ -81,25 +80,23 @@ public class BatataQuente extends EventoBaseAPI {
 					playerComBatata.sendMessage(getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "§")
 							.replace("$EventoName$", getNome()));
 					String msg = getConfig().getString("Mensagens.FoiEliminado");
-					for (String sa : getParticipantes()) {
-						Player p = getPlayerByName(sa);
+					for (Player p : getParticipantes()) {
 						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()).replace("$player$",
 								playerComBatata.getName()));
 
 					}
 					if (getParticipantes().size() > 1) {
 						Random r = new Random();
-						playerComBatata = getPlayerByName(getParticipantes().get(r.nextInt(getParticipantes().size())));
-						for (String sa : getParticipantes()) {
+						playerComBatata = getParticipantes().get(r.nextInt(getParticipantes().size()));
+						for (Player p : getParticipantes()) {
 							for (String s : getConfig().getStringList("Mensagens.Esta_Com_Batata")) {
 								playerComBatata.getInventory().addItem(new ItemStack(Material.POTATO_ITEM, 1));
-								Player p = getPlayerByName(sa);
 								p.sendMessage(s.replace("&", "§").replace("$player$", playerComBatata.getName())
 										.replace("$EventoName$", getNome()));
 							}
 						}
 					} else {
-						return; 
+						return;
 					}
 					tempoBatataCurrent = tempoBatata;
 				} else if (tempoBatataCurrent > 0)
@@ -113,12 +110,10 @@ public class BatataQuente extends EventoBaseAPI {
 				if (!tempoAviso.contains(tempoBatataCurrent)) {
 					return;
 				}
-				for (String s : getParticipantes()) {
-					Player p = getPlayerByName(s);
+				for (Player p : getParticipantes()) {
 					p.playSound(p.getLocation(), Sound.CLICK, 1.0f, 1.0f);
 				}
-				for (String sa : getParticipantes()) {
-					Player p = getPlayerByName(sa);
+				for (Player p : getParticipantes()) {
 					p.sendMessage(getConfig().getString("Mensagens.Tempo").replace("&", "§")
 							.replace("$tempo$", tempoBatataCurrent + "").replace("$EventoName$", getNome()));
 				}

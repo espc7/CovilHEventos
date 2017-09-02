@@ -2,7 +2,9 @@ package me.herobrinedobem.heventos.eventos;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -25,8 +27,9 @@ import me.herobrinedobem.heventos.utils.BukkitEventHelper;
 public class Paintball extends EventoBaseAPI {
 
 	private PaintballListener listener;
-	private List<String> timeAzul = new ArrayList<String>();
-	private List<String> timeVermelho = new ArrayList<String>();
+	private List<Player> timeAzul = new ArrayList<Player>();
+	private List<Player> timeVermelho = new ArrayList<Player>();
+	private Set<String> clans = new HashSet<String>();
 
 	public Paintball(YamlConfiguration config) {
 		super(config);
@@ -38,25 +41,38 @@ public class Paintball extends EventoBaseAPI {
 	public void startEventMethod() {
 		Collections.shuffle(getParticipantes());
 		for (int i = 0; i < getParticipantes().size(); ++i) {
-			String b = getParticipantes().get(i);
+			Player b = getParticipantes().get(i);
 			if (i % 2 == 0) {
 				getTimeAzul().add(b);
 			} else {
 				getTimeVermelho().add(b);
 			}
 		}
-		for (String s : getParticipantes()) {
-			darKit(getPlayerByName(s));
+		for (Player p : getParticipantes()) {
+			darKit(p);
 			Location Locvermelho = EventoUtils.getLocation(getConfig(), "Localizacoes.Pos_1");
 			Location Locazul = EventoUtils.getLocation(getConfig(), "Localizacoes.Pos_2");
 			Locazul.setY(Locazul.getY() + 1);
 			Locvermelho.setY(Locvermelho.getY() + 1);
-			if (timeAzul.contains(s)) {
-				getPlayerByName(s).teleport(Locazul);
-			} else if (timeVermelho.contains(s)) {
-				getPlayerByName(s).teleport(Locvermelho);
+			if (timeAzul.contains(p)) {
+				p.teleport(Locazul);
+			} else if (timeVermelho.contains(p)) {
+				p.teleport(Locvermelho);
 			}
-			getPlayerByName(s).setHealth(20.0);
+			if (HEventos.getHEventos().getSc() != null) {
+				if (HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p) != null) {
+					HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p)
+							.setFriendlyFire(true);
+					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
+				}
+			} else if (HEventos.getHEventos().getCore() != null) {
+				if (HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p) != null) {
+					HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p)
+							.setFriendlyFire(true);
+					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
+				}
+			}
+			p.setHealth(20.0);
 		}
 	}
 
@@ -92,9 +108,17 @@ public class Paintball extends EventoBaseAPI {
 				EventoCancellType.FINISHED);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 	}
-	
+
 	@Override
 	public void resetEvent() {
+		for (String string : clans) {
+			if (HEventos.getHEventos().getSc() != null) {
+				HEventos.getHEventos().getSc().getClanManager().getClan(string).setFriendlyFire(false);
+			} else if (HEventos.getHEventos().getCore() != null) {
+				HEventos.getHEventos().getCore().getClanManager().getClan(string).setFriendlyFire(false);
+			}
+		}
+		clans.clear();
 		super.resetEvent();
 		BukkitEventHelper.unregisterEvents(listener, HEventos.getHEventos());
 	}
@@ -102,7 +126,7 @@ public class Paintball extends EventoBaseAPI {
 	private void darKit(Player player) {
 		ItemStack arco = new ItemStack(Material.BOW, 1);
 		arco.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-		if (getTimeAzul().contains(player.getName())) {
+		if (getTimeAzul().contains(player)) {
 			player.getInventory().addItem(arco);
 			player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 			ItemStack lhelmet = new ItemStack(Material.LEATHER_HELMET, 1);
@@ -153,11 +177,11 @@ public class Paintball extends EventoBaseAPI {
 		}
 	}
 
-	public List<String> getTimeAzul() {
+	public List<Player> getTimeAzul() {
 		return this.timeAzul;
 	}
 
-	public List<String> getTimeVermelho() {
+	public List<Player> getTimeVermelho() {
 		return this.timeVermelho;
 	}
 }

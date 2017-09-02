@@ -18,26 +18,25 @@ public class FrogListener extends EventoBaseListener {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
 		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName()))
+				.contains(e.getPlayer()))
 			return;
 		if ((HEventos.getHEventos().getEventosController().getEvento().isAberto()))
 			return;
 		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
 			return;
 		Frog frog = (Frog) HEventos.getHEventos().getEventosController().getEvento();
-		if ((e.getPlayer().getLocation().getY() <= frog.getY()) && frog.isComecou()) {
+		if ((e.getPlayer().getLocation().getY() <= frog.getY()) && frog.getEtapa() != 1) {
 			e.getPlayer().sendMessage(frog.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "§").replace("$EventoName$", frog.getNome()));
 			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(),
 					HEventos.getHEventos().getEventosController().getEvento());
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 			String msg = frog.getConfig().getString("Mensagens.FoiEliminado");
-			for (String sa : frog.getParticipantes()) {
-				Player p = frog.getPlayerByName(sa);
+			for (Player p : frog.getParticipantes()) {
 				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", frog.getNome()).replace("$player$", e.getPlayer().getName()));
 
 			}
 		}
-		if (!frog.isFim())
+		if (frog.getEtapa() != 6)
 			return;
 		Block b = frog.getLaVermelha().getWorld().getBlockAt(frog.getLaVermelha());
 		if (!(e.getTo().getBlock().getX() == b.getX())) {

@@ -1,6 +1,7 @@
 package me.herobrinedobem.heventos.eventos;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseAPI;
@@ -22,8 +23,8 @@ public class EventoNormal extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String s : getParticipantes()) {
-			getPlayerByName(s).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
+		for (Player s : getParticipantes()) {
+			s.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 		}
 	}
 

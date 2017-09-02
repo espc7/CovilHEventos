@@ -21,7 +21,7 @@ public class SpleefListener extends EventoBaseListener {
 		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
 			return;
 		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName()))
+				.contains(e.getPlayer()))
 			return;
 		Spleef spleef = (Spleef) HEventos.getHEventos().getEventosController().getEvento();
 		if (!spleef.isPodeQuebrar()) {
@@ -39,7 +39,7 @@ public class SpleefListener extends EventoBaseListener {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
 		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName()))
+				.contains(e.getPlayer()))
 			return;
 		if ((HEventos.getHEventos().getEventosController().getEvento().isAberto()))
 			return;
@@ -52,8 +52,7 @@ public class SpleefListener extends EventoBaseListener {
 					HEventos.getHEventos().getEventosController().getEvento());
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 			String msg = spleef.getConfig().getString("Mensagens.FoiEliminado");
-			for (String sa : spleef.getParticipantes()) {
-				Player p = spleef.getPlayerByName(sa);
+			for (Player p : spleef.getParticipantes()) {
 				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", spleef.getNome()).replace("$player$", e.getPlayer().getName()));
 			}
 		}

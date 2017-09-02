@@ -6,6 +6,7 @@ import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseAPI;
@@ -49,8 +50,8 @@ public class MinaMortal extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String s : getParticipantes()) {
-			getPlayerByName(s).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
+		for (Player p : getParticipantes()) {
+			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 		}
 	}
 

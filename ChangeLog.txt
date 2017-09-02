@@ -1,5 +1,11 @@
 ChangeLog HEventos
 
+HEventos ChangeLog version=1.5.1
+
+01/09/2017
+Código do Frog melhorado, agora ele funciona por etapas
+Corrigido fogo-amigo no PaintBall
+
 HEventos ChangeLog version=1.5
 
 31/08/2017

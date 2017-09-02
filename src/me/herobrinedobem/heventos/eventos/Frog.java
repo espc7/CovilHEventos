@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseAPI;
@@ -27,13 +28,13 @@ public class Frog extends EventoBaseAPI {
 	private int tempoComecar, tempoComecarCurrent;
 	private int tempoRodada, tempoTirarNeve, tempoVoltarNeve;
 	private int tempoRodadaCurrent, tempoTirarNeveCurrent, tempoVoltarNeveCurrent;
-	private boolean comecou, selecionou, tirou, voltou, fim;
+	private int etapa;
 	private Random r = new Random();
 	private Location l, laVermelha;
 	private World w;
-	private Map<Location, String> blocos = new HashMap<>();
-	private List<Location> loc = new ArrayList<>();
-	private List<Location> loc2 = new ArrayList<>();
+	private Map<Location, String> blocosIniciaisBackup = new HashMap<>();
+	private List<Location> blocosInciais = new ArrayList<>();
+	private List<Location> blocosRemovidos = new ArrayList<>();
 	private Cuboid cubo;
 	private int y;
 
@@ -50,11 +51,7 @@ public class Frog extends EventoBaseAPI {
 		tempoTirarNeveCurrent = tempoTirarNeve;
 		tempoVoltarNeve = config.getInt("Config.Tempo_Voltar_Neve");
 		tempoVoltarNeveCurrent = tempoVoltarNeve;
-		comecou = false;
-		selecionou = false;
-		tirou = false;
-		voltou = false;
-		fim = false;
+		etapa = 1;
 		w = EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_1").getWorld();
 		y = (int) (EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_1").getY() - 1.0);
 		cubo = new Cuboid(EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_1"),
@@ -62,8 +59,8 @@ public class Frog extends EventoBaseAPI {
 		for (Block b : cubo.getBlocks()) {
 			if ((b.getType() != Material.SNOW_BLOCK) && (b.getType() != Material.AIR)) {
 				String id = b.getTypeId() + ":" + b.getData();
-				blocos.put(b.getLocation(), id);
-				loc.add(b.getLocation());
+				blocosIniciaisBackup.put(b.getLocation(), id);
+				blocosInciais.add(b.getLocation());
 			} else {
 				b.setType(Material.SNOW_BLOCK);
 			}
@@ -72,10 +69,10 @@ public class Frog extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String p : getParticipantes()) {
-			getPlayerByName(p).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
+		for (Player p : getParticipantes()) {
+			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
-				getPlayerByName(p).sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
+				p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
 						.replace("$EventoName$", getNome()));
 			}
 		}
@@ -85,79 +82,80 @@ public class Frog extends EventoBaseAPI {
 	@Override
 	public void scheduledMethod() {
 		if ((isOcorrendo()) && (!isAberto())) {
-			if(getParticipantes().size() == 0) {
+			if (getParticipantes().size() == 0) {
 				sendMessageList("Mensagens.Sem_Vencedor");
 				stopEvent();
 			}
-			if (tempoComecarCurrent > 0) {
-				tempoComecarCurrent--;
-				return;
-			} else if (tempoRodadaCurrent == 0 && !comecou) {
+			// Preparar
+			if (etapa == 1) {
+				if (tempoComecarCurrent > 0) {
+					tempoComecarCurrent--;
+					return;
+				}
 				for (Block b : cubo.getBlocks()) {
-					if (!blocos.containsKey(b.getLocation()))
+					if (!blocosIniciaisBackup.containsKey(b.getLocation()))
 						b.setType(Material.AIR);
 				}
-				for (String p : getParticipantes()) {
+				for (Player p : getParticipantes()) {
 					for (String s1 : getConfig().getStringList("Mensagens.Comecou")) {
-						getPlayerByName(p).sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
+						p.sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
 					}
 				}
-				comecou = true;
-				tempoComecarCurrent--;
-				return;
-			}
-			// Rodada
-			if (tempoRodadaCurrent == 0 && !fim) {
-				// selecionar bloco
-				if (!selecionou) {
-					l = loc.get(r.nextInt(loc.size()));
-					loc2.add(l);
-					loc.remove(l);
-					l.getWorld().getBlockAt(l).setType(Material.SNOW_BLOCK);
-					selecionou = true;
-				}
-				// selecionando la vermelha
-				if (loc.isEmpty()) {
-					for (String p : getParticipantes()) {
-						for (String s1 : getConfig().getStringList("Mensagens.LaVermelha")) {
-							getPlayerByName(p).sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
-						}
-					}
-					laVermelha = loc2.get(r.nextInt(loc2.size()));
-					w.getBlockAt(laVermelha).setType(Material.WOOL);
-					w.getBlockAt(laVermelha).setData((byte) 14);
-					fim = true;
+				etapa = 2;
+			} else if (etapa != 6) {
+				// Rodada
+				if (tempoRodadaCurrent > 0) {
+					tempoRodadaCurrent--;
 					return;
 				}
-				// tirar neves
-				if (tempoTirarNeveCurrent == 0 && !tirou) {
-					for (Location l1 : loc2) {
+				switch (etapa) {
+				case 2:
+					// selecionar bloco para virar neve
+					l = blocosInciais.get(r.nextInt(blocosInciais.size()));
+					blocosRemovidos.add(l);
+					blocosInciais.remove(l);
+					l.getWorld().getBlockAt(l).setType(Material.SNOW_BLOCK);
+					etapa = 3;
+					// selecionar lã vermelha se todos blocos foram removidos
+					if (blocosInciais.isEmpty()) {
+						for (Player p : getParticipantes()) {
+							for (String s1 : getConfig().getStringList("Mensagens.LaVermelha")) {
+								p.sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
+							}
+						}
+						laVermelha = blocosRemovidos.get(r.nextInt(blocosRemovidos.size()));
+						w.getBlockAt(laVermelha).setType(Material.WOOL);
+						w.getBlockAt(laVermelha).setData((byte) 14);
+						etapa = 6;
+						return;
+					}
+					break;
+				case 3:
+					// Remover as neves
+					if (tempoTirarNeveCurrent > 0) {
+						tempoTirarNeveCurrent--;
+						return;
+					}
+					for (Location l1 : blocosRemovidos) {
 						l1.getWorld().getBlockAt(l1).setType(Material.AIR);
 					}
-					tirou = true;
+					etapa = 4;
 					tempoTirarNeveCurrent = tempoTirarNeve;
-					return;
-				} else if (!tirou) {
-					tempoTirarNeveCurrent--;
-					return;
-				}
-				// voltar neves
-				if (tempoVoltarNeveCurrent == 0 && !voltou) {
-					for (Location l1 : loc2) {
+					break;
+				case 4:
+					// Recolocar as neves
+					if (tempoVoltarNeveCurrent > 0) {
+						tempoVoltarNeveCurrent--;
+						return;
+					}
+					for (Location l1 : blocosRemovidos) {
 						l1.getWorld().getBlockAt(l1).setType(Material.SNOW_BLOCK);
 					}
-					voltou = true;
+					etapa = 2;
 					tempoVoltarNeveCurrent = tempoVoltarNeve;
-				} else if (!voltou) {
-					tempoVoltarNeveCurrent--;
-					return;
+					tempoRodadaCurrent = tempoRodada;
+					break;
 				}
-				voltou = false;
-				tirou = false;
-				selecionou = false;
-				tempoRodadaCurrent = tempoRodada;
-			} else if (!fim) {
-				tempoRodadaCurrent--;
 			}
 		}
 	}
@@ -178,9 +176,9 @@ public class Frog extends EventoBaseAPI {
 	@Override
 	public void resetEvent() {
 		for (Block b : cubo.getBlocks()) {
-			if (blocos.containsKey(b.getLocation())) {
-				int id = Integer.parseInt(blocos.get(b.getLocation()).split(":")[0]);
-				byte data = Byte.parseByte(blocos.get(b.getLocation()).split(":")[1]);
+			if (blocosIniciaisBackup.containsKey(b.getLocation())) {
+				int id = Integer.parseInt(blocosIniciaisBackup.get(b.getLocation()).split(":")[0]);
+				byte data = Byte.parseByte(blocosIniciaisBackup.get(b.getLocation()).split(":")[1]);
 				b.setTypeId(id);
 				b.setData(data);
 			} else {
@@ -188,8 +186,8 @@ public class Frog extends EventoBaseAPI {
 			}
 		}
 		super.resetEvent();
-		blocos.clear();;
-		loc.clear();;
+		blocosIniciaisBackup.clear();
+		blocosInciais.clear();
 		cubo = null;
 		BukkitEventHelper.unregisterEvents(listener, HEventos.getHEventos());
 	}
@@ -202,13 +200,7 @@ public class Frog extends EventoBaseAPI {
 		return laVermelha;
 	}
 
-	public boolean isFim() {
-		return fim;
+	public int getEtapa() {
+		return etapa;
 	}
-
-	public boolean isComecou() {
-		return comecou;
-	}
-	
-	
 }

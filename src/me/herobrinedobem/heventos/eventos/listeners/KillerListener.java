@@ -25,9 +25,9 @@ public class KillerListener extends EventoBaseListener {
 			return;
 		Player p = (Player) e.getDamager();
 		Killer killer = (Killer) HEventos.getHEventos().getEventosController().getEvento();
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p.getName()))
+		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p))
 			return;
-		if (!killer.isPvpOff())
+		if (killer.getEtapa() != 1)
 			return;
 		e.setCancelled(true);
 	}
@@ -37,7 +37,7 @@ public class KillerListener extends EventoBaseListener {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
 		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName()))
+				.contains(e.getPlayer()))
 			return;
 		if (HEventos.getHEventos().getEventosController().getEvento().isAberto())
 			return;
@@ -50,7 +50,7 @@ public class KillerListener extends EventoBaseListener {
 			if (e.getPotion().getShooter() instanceof Player) {
 				Player p = (Player) e.getPotion().getShooter();
 				if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-						.contains(p.getName())) {
+						.contains(p)) {
 					e.setCancelled(true);
 				}
 			}

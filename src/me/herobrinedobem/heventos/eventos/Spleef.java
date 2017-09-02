@@ -46,13 +46,13 @@ public class Spleef extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String p : getParticipantes()) {
+		for (Player p : getParticipantes()) {
 			for (String linha : getConfig().getStringList("Itens_Ao_Iniciar")) {
-				getPlayerByName(p).getPlayer().getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
+				p.getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
 			}
-			getPlayerByName(p).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
+			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
-				getPlayerByName(p).sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
+				p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
 						.replace("$EventoName$", getNome()));
 			}
 		}
@@ -63,14 +63,14 @@ public class Spleef extends EventoBaseAPI {
 	public void scheduledMethod() {
 		if (isOcorrendo() && !isAberto()) {
 			if (tempoComecarCurrent == 0 && !podeQuebrar) {
-				for (String p : getParticipantes()) {
+				for (Player p : getParticipantes()) {
 					for (String s1 : getConfig().getStringList("Mensagens.Pode_Quebrar")) {
-						getPlayerByName(p).sendMessage(s1.replace("&", "§")
-								.replace("$tempo$", String.valueOf(tempoComecar)).replace("$EventoName$", getNome()));
+						p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
+								.replace("$EventoName$", getNome()));
 					}
 				}
 				podeQuebrar = true;
-			} else if(!podeQuebrar){
+			} else if (!podeQuebrar) {
 				tempoComecarCurrent--;
 			}
 			if (regenerarChao) {
@@ -85,8 +85,8 @@ public class Spleef extends EventoBaseAPI {
 			}
 			if (getParticipantes().size() == 1) {
 				Player player = null;
-				for (String s : getParticipantes()) {
-					player = getPlayerByName(s);
+				for (Player p : getParticipantes()) {
+					player = p;
 				}
 				PlayerWinEvent event = new PlayerWinEvent(player, this, false);
 				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);

@@ -29,7 +29,7 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
  * Refeito por GabrielDev (DeathRush)! 
  * @author Herobrinedobem (Gabriel Henrique)
  * @author GabrielDev (DeathRush)
- * @version 1.5.0
+ * @version 1.6
  * @see EventosController
  * @see MySQL
  * @see SQLite
@@ -87,7 +87,7 @@ public class HEventos extends JavaPlugin {
 			this.eventosController.getEvento().stopEvent();
 			eventosController.setEvento(null);
 		}
-		Bukkit.getConsoleSender().sendMessage("§9[HEventos] §fPlugin Desabilitado - (Versao §9" + this.getDescription().getVersion() + "§f)");
+		Bukkit.getConsoleSender().sendMessage("§9[HEventos-Reloaded] §fPlugin Desabilitado - (Versao §9" + this.getDescription().getVersion() + "§f)");
 	}
 	
 	/**

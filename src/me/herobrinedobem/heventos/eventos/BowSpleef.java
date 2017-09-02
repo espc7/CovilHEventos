@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.herobrinedobem.heventos.HEventos;
@@ -40,18 +41,18 @@ public class BowSpleef extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String s : getParticipantes()) {
-			for(String linha : getConfig().getStringList("Itens_Ao_Iniciar")) {
-				getPlayerByName(s).getPlayer().getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
+		for (Player s : getParticipantes()) {
+			for (String linha : getConfig().getStringList("Itens_Ao_Iniciar")) {
+				s.getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
 			}
 			for (Block b : chao.getBlocks()) {
 				Location l = b.getLocation();
-				l.setY(l.getY()+1);
+				l.setY(l.getY() + 1);
 			}
 			Random r = new Random();
 			Location l = chao.getBlocks().get(r.nextInt(chao.getBlocks().size())).getLocation();
-			l.setY(l.getY()+1);
-			getPlayerByName(s).teleport(l);
+			l.setY(l.getY() + 1);
+			s.teleport(l);
 		}
 	}
 
@@ -68,7 +69,7 @@ public class BowSpleef extends EventoBaseAPI {
 				tempoRegenera = getConfig().getInt("Config.Tempo_Chao_Regenera");
 			}
 			if (getParticipantes().size() == 1) {
-				PlayerWinEvent event = new PlayerWinEvent(getPlayerByName(getParticipantes().get(0)), this, false);
+				PlayerWinEvent event = new PlayerWinEvent(getParticipantes().get(0), this, false);
 				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 				stopEvent();
 			}
@@ -79,7 +80,7 @@ public class BowSpleef extends EventoBaseAPI {
 	public void cancelEventMethod() {
 		sendMessageList("Mensagens.Cancelado");
 	}
-	
+
 	@Override
 	public void stopEvent() {
 		StopEvent event = new StopEvent(HEventos.getHEventos().getEventosController().getEvento(),

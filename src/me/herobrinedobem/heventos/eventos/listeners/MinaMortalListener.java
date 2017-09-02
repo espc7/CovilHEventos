@@ -14,7 +14,7 @@ public class MinaMortalListener extends EventoBaseListener {
 		if (HEventos.getHEventos().getEventosController().getEvento() != null) {
 			if (e.getPotion().getShooter() instanceof Player) {
 				Player p = (Player) e.getPotion().getShooter();
-				if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().contains(p.getName())) {
+				if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().contains(p)) {
 					e.setCancelled(true);
 				}
 			}

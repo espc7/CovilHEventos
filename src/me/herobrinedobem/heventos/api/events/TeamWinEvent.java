@@ -2,6 +2,7 @@ package me.herobrinedobem.heventos.api.events;
 
 import java.util.List;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -12,9 +13,9 @@ public class TeamWinEvent extends Event {
 	private static final HandlerList handlers = new HandlerList();
 	private String time;
 	private EventoBaseAPI evento;
-	private List<String> time1;
+	private List<Player> time1;
 	
-	public TeamWinEvent(String time, EventoBaseAPI evento, List<String> time1) {
+	public TeamWinEvent(String time, EventoBaseAPI evento, List<Player> time1) {
 		this.time = time;
 		this.evento = evento;
 		this.time1 = time1;
@@ -36,7 +37,7 @@ public class TeamWinEvent extends Event {
 		return evento;
 	}
 	
-	public List<String> getList() {
+	public List<Player> getList() {
 		return time1;
 	}
 	

@@ -14,13 +14,13 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	private EventoType eventoType;
 	private String horarioStart;
-	private List<String> participantes = new ArrayList<String>();
+	private List<Player> participantes = new ArrayList<Player>();
 	private boolean ocorrendo, aberto, parte1, vip, assistirAtivado, pvp, contarVitoria, contarParticipacao,
 			inventoryEmpty;
 	private int chamadas, tempo, id2, chamadascurrent, id;
 	private String nome;
 	private Location saida, entrada, camarote, aguarde;
-	private List<String> camarotePlayers = new ArrayList<String>();
+	private List<Player> camarotePlayers = new ArrayList<Player>();
 	private YamlConfiguration config;
 
 	public EventoBaseAPI(YamlConfiguration config) {
@@ -79,17 +79,16 @@ public class EventoBaseAPI implements EventoBaseImplements {
 		} else if (EventoBaseAPI.this.chamadascurrent == 0) {
 			if (EventoBaseAPI.this.participantes.size() > 1) {
 				if (EventoBaseAPI.this.isContarParticipacao()) {
-					for (String p1 : EventoBaseAPI.this.participantes) {
-						Player p = EventoBaseAPI.this.getPlayerByName(p1);
-						HEventos.getHEventos().getDatabaseManager().addParticipationPoint(p.getPlayer().getName(), 1);
+					for (Player p : EventoBaseAPI.this.participantes) {
+						HEventos.getHEventos().getDatabaseManager().addParticipationPoint(p.getName(), 1);
 					}
 				}
 				EventoBaseAPI.this.aberto = false;
 				EventoBaseAPI.this.parte1 = true;
 				EventoBaseAPI.this.sendMessageList("Mensagens.Iniciando");
 				this.startEventMethod();
-				for (String sa : EventoBaseAPI.this.camarotePlayers) {
-					EventoBaseAPI.this.getPlayerByName(sa).teleport(EventoBaseAPI.this.camarote);
+				for (Player p : EventoBaseAPI.this.camarotePlayers) {
+					p.teleport(EventoBaseAPI.this.camarote);
 				}
 			} else {
 				EventoBaseAPI.this.stopEvent();
@@ -98,12 +97,12 @@ public class EventoBaseAPI implements EventoBaseImplements {
 			}
 		}
 	}
-	
+
 	@Override
 	public void stopEvent() {
-		
+
 	}
-	
+
 	@Override
 	public void resetEvent() {
 		this.nome = this.config.getString("Config.Nome");
@@ -151,10 +150,6 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	@Override
 	public void stopEventMethod() {
-	}
-
-	public Player getPlayerByName(String name) {
-		return HEventos.getHEventos().getServer().getPlayer(name);
 	}
 
 	public void sendMessageList(String list) {
@@ -318,11 +313,11 @@ public class EventoBaseAPI implements EventoBaseImplements {
 		this.config = config;
 	}
 
-	public List<String> getParticipantes() {
+	public List<Player> getParticipantes() {
 		return this.participantes;
 	}
 
-	public List<String> getCamarotePlayers() {
+	public List<Player> getCamarotePlayers() {
 		return this.camarotePlayers;
 	}
 

@@ -20,9 +20,8 @@ public class EventoBaseListener implements Listener {
 
 		// Players Participantes
 		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getEntity().getPlayer().getName())) {
-			for (String s : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
-				Player p = HEventos.getHEventos().getServer().getPlayer(s);
+				.contains(e.getEntity().getPlayer())) {
+			for (Player p : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
 				p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgMorreu().replace("$player$",
 						e.getEntity().getPlayer().getName()));
 			}
@@ -34,7 +33,7 @@ public class EventoBaseListener implements Listener {
 
 		// Players Camarote
 		if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-				.contains(e.getEntity().getPlayer().getName())) {
+				.contains(e.getEntity().getPlayer())) {
 			PlayerLeaveEvent event = new PlayerLeaveEvent(e.getEntity().getPlayer(),
 					HEventos.getHEventos().getEventosController().getEvento(), true);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
@@ -47,19 +46,18 @@ public class EventoBaseListener implements Listener {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
 		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName())) {
+				.contains(e.getPlayer())) {
 			PlayerLeaveEvent event2 = new PlayerLeaveEvent(e.getPlayer(),
 					HEventos.getHEventos().getEventosController().getEvento(), false);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event2);
-			for (String s : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
-				Player p = HEventos.getHEventos().getServer().getPlayer(s);
+			for (Player p : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
 				p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgDesconect().replace("$player$",
 						e.getPlayer().getName()));
 			}
 		}
 		// Players Camarote
 		if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-				.contains(e.getPlayer().getName())) {
+				.contains(e.getPlayer())) {
 			PlayerLeaveEvent event = new PlayerLeaveEvent(e.getPlayer(),
 					HEventos.getHEventos().getEventosController().getEvento(), true);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
@@ -71,7 +69,7 @@ public class EventoBaseListener implements Listener {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
 		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer().getName()))
+				.contains(e.getPlayer()))
 			return;
 		for (String s : HEventos.getHEventos().getEventosController().getEvento().getConfig()
 				.getStringList("Comandos_Liberados")) {

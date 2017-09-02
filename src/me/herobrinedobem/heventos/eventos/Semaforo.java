@@ -1,6 +1,7 @@
 package me.herobrinedobem.heventos.eventos;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseAPI;
@@ -32,10 +33,10 @@ public class Semaforo extends EventoBaseAPI {
 
 	@Override
 	public void startEventMethod() {
-		for (String s : getParticipantes()) {
-			getPlayerByName(s).teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
+		for (Player p : getParticipantes()) {
+			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 			for (String msg : getConfig().getStringList("Mensagens.Verde")) {
-				getPlayerByName(s).sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
 			}
 		}
 	}
@@ -45,23 +46,23 @@ public class Semaforo extends EventoBaseAPI {
 		if ((isOcorrendo() == true) && (isAberto() == false)) {
 			if (tempoTrocaCurrent == 0) {
 				podeAndar = true;
-				for (String s : getParticipantes()) {
+				for (Player p : getParticipantes()) {
 					for (String msg : getConfig().getStringList("Mensagens.Verde")) {
-						getPlayerByName(s).sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
 					}
 				}
 				tempoTrocaCurrent = tempoTroca;
 			} else if (tempoTrocaCurrent == tempoAmarelo) {
-				for (String s : getParticipantes()) {
+				for (Player p : getParticipantes()) {
 					for (String msg : getConfig().getStringList("Mensagens.Amarelo")) {
-						getPlayerByName(s).sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
 					}
 				}
 				tempoTrocaCurrent--;
 			} else if (tempoTrocaCurrent == tempoVermelho) {
-				for (String s : getParticipantes()) {
+				for (Player p : getParticipantes()) {
 					for (String msg : getConfig().getStringList("Mensagens.Vermelho")) {
-						getPlayerByName(s).sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
 					}
 				}
 				podeAndar = false;

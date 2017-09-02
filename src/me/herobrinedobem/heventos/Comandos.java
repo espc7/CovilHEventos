@@ -52,8 +52,7 @@ public class Comandos implements CommandExecutor {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNenhumEvento());
 						return true;
 					}
-					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-							.contains(p.getName())) {
+					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p)) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaParticipa());
 						return true;
 					}
@@ -73,12 +72,11 @@ public class Comandos implements CommandExecutor {
 							return true;
 						}
 					}
-					for (String s : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
-						Player pa = HEventos.getHEventos().getServer().getPlayer(s);
+					for (Player pa : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
 						pa.sendMessage(
 								HEventos.getHEventos().getConfigUtil().getMsgEntrou().replace("$player$", p.getName()));
 					}
-					HEventos.getHEventos().getEventosController().getEvento().getParticipantes().add(p.getName());
+					HEventos.getHEventos().getEventosController().getEvento().getParticipantes().add(p);
 					p.teleport(HEventos.getHEventos().getEventosController().getEvento().getAguarde());
 					PlayerEnterEvent event = new PlayerEnterEvent(p,
 							HEventos.getHEventos().getEventosController().getEvento(), false);
@@ -88,20 +86,18 @@ public class Comandos implements CommandExecutor {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNenhumEvento());
 						return true;
 					}
-					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-							.contains(p.getName())) {
+					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p)) {
 						PlayerLeaveEvent event = new PlayerLeaveEvent(p,
 								HEventos.getHEventos().getEventosController().getEvento(), false);
 						HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-						for (String s : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
-							Player pa = HEventos.getHEventos().getServer().getPlayer(s);
+						for (Player pa : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
 							pa.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgSaiu().replace("$player$",
 									p.getName()));
 						}
 						return true;
 					}
 					if (!HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-							.contains(p.getName())) {
+							.contains(p)) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNaoParticipa());
 						return true;
 					}
@@ -128,13 +124,12 @@ public class Comandos implements CommandExecutor {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgAssistirDesativado());
 						return true;
 					}
-					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-							.contains(p.getName())) {
+					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p)) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaParticipa());
 						return true;
 					}
 					if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-							.contains(p.getName())) {
+							.contains(p)) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaEstaCamarote());
 						return true;
 					}
@@ -142,19 +137,17 @@ public class Comandos implements CommandExecutor {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgAssistirBloqueado());
 						return true;
 					}
-					HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().add(p.getName());
+					HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().add(p);
 					if (HEventos.getHEventos().getEventosController().getEvento().isAberto()) {
 						p.teleport(HEventos.getHEventos().getEventosController().getEvento().getAguarde());
 					} else {
 						p.teleport(HEventos.getHEventos().getEventosController().getEvento().getCamarote());
 					}
-					for (String s : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
-						Player pa = HEventos.getHEventos().getServer().getPlayer(s);
+					for (Player pa : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
 						pa.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgAssistindo().replace("$player$",
 								p.getName()));
 					}
-					for (String s : HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()) {
-						Player pa = HEventos.getHEventos().getServer().getPlayer(s);
+					for (Player pa : HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()) {
 						pa.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgAssistindo().replace("$player$",
 								p.getName()));
 					}
@@ -445,7 +438,7 @@ public class Comandos implements CommandExecutor {
 				MsgDefault(p);
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private void MsgDefault(Player p) {
