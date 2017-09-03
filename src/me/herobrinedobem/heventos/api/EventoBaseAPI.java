@@ -26,24 +26,7 @@ public class EventoBaseAPI implements EventoBaseImplements {
 	public EventoBaseAPI(YamlConfiguration config) {
 		this.config = config;
 		this.eventoType = EventoType.getEventoType(config.getString("Config.Evento_Type"));
-		this.nome = this.config.getString("Config.Nome");
-		this.chamadas = this.config.getInt("Config.Chamadas");
-		this.vip = this.config.getBoolean("Config.VIP");
-		this.assistirAtivado = this.config.getBoolean("Config.Assistir_Ativado");
-		this.pvp = this.config.getBoolean("Config.PVP");
-		this.contarParticipacao = this.config.getBoolean("Config.Contar_Participacao");
-		this.contarVitoria = this.config.getBoolean("Config.Contar_Vitoria");
-		this.tempo = this.config.getInt("Config.Tempo_Entre_As_Chamadas");
-		this.inventoryEmpty = this.config.getBoolean("Config.Inv_Vazio");
-		this.saida = EventoUtils.getLocation(config, "Localizacoes.Saida");
-		this.camarote = EventoUtils.getLocation(config, "Localizacoes.Camarote");
-		this.entrada = EventoUtils.getLocation(config, "Localizacoes.Entrada");
-		this.aguarde = EventoUtils.getLocation(config, "Localizacoes.Aguardando");
-		this.aberto = false;
-		this.ocorrendo = false;
-		this.parte1 = false;
-		this.participantes.clear();
-		this.chamadascurrent = this.chamadas;
+		resetAll();
 	}
 
 	public void run() {
@@ -105,23 +88,7 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	@Override
 	public void resetEvent() {
-		this.nome = this.config.getString("Config.Nome");
-		this.chamadas = this.config.getInt("Config.Chamadas");
-		this.vip = this.config.getBoolean("Config.VIP");
-		this.assistirAtivado = this.config.getBoolean("Config.Assistir_Ativado");
-		this.pvp = this.config.getBoolean("Config.PVP");
-		this.contarParticipacao = this.config.getBoolean("Config.Contar_Participacao");
-		this.contarVitoria = this.config.getBoolean("Config.Contar_Vitoria");
-		this.tempo = this.config.getInt("Config.Tempo_Entre_As_Chamadas");
-		this.saida = EventoUtils.getLocation(config, "Localizacoes.Saida");
-		this.camarote = EventoUtils.getLocation(config, "Localizacoes.Camarote");
-		this.entrada = EventoUtils.getLocation(config, "Localizacoes.Entrada");
-		this.aguarde = EventoUtils.getLocation(config, "Localizacoes.Aguardando");
-		this.inventoryEmpty = this.config.getBoolean("Config.Inv_Vazio");
-		this.aberto = false;
-		this.ocorrendo = false;
-		this.parte1 = false;
-		this.chamadascurrent = this.chamadas;
+		resetAll();
 		HEventos.getHEventos().getEventosController().setEvento(null);
 		HEventos.getHEventos().getServer().getScheduler().cancelTask(this.id);
 		HEventos.getHEventos().getServer().getScheduler().cancelTask(this.id2);
@@ -156,6 +123,26 @@ public class EventoBaseAPI implements EventoBaseImplements {
 		for (String s : this.config.getStringList(list)) {
 			HEventos.getHEventos().getServer().broadcastMessage(s.replace("&", "§").replace("$EventoName$", getNome()));
 		}
+	}
+	
+	public void resetAll() {
+		this.nome = EventoBaseAPI.this.config.getString("Config.Nome");
+		this.chamadas = EventoBaseAPI.this.config.getInt("Config.Chamadas");
+		this.vip = EventoBaseAPI.this.config.getBoolean("Config.VIP");
+		this.assistirAtivado = EventoBaseAPI.this.config.getBoolean("Config.Assistir_Ativado");
+		this.pvp = EventoBaseAPI.this.config.getBoolean("Config.PVP");
+		this.contarParticipacao = EventoBaseAPI.this.config.getBoolean("Config.Contar_Participacao");
+		this.contarVitoria = EventoBaseAPI.this.config.getBoolean("Config.Contar_Vitoria");
+		this.tempo = EventoBaseAPI.this.config.getInt("Config.Tempo_Entre_As_Chamadas");
+		this.saida = EventoUtils.getLocation(config, "Localizacoes.Saida");
+		this.camarote = EventoUtils.getLocation(config, "Localizacoes.Camarote");
+		this.entrada = EventoUtils.getLocation(config, "Localizacoes.Entrada");
+		this.aguarde = EventoUtils.getLocation(config, "Localizacoes.Aguardando");
+		this.inventoryEmpty = EventoBaseAPI.this.config.getBoolean("Config.Inv_Vazio");
+		this.aberto = false;
+		this.ocorrendo = false;
+		this.parte1 = false;
+		this.chamadascurrent = this.chamadas;
 	}
 
 	public int getId() {

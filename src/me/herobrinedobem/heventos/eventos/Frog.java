@@ -25,9 +25,8 @@ import me.herobrinedobem.heventos.utils.Cuboid;
 public class Frog extends EventoBaseAPI {
 
 	private FrogListener listener;
-	private int tempoComecar, tempoComecarCurrent;
+	private int tempoComecar;
 	private int tempoRodada, tempoTirarNeve, tempoVoltarNeve;
-	private int tempoRodadaCurrent, tempoTirarNeveCurrent, tempoVoltarNeveCurrent;
 	private int etapa;
 	private Random r = new Random();
 	private Location l, laVermelha;
@@ -44,13 +43,9 @@ public class Frog extends EventoBaseAPI {
 		listener = new FrogListener();
 		HEventos.getHEventos().getServer().getPluginManager().registerEvents(listener, HEventos.getHEventos());
 		tempoComecar = config.getInt("Config.Tempo_Comecar");
-		tempoComecarCurrent = tempoComecar;
 		tempoRodada = config.getInt("Config.Tempo_Rodada");
-		tempoRodadaCurrent = tempoRodada;
 		tempoTirarNeve = config.getInt("Config.Tempo_Tirar_Neve");
-		tempoTirarNeveCurrent = tempoTirarNeve;
 		tempoVoltarNeve = config.getInt("Config.Tempo_Voltar_Neve");
-		tempoVoltarNeveCurrent = tempoVoltarNeve;
 		etapa = 1;
 		w = EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_1").getWorld();
 		y = (int) (EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_1").getY() - 1.0);
@@ -78,86 +73,77 @@ public class Frog extends EventoBaseAPI {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo()) && (!isAberto())) {
-			if (getParticipantes().size() == 0) {
-				sendMessageList("Mensagens.Sem_Vencedor");
-				stopEvent();
+		if (isAberto()) {
+			return;
+		}
+		if (getParticipantes().size() == 0) {
+			sendMessageList("Mensagens.Sem_Vencedor");
+			stopEvent();
+		}
+		if (etapa != 1) {
+			return;
+		}
+		if (tempoComecar > 0) {
+			tempoComecar--;
+			return;
+		}
+		for (Block b : cubo.getBlocks()) {
+			if (!blocosIniciaisBackup.containsKey(b.getLocation()))
+				b.setType(Material.AIR);
+		}
+		for (Player p : getParticipantes()) {
+			for (String s1 : getConfig().getStringList("Mensagens.Comecou")) {
+				p.sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
 			}
-			// Preparar
-			if (etapa == 1) {
-				if (tempoComecarCurrent > 0) {
-					tempoComecarCurrent--;
-					return;
+		}
+		etapa = 2;
+		frogMethod();
+	}
+
+	@SuppressWarnings("deprecation")
+	public void frogMethod() {
+		HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(), () -> {
+			// selecionar bloco para virar neve
+			l = blocosInciais.get(r.nextInt(blocosInciais.size()));
+			int idBlock = l.getWorld().getBlockAt(l).getTypeId();
+			byte dataBlock = l.getWorld().getBlockAt(l).getData();
+			for (Location b : blocosIniciaisBackup.keySet()) {
+				if (l.getWorld().getBlockAt(b).getTypeId() != idBlock) {
+					continue;
 				}
-				for (Block b : cubo.getBlocks()) {
-					if (!blocosIniciaisBackup.containsKey(b.getLocation()))
-						b.setType(Material.AIR);
+				if (l.getWorld().getBlockAt(b).getData() != dataBlock) {
+					continue;
 				}
+				blocosRemovidos.add(b);
+				blocosInciais.remove(b);
+				l.getWorld().getBlockAt(b).setType(Material.SNOW_BLOCK);
+			}
+			if (blocosInciais.isEmpty()) {
 				for (Player p : getParticipantes()) {
-					for (String s1 : getConfig().getStringList("Mensagens.Comecou")) {
+					for (String s1 : getConfig().getStringList("Mensagens.LaVermelha")) {
 						p.sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
 					}
 				}
-				etapa = 2;
-			} else if (etapa != 6) {
-				// Rodada
-				if (tempoRodadaCurrent > 0) {
-					tempoRodadaCurrent--;
-					return;
+				laVermelha = blocosRemovidos.get(r.nextInt(blocosRemovidos.size()));
+				w.getBlockAt(laVermelha).setType(Material.WOOL);
+				w.getBlockAt(laVermelha).setData((byte) 14);
+				etapa = 6;
+				return;
+			}
+			HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(), () -> {
+				for (Location l1 : blocosRemovidos) {
+					l1.getWorld().getBlockAt(l1).setType(Material.AIR);
 				}
-				switch (etapa) {
-				case 2:
-					// selecionar bloco para virar neve
-					l = blocosInciais.get(r.nextInt(blocosInciais.size()));
-					blocosRemovidos.add(l);
-					blocosInciais.remove(l);
-					l.getWorld().getBlockAt(l).setType(Material.SNOW_BLOCK);
-					etapa = 3;
-					// selecionar lã vermelha se todos blocos foram removidos
-					if (blocosInciais.isEmpty()) {
-						for (Player p : getParticipantes()) {
-							for (String s1 : getConfig().getStringList("Mensagens.LaVermelha")) {
-								p.sendMessage(s1.replace("&", "§").replace("$EventoName$", getNome()));
-							}
-						}
-						laVermelha = blocosRemovidos.get(r.nextInt(blocosRemovidos.size()));
-						w.getBlockAt(laVermelha).setType(Material.WOOL);
-						w.getBlockAt(laVermelha).setData((byte) 14);
-						etapa = 6;
-						return;
-					}
-					break;
-				case 3:
-					// Remover as neves
-					if (tempoTirarNeveCurrent > 0) {
-						tempoTirarNeveCurrent--;
-						return;
-					}
-					for (Location l1 : blocosRemovidos) {
-						l1.getWorld().getBlockAt(l1).setType(Material.AIR);
-					}
-					etapa = 4;
-					tempoTirarNeveCurrent = tempoTirarNeve;
-					break;
-				case 4:
-					// Recolocar as neves
-					if (tempoVoltarNeveCurrent > 0) {
-						tempoVoltarNeveCurrent--;
-						return;
-					}
+				HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(), () -> {
 					for (Location l1 : blocosRemovidos) {
 						l1.getWorld().getBlockAt(l1).setType(Material.SNOW_BLOCK);
 					}
-					etapa = 2;
-					tempoVoltarNeveCurrent = tempoVoltarNeve;
-					tempoRodadaCurrent = tempoRodada;
-					break;
-				}
-			}
-		}
+					this.frogMethod();
+				}, tempoVoltarNeve * 20L);
+			}, tempoTirarNeve * 20L);
+		}, tempoRodada * 20L);
 	}
 
 	@Override
