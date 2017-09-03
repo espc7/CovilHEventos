@@ -77,7 +77,7 @@ public class HEventos extends JavaPlugin {
 	}
 	
 	/**
-	 * Metodo que ira carregar as configs do plugin.
+	 * Metodo que ira carregar as configs do plugin...
 	 */
 	private void loadConfigs(){
 		if (!new File(this.getDataFolder(), "config.yml").exists()) {
