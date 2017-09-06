@@ -62,12 +62,9 @@ public class BatataQuente extends EventoBaseAPI {
 
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo()) && !(isAberto()) && (playerComBatata != null)) {
+		if (playerComBatata != null) {
 			if (getParticipantes().size() == 1) {
-				Player player = null;
-				for (Player s : getParticipantes()) {
-					player = s;
-				}
+				Player player = getParticipantes().get(0);
 				PlayerWinEvent event = new PlayerWinEvent(player, this, false);
 				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 				stopEvent();

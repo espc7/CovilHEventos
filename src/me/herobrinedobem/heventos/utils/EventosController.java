@@ -10,6 +10,7 @@ import me.herobrinedobem.heventos.api.EventoType;
 import me.herobrinedobem.heventos.eventos.BatataQuente;
 import me.herobrinedobem.heventos.eventos.BowSpleef;
 import me.herobrinedobem.heventos.eventos.EventoNormal;
+import me.herobrinedobem.heventos.eventos.Fight;
 import me.herobrinedobem.heventos.eventos.Frog;
 import me.herobrinedobem.heventos.eventos.Killer;
 import me.herobrinedobem.heventos.eventos.MinaMortal;
@@ -33,6 +34,10 @@ public class EventosController {
 			break;
 		case FROG:
 			this.evento = new Frog(this.getConfigFile(name));
+			break;
+		case FIGHT:
+			this.evento = new Fight(this.getConfigFile(name));
+			break;
 		case BOW_SPLEEF:
 			this.evento = new BowSpleef(this.getConfigFile(name));
 			break;

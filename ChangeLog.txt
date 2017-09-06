@@ -1,6 +1,26 @@
 ChangeLog HEventos
 
-HEventos ChangeLog version=1.5.2
+HEventos ChangeLog version=1.6.0
+
+05/09/2017
+Corrido BUG de Comandos Liberados não funcionando
+Arrumado bug no SimpleClans que não voltava a opção de ff auto
+Comando "/evento entrar" agora se usa só "/evento"
+Comando /evento report adicionado para admins reportarem erros
+Implementação do LegendChat iniciada
+Alguns comentarios foram adicionado na config, para auxiliar nos eventos automaticos e vip
+Agora o scheduledEvent só funciona se o evento estiver fechado
+Evento Fight agora esta funcionando
+BUG que registrava listener @Override corrigido
+Novo comando /evento setloc NomeArquivo ?(saida/entrada/etc...)
+Comando de alterar localizações dos eventos alterados
+Implementação do Fight iniciada
+Opção para escolher a quantidade minima de players para cada evento
+Agora SimpleClans é opcional ter ele ou não
+Removido hook com SimpleClans antigo!
+
+03/09/2017
+API com Vault atualizada
 
 02/09/2017
 Novo recurso no Frog, agora ele escolhe todos blocos do mesmo tipo no evento, evento mais rapido

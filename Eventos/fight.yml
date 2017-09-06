@@ -1,32 +1,52 @@
 Config:
-  Nome: "Killer"
-  Evento_Type: "killer"
+  Nome: "Fight"
+  Evento_Type: "fight"
   Chamadas: 5
   Tempo_Entre_As_Chamadas: 10
   Minimo_Partipantes: 2
-  Tempo_Pegar_Itens: 60
   Tempo_Entre_Avisos: 120
-  Tempo_PVP_Off: 60
+  Tempo_Luta: 180
+  Tempo_Entre_Lutas: 10
   PVP: true
   VIP: false
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true
-  Inv_Vazio: false
+  Inv_Vazio: true
+
+Itens_Lutas:
+  Lutas_Normais:
+    Armadura:
+      Helmet: null
+      Armor: null
+      Legs: null
+      Boots: null
+    Inventario:
+      - 268 1
+  Ultima_Luta:
+    Armadura:
+      Helmet: 306 1
+      Armor: 307 1
+      Legs: 308 1
+      Boots: 309 1
+    Inventario:
+      - 267 1
 
 Premios:
   Itens:
     - 263 1
     - 384 15
   Comandos:
-    - "setmito $player$"
+    - "say $player$ toper"
   Money: 100000.0
 
 Localizacoes:
-  Saida: world;730.5575815847915;23.0;799.2918872306126;180.03613;31.98245
-  Camarote: VIP;-639;5;743;30.50;226.10
-  Entrada: eventos;-352.955614084821;4.0;-352.19972196396594;-0.15137777;28.949957
-  Aguardando: eventos;-386.53726043286224;4.0;-478.2949589440582;-359.40137;18.900019
+  Saida: world;730.4401266828007;23.0;799.5038991461042;179.54951;25.199923
+  Camarote: eventos;-350.7223553636283;15.0;-420.2395514142502;90.74893;44.549995
+  Entrada: eventos;-351.47376067293845;5.0;-436.7135774633887;359.9988;32.700005
+  Aguardando: eventos;-386.585871124227;4.0;-478.5405469073799;358.9489;19.80002
+  Pos_1: eventos;-351.47965239301203;5.0;-428.3542174948191;0.298727;33.14999
+  Pos_2: eventos;-351.43666270780295;5.0;-412.5683803356911;-179.5512;28.04998
 
 Mensagens:
   Aberto:
@@ -52,7 +72,6 @@ Mensagens:
     - "  "
     - "&9[$EventoName$] &fO evento &6$EventoName$ &ffoi finalizado!"
     - "&9[$EventoName$] &fO vencedor do evento foi: &6$player$"
-    - "&9[$EventoName$] &fEle recebeu &6100k &fe a tag &5[MitoDoPVP]"
     - "  "
   Sem_Vencedor:
     - "  "
@@ -68,21 +87,24 @@ Mensagens:
     - "  "
     - "&4[$EventoName$] &cEvento &6$EventoName$ &cfoi cancelado!"
     - "  "
-  IniciandoEm:
-    - "  "
-    - "&9[$EventoName$] &fEvento iniciado, &cPVP ON &fem $tempo$ segundos!"
-    - "  "
-  PVPON:
-    - "  "
-    - "&9[$EventoName$] &cPVP ON &fboa sorte aos participantes!"
-    - "  "
   Status:
     - " "
     - "&9[$EventoName$] &fEvento ocorrendo no momento!"
     - "&9[$EventoName$] &fPara assistir utilize &6/evento assistir"
-    - "&9[$EventoName$] &fJogadores vivos no evento: &6$jogadores$"
     - " "
-  Tempo_Pegar_Itens:
+  Iniciando_Em:
     - " "
-    - "&9[$EventoName$] &fVoce tem &660 &fsegundos para pegar os itens!"
+    - "&9[$EventoName$] &fProxima luta em &6$tempo$ &fsegundos"
+    - " "
+  Iniciar_Luta:
+    - " "
+    - "&9[$EventoName$] &fDuelo entre &b$lutador1$ &fe &b$lutador2$ &finiciou"
+    - " "
+  Luta_Sem_Vencedor:
+    - " "
+    - "&9[$EventoName$] &fO duelo não houve vencedores"
+    - " "
+  Luta_Vencedor:
+    - " "
+    - "&9[$EventoName$] &b$vencedor$ &fvenceu a luta"
     - " "

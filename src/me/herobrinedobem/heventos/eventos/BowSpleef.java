@@ -59,20 +59,18 @@ public class BowSpleef extends EventoBaseAPI {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo()) && (!isAberto())) {
-			if (tempoRegenera > 0) {
-				tempoRegenera--;
-			} else {
-				for (Block b : chao.getBlocks()) {
-					b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
-				}
-				tempoRegenera = getConfig().getInt("Config.Tempo_Chao_Regenera");
+		if (tempoRegenera > 0) {
+			tempoRegenera--;
+		} else {
+			for (Block b : chao.getBlocks()) {
+				b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
 			}
-			if (getParticipantes().size() == 1) {
-				PlayerWinEvent event = new PlayerWinEvent(getParticipantes().get(0), this, false);
-				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-				stopEvent();
-			}
+			tempoRegenera = getConfig().getInt("Config.Tempo_Chao_Regenera");
+		}
+		if (getParticipantes().size() == 1) {
+			PlayerWinEvent event = new PlayerWinEvent(getParticipantes().get(0), this, false);
+			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
+			stopEvent();
 		}
 	}
 

@@ -74,6 +74,10 @@ public class PaintballListener extends EventoBaseListener {
 		} else if (paintball.getTimeAzul().contains(e.getPlayer())) {
 			paintball.getTimeAzul().remove(e.getPlayer());
 		}
+		if (HEventos.getHEventos().getSc() != null) {
+			paintball.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
+		}
 	}
 	
 	@EventHandler

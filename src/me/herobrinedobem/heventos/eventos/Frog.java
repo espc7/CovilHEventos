@@ -75,9 +75,6 @@ public class Frog extends EventoBaseAPI {
 
 	@Override
 	public void scheduledMethod() {
-		if (isAberto()) {
-			return;
-		}
 		if (getParticipantes().size() == 0) {
 			sendMessageList("Mensagens.Sem_Vencedor");
 			stopEvent();

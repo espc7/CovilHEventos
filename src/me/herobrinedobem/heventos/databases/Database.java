@@ -42,10 +42,13 @@ public class Database {
 
 	private void selectDriver() {
 		try {
-			if (type == DatabaseType.MYSQL) {
+			switch (type) {
+			case MYSQL:
 				Class.forName("com.mysql.jdbc.Driver");
-			} else if (type == DatabaseType.SQLITE) {
+				break;
+			case SQLITE:
 				Class.forName("org.sqlite.JDBC");
+				break;
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -208,7 +211,7 @@ public class Database {
 	public void getTOPParticipations(final Player p) {
 		try {
 			selectDriver();
-			p.sendMessage(HEventos.getHEventos().getConfigUtil().getTopVencedores());
+			p.sendMessage(HEventos.getHEventos().getConfigUtil().getTopParticipacoes());
 			ResultSet rs = connection.createStatement()
 					.executeQuery("SELECT * FROM eventos ORDER BY participations DESC LIMIT 10");
 			int i = 0;

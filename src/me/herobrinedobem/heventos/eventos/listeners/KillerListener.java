@@ -2,13 +2,13 @@ package me.herobrinedobem.heventos.eventos.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseListener;
+import me.herobrinedobem.heventos.api.events.PlayerLoseEvent;
 import me.herobrinedobem.heventos.eventos.Killer;
 
 public class KillerListener extends EventoBaseListener {
@@ -32,8 +32,8 @@ public class KillerListener extends EventoBaseListener {
 		e.setCancelled(true);
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerQuitEvent(PlayerQuitEvent e) {
+	@EventHandler
+	public void onPlayerQuitEventKILLER(PlayerQuitEvent e) {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
 		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
@@ -57,4 +57,12 @@ public class KillerListener extends EventoBaseListener {
 		}
 	}
 
+	@EventHandler
+	public void onPlayerLoseEventKILLER(PlayerLoseEvent e) {
+		Killer killer = (Killer) HEventos.getHEventos().getEventosController().getEvento();
+		if (HEventos.getHEventos().getSc() != null) {
+			killer.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
+		}
+	}
 }

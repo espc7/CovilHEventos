@@ -4,6 +4,7 @@ public enum EventoType {
 
 	BATATA_QUENTE,
 	FROG,
+	FIGHT,
 	KILLER,
 	MINA_MORTAL,
 	SPLEEF,
@@ -19,6 +20,8 @@ public enum EventoType {
 				return EventoType.BATATA_QUENTE;
 			case "frog":
 				return EventoType.FROG;
+			case "fight":
+				return EventoType.FIGHT;
 			case "killer":
 				return EventoType.KILLER;
 			case "minamortal":

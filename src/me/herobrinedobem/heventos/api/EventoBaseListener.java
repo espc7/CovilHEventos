@@ -21,13 +21,13 @@ public class EventoBaseListener implements Listener {
 		// Players Participantes
 		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
 				.contains(e.getEntity().getPlayer())) {
+			PlayerLoseEvent event2 = new PlayerLoseEvent(e.getEntity().getPlayer(),
+					HEventos.getHEventos().getEventosController().getEvento());
+			HEventos.getHEventos().getServer().getPluginManager().callEvent(event2);
 			for (Player p : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
 				p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgMorreu().replace("$player$",
 						e.getEntity().getPlayer().getName()));
 			}
-			PlayerLoseEvent event2 = new PlayerLoseEvent(e.getEntity().getPlayer(),
-					HEventos.getHEventos().getEventosController().getEvento());
-			HEventos.getHEventos().getServer().getPluginManager().callEvent(event2);
 			return;
 		}
 
@@ -45,8 +45,7 @@ public class EventoBaseListener implements Listener {
 	public void onPlayerQuitEvent(PlayerQuitEvent e) {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
-		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer())) {
+		if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(e.getPlayer())) {
 			PlayerLeaveEvent event2 = new PlayerLeaveEvent(e.getPlayer(),
 					HEventos.getHEventos().getEventosController().getEvento(), false);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event2);
@@ -56,8 +55,7 @@ public class EventoBaseListener implements Listener {
 			}
 		}
 		// Players Camarote
-		if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-				.contains(e.getPlayer())) {
+		if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().contains(e.getPlayer())) {
 			PlayerLeaveEvent event = new PlayerLeaveEvent(e.getPlayer(),
 					HEventos.getHEventos().getEventosController().getEvento(), true);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
@@ -68,15 +66,14 @@ public class EventoBaseListener implements Listener {
 	public void onPlayerProccessCommandEvent(PlayerCommandPreprocessEvent e) {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null)
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer()))
+		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(e.getPlayer()))
 			return;
-		for (String s : HEventos.getHEventos().getEventosController().getEvento().getConfig()
-				.getStringList("Comandos_Liberados")) {
-			if (!e.getMessage().startsWith(s)) {
-				e.setCancelled(true);
+		for (String s : HEventos.getHEventos().getConfig().getStringList("Comandos_Liberados")) {
+			if (e.getMessage().matches("^" + s + ".*")) {
+				return;
 			}
 		}
-
+		e.getPlayer().sendMessage(HEventos.getHEventos().getConfigUtil().getMsgComandoBloqueado());
+		e.setCancelled(true);
 	}
 }

@@ -2,9 +2,7 @@ package me.herobrinedobem.heventos.eventos;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -23,13 +21,14 @@ import me.herobrinedobem.heventos.api.events.StopEvent;
 import me.herobrinedobem.heventos.api.events.TeamWinEvent;
 import me.herobrinedobem.heventos.eventos.listeners.PaintballListener;
 import me.herobrinedobem.heventos.utils.BukkitEventHelper;
+import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 
 public class Paintball extends EventoBaseAPI {
 
 	private PaintballListener listener;
 	private List<Player> timeAzul = new ArrayList<Player>();
 	private List<Player> timeVermelho = new ArrayList<Player>();
-	private Set<String> clans = new HashSet<String>();
+	private List<ClanPlayer> clans = new ArrayList<ClanPlayer>();
 
 	public Paintball(YamlConfiguration config) {
 		super(config);
@@ -52,8 +51,6 @@ public class Paintball extends EventoBaseAPI {
 			darKit(p);
 			Location Locvermelho = EventoUtils.getLocation(getConfig(), "Localizacoes.Pos_1");
 			Location Locazul = EventoUtils.getLocation(getConfig(), "Localizacoes.Pos_2");
-			Locazul.setY(Locazul.getY() + 1);
-			Locvermelho.setY(Locvermelho.getY() + 1);
 			if (timeAzul.contains(p)) {
 				p.teleport(Locazul);
 			} else if (timeVermelho.contains(p)) {
@@ -61,15 +58,8 @@ public class Paintball extends EventoBaseAPI {
 			}
 			if (HEventos.getHEventos().getSc() != null) {
 				if (HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p) != null) {
-					HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p)
-							.setFriendlyFire(true);
-					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
-				}
-			} else if (HEventos.getHEventos().getCore() != null) {
-				if (HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p) != null) {
-					HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p)
-							.setFriendlyFire(true);
-					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
+					HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).setFriendlyFire(true);
+					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p));
 				}
 			}
 			p.setHealth(20.0);
@@ -78,22 +68,20 @@ public class Paintball extends EventoBaseAPI {
 
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo() == true) && (isAberto() == false)) {
-			if (this.timeVermelho.isEmpty()) {
-				String time = "Azul";
-				TeamWinEvent event1 = new TeamWinEvent(time, this, getTimeAzul());
-				HEventos.getHEventos().getServer().getPluginManager().callEvent(event1);
-				getTimeAzul().clear();
-				getTimeVermelho().clear();
-				stopEvent();
-			} else if (this.timeAzul.isEmpty()) {
-				String time = "Vermelho";
-				TeamWinEvent event1 = new TeamWinEvent(time, this, getTimeVermelho());
-				HEventos.getHEventos().getServer().getPluginManager().callEvent(event1);
-				getTimeAzul().clear();
-				getTimeVermelho().clear();
-				stopEvent();
-			}
+		if (this.timeVermelho.isEmpty()) {
+			String time = "Azul";
+			TeamWinEvent event1 = new TeamWinEvent(time, this, getTimeAzul());
+			HEventos.getHEventos().getServer().getPluginManager().callEvent(event1);
+			getTimeAzul().clear();
+			getTimeVermelho().clear();
+			stopEvent();
+		} else if (this.timeAzul.isEmpty()) {
+			String time = "Vermelho";
+			TeamWinEvent event1 = new TeamWinEvent(time, this, getTimeVermelho());
+			HEventos.getHEventos().getServer().getPluginManager().callEvent(event1);
+			getTimeAzul().clear();
+			getTimeVermelho().clear();
+			stopEvent();
 		}
 	}
 
@@ -111,11 +99,9 @@ public class Paintball extends EventoBaseAPI {
 
 	@Override
 	public void resetEvent() {
-		for (String string : clans) {
-			if (HEventos.getHEventos().getSc() != null) {
-				HEventos.getHEventos().getSc().getClanManager().getClan(string).setFriendlyFire(false);
-			} else if (HEventos.getHEventos().getCore() != null) {
-				HEventos.getHEventos().getCore().getClanManager().getClan(string).setFriendlyFire(false);
+		if (HEventos.getHEventos().getSc() != null) {
+			for (ClanPlayer string : clans) {
+				string.setFriendlyFire(false);
 			}
 		}
 		clans.clear();
@@ -183,5 +169,9 @@ public class Paintball extends EventoBaseAPI {
 
 	public List<Player> getTimeVermelho() {
 		return this.timeVermelho;
+	}
+
+	public List<ClanPlayer> getClans() {
+		return clans;
 	}
 }

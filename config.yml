@@ -1,3 +1,12 @@
+#
+# COMO CONFIGURAR EVENTOS AUTOMATICOS
+# Dia - Hora:Minuto - NomeArquivo
+# Dia é opcional, se não tiver dia, ele vai acontecer todos dias
+# Hora:Minuto e NomeArquivo são obrigatórios
+# No NomeArquivo não é necessario .yml no fim
+# Evite marcar eventos para realizarem na mesma hora e minuto para evitar problemas
+# Para evento vip você cria uma cópia do arquivo do evento, e mude vip para true
+#
 Horarios:
   - "segunda-03:00-subida_mortal"
   - "terca-04:00-escalada"
@@ -43,7 +52,7 @@ Mensagens:
   Saiu: "&9[Evento] &fO jogador &6$player$ &fsaiu do evento!"
   Comando_Bloqueado: "&9[Evento] &fEsse comando e bloqueado no evento!"
   Nenhum_Evento: "&9[Evento] &fNao ha nenhum evento ocorrendo no momento!"
-  Evento_Fechado: "&9[Evento] &fO evento esta fechado, para ver digite /evento camarote"
+  Evento_Fechado: "&9[Evento] &fO evento esta fechado, para ver digite /evento assistir"
   Ja_Participa: "&9[Evento] &fVoce ja esta participando desse evento!"
   Entrou: "&9[Evento] &fO jogador &6$player$ &fentrou no evento!"
   Nao_Participa: "&9[Evento] &fVoce nao esta participando desse evento!"
@@ -58,21 +67,23 @@ Mensagens:
   Top_Participacoes: "&9[Eventos] TOP Participantes"
   Top_Participacoes_Posicao: "&9[&f$posicao$&9] - &f$player$ &9- &f$participacoes$ &9participacoes"
   Default:
-    - "&9[Eventos] Comandos"
-    - "&9/evento entrar &f- Entra em um evento"
+    - "&9[Eventos] Todos comandos e outros"
+    - "&9/evento &f- Entra em um evento"
     - "&9/evento assistir &f- Assisti ao evento"
     - "&9/evento sair &f- Sai do evento"
-    - "&9/evento top vencedores &f- Mostra quem mais venceu eventos"
-    - "&9/evento top participacoes &f- Mostra quem mais participou de eventos"
+    - "&9/evento top vencedores &f- Os que mais venceram"
+    - "&9/evento top participacoes &f- Os que mais participaram"
   DefaultAdmin:
     - "&4/evento iniciar <nome> &c- Inicia um evento"
     - "&4/evento cancelar &c- Cancela um evento"
-    - "&4/evento setentrada <evento> &c- Seta a entrada de um evento"
-    - "&4/evento setsaida <evento> &c- Seta a saida de um evento"
-    - "&4/evento setcamarote <evento> &c- Seta o camarote de um evento"
-    - "&4/evento setaguardando <evento> &c- Seta local de espera de um evento"
+    - "&4/evento setloc entrada <evento> &c- Seta a entrada"
+    - "&4/evento setloc saida <evento> &c- Seta a saida"
+    - "&4/evento setloc camarote <evento> &c- Seta o camarote"
+    - "&4/evento setloc aguardando <evento> &c- Seta local de espera"
+    - "&4/evento setloc [pos1/pos2] <evento> &c- (fight/paintball)"
     - "&4/evento multiplicador &c- Altera o multiplicador de money"
     - "&4/evento multiplicador reset &c- Reseta o multiplicador"
     - "&4/evento reload &c- Recarrega a config do plugin"
-    - "&4/evento tool <evento> &c- Pega uma ferramenta para setar locs"
+    - "&4/evento tool <evento> &c- Ferramenta para setar loc de blocos"
     - "&4/evento lista &c- Mostra a lista de eventos"
+    - "&4/evento report &c- Mostra o link para reportar erros"

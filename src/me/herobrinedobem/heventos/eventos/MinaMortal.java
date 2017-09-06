@@ -57,25 +57,23 @@ public class MinaMortal extends EventoBaseAPI {
 
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo() == true) && (isAberto() == false)) {
-			if (getParticipantes().size() >= 1) {
-				if (tempoDeEventoCurrent > 0) {
-					tempoDeEventoCurrent--;
-					if (tempoMensagensCurrent == 0) {
-						for (String s : getConfig().getStringList("Mensagens.Status")) {
-							HEventos.getHEventos().getServer().broadcastMessage(
-									s.replace("&", "§").replace("$tempo$", tempoDeEventoCurrent + "").replace("$EventoName$", getNome()));
-						}
-						tempoMensagensCurrent = tempoMensagens;
-					} else {
-						tempoMensagensCurrent--;
+		if (getParticipantes().size() >= 1) {
+			if (tempoDeEventoCurrent > 0) {
+				tempoDeEventoCurrent--;
+				if (tempoMensagensCurrent == 0) {
+					for (String s : getConfig().getStringList("Mensagens.Status")) {
+						HEventos.getHEventos().getServer().broadcastMessage(s.replace("&", "§")
+								.replace("$tempo$", tempoDeEventoCurrent + "").replace("$EventoName$", getNome()));
 					}
+					tempoMensagensCurrent = tempoMensagens;
 				} else {
-					stopEvent();
+					tempoMensagensCurrent--;
 				}
 			} else {
 				stopEvent();
 			}
+		} else {
+			stopEvent();
 		}
 	}
 
@@ -95,7 +93,7 @@ public class MinaMortal extends EventoBaseAPI {
 				EventoCancellType.FINISHED);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 	}
-	
+
 	@Override
 	public void resetEvent() {
 		super.resetEvent();

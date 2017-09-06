@@ -61,40 +61,38 @@ public class Spleef extends EventoBaseAPI {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void scheduledMethod() {
-		if (isOcorrendo() && !isAberto()) {
-			if (tempoComecarCurrent == 0 && !podeQuebrar) {
-				for (Player p : getParticipantes()) {
-					for (String s1 : getConfig().getStringList("Mensagens.Pode_Quebrar")) {
-						p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
-								.replace("$EventoName$", getNome()));
-					}
-				}
-				podeQuebrar = true;
-			} else if (!podeQuebrar) {
-				tempoComecarCurrent--;
-			}
-			if (regenerarChao) {
-				if (tempoChaoRegeneraCurrent == 0) {
-					for (Block b : cubo.getBlocks()) {
-						b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
-					}
-					tempoChaoRegeneraCurrent = tempoChaoRegenera;
-				} else {
-					tempoChaoRegeneraCurrent--;
+		if (tempoComecarCurrent == 0 && !podeQuebrar) {
+			for (Player p : getParticipantes()) {
+				for (String s1 : getConfig().getStringList("Mensagens.Pode_Quebrar")) {
+					p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoComecar))
+							.replace("$EventoName$", getNome()));
 				}
 			}
-			if (getParticipantes().size() == 1) {
-				Player player = null;
-				for (Player p : getParticipantes()) {
-					player = p;
-				}
-				PlayerWinEvent event = new PlayerWinEvent(player, this, false);
-				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
+			podeQuebrar = true;
+		} else if (!podeQuebrar) {
+			tempoComecarCurrent--;
+		}
+		if (regenerarChao) {
+			if (tempoChaoRegeneraCurrent == 0) {
 				for (Block b : cubo.getBlocks()) {
-					b.setType(Material.getMaterial(7));
+					b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
 				}
-				stopEvent();
+				tempoChaoRegeneraCurrent = tempoChaoRegenera;
+			} else {
+				tempoChaoRegeneraCurrent--;
 			}
+		}
+		if (getParticipantes().size() == 1) {
+			Player player = null;
+			for (Player p : getParticipantes()) {
+				player = p;
+			}
+			PlayerWinEvent event = new PlayerWinEvent(player, this, false);
+			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
+			for (Block b : cubo.getBlocks()) {
+				b.setType(Material.getMaterial(7));
+			}
+			stopEvent();
 		}
 	}
 

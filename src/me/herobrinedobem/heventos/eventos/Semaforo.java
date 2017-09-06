@@ -43,33 +43,31 @@ public class Semaforo extends EventoBaseAPI {
 
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo() == true) && (isAberto() == false)) {
-			if (tempoTrocaCurrent == 0) {
-				podeAndar = true;
-				for (Player p : getParticipantes()) {
-					for (String msg : getConfig().getStringList("Mensagens.Verde")) {
-						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-					}
+		if (tempoTrocaCurrent == 0) {
+			podeAndar = true;
+			for (Player p : getParticipantes()) {
+				for (String msg : getConfig().getStringList("Mensagens.Verde")) {
+					p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
 				}
-				tempoTrocaCurrent = tempoTroca;
-			} else if (tempoTrocaCurrent == tempoAmarelo) {
-				for (Player p : getParticipantes()) {
-					for (String msg : getConfig().getStringList("Mensagens.Amarelo")) {
-						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-					}
-				}
-				tempoTrocaCurrent--;
-			} else if (tempoTrocaCurrent == tempoVermelho) {
-				for (Player p : getParticipantes()) {
-					for (String msg : getConfig().getStringList("Mensagens.Vermelho")) {
-						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-					}
-				}
-				podeAndar = false;
-				tempoTrocaCurrent--;
-			} else {
-				tempoTrocaCurrent--;
 			}
+			tempoTrocaCurrent = tempoTroca;
+		} else if (tempoTrocaCurrent == tempoAmarelo) {
+			for (Player p : getParticipantes()) {
+				for (String msg : getConfig().getStringList("Mensagens.Amarelo")) {
+					p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+				}
+			}
+			tempoTrocaCurrent--;
+		} else if (tempoTrocaCurrent == tempoVermelho) {
+			for (Player p : getParticipantes()) {
+				for (String msg : getConfig().getStringList("Mensagens.Vermelho")) {
+					p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+				}
+			}
+			podeAndar = false;
+			tempoTrocaCurrent--;
+		} else {
+			tempoTrocaCurrent--;
 		}
 	}
 

@@ -2,8 +2,12 @@ package me.herobrinedobem.heventos;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -24,6 +28,7 @@ import me.herobrinedobem.heventos.api.events.StopEvent;
 import me.herobrinedobem.heventos.eventos.BatataQuente;
 import me.herobrinedobem.heventos.eventos.BowSpleef;
 import me.herobrinedobem.heventos.eventos.EventoNormal;
+import me.herobrinedobem.heventos.eventos.Fight;
 import me.herobrinedobem.heventos.eventos.Frog;
 import me.herobrinedobem.heventos.eventos.Killer;
 import me.herobrinedobem.heventos.eventos.MinaMortal;
@@ -46,42 +51,42 @@ public class Comandos implements CommandExecutor {
 		}
 		Player p = (Player) sender;
 		if (cmd.getName().equalsIgnoreCase("evento")) {
-			if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("entrar")) {
-					if (HEventos.getHEventos().getEventosController().getEvento() == null) {
-						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNenhumEvento());
+			if (args.length == 0) {
+				if (HEventos.getHEventos().getEventosController().getEvento() == null) {
+					p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNenhumEvento());
+					return true;
+				}
+				if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p)) {
+					p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaParticipa());
+					return true;
+				}
+				if (!HEventos.getHEventos().getEventosController().getEvento().isAberto()) {
+					p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgEventoFechado());
+					return true;
+				}
+				if (HEventos.getHEventos().getEventosController().getEvento().isVip()) {
+					if (!(p.hasPermission("heventos.vip") || p.hasPermission("heventos.admin"))) {
+						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgEventoVip());
 						return true;
 					}
-					if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p)) {
-						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaParticipa());
+				}
+				if (HEventos.getHEventos().getEventosController().getEvento().isInventoryEmpty()) {
+					if (EventoUtils.isInventoryEmpty(p)) {
+						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgInventarioVazio());
 						return true;
 					}
-					if (!HEventos.getHEventos().getEventosController().getEvento().isAberto()) {
-						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgEventoFechado());
-						return true;
-					}
-					if (HEventos.getHEventos().getEventosController().getEvento().isVip()) {
-						if (!(p.hasPermission("heventos.vip") || p.hasPermission("heventos.admin"))) {
-							p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgEventoVip());
-							return true;
-						}
-					}
-					if (HEventos.getHEventos().getEventosController().getEvento().isInventoryEmpty()) {
-						if (EventoUtils.isInventoryEmpty(p)) {
-							p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgInventarioVazio());
-							return true;
-						}
-					}
-					for (Player pa : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
-						pa.sendMessage(
-								HEventos.getHEventos().getConfigUtil().getMsgEntrou().replace("$player$", p.getName()));
-					}
-					HEventos.getHEventos().getEventosController().getEvento().getParticipantes().add(p);
-					p.teleport(HEventos.getHEventos().getEventosController().getEvento().getAguarde());
-					PlayerEnterEvent event = new PlayerEnterEvent(p,
-							HEventos.getHEventos().getEventosController().getEvento(), false);
-					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-				} else if (args[0].equalsIgnoreCase("sair")) {
+				}
+				for (Player pa : HEventos.getHEventos().getEventosController().getEvento().getParticipantes()) {
+					pa.sendMessage(
+							HEventos.getHEventos().getConfigUtil().getMsgEntrou().replace("$player$", p.getName()));
+				}
+				HEventos.getHEventos().getEventosController().getEvento().getParticipantes().add(p);
+				p.teleport(HEventos.getHEventos().getEventosController().getEvento().getAguarde());
+				PlayerEnterEvent event = new PlayerEnterEvent(p,
+						HEventos.getHEventos().getEventosController().getEvento(), false);
+				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
+			} else if (args.length == 1) {
+				if (args[0].equalsIgnoreCase("sair")) {
 					if (HEventos.getHEventos().getEventosController().getEvento() == null) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNenhumEvento());
 						return true;
@@ -96,8 +101,7 @@ public class Comandos implements CommandExecutor {
 						}
 						return true;
 					}
-					if (!HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-							.contains(p)) {
+					if (!HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().contains(p)) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNaoParticipa());
 						return true;
 					}
@@ -128,8 +132,7 @@ public class Comandos implements CommandExecutor {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaParticipa());
 						return true;
 					}
-					if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers()
-							.contains(p)) {
+					if (HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().contains(p)) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgJaEstaCamarote());
 						return true;
 					}
@@ -160,13 +163,24 @@ public class Comandos implements CommandExecutor {
 					HEventos.getHEventos().reloadConfig();
 					HEventos.getHEventos().getConfigUtil().setupConfigUtils();
 					p.sendMessage("§4[Evento] §cConfiguracao recarregada com sucesso!");
+				} else if (args[0].equalsIgnoreCase("report")) {
+					if (!p.hasPermission("heventos.admin"))
+						return true;
+					p.sendMessage("  §c§l* - Reporte qualquer bug que aparecer xD * -");
+					p.sendMessage("§b§nhttps://github.com/DeathrushW/HEventos-Reloaded/issues");
+					p.sendMessage(" ");
 				} else if (args[0].equalsIgnoreCase("lista")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
 					StringBuilder builder = new StringBuilder();
-					for (File file : new File(this.instance.getDataFolder().getAbsolutePath() + "/Eventos/")
-							.listFiles()) {
-						builder.append("§6" + file.getName().replace(".yml", "") + " §0- ");
+					try {
+						for (Path path : Files.newDirectoryStream(
+								Paths.get(this.instance.getDataFolder().getAbsolutePath() + "/Eventos/"))) {
+							builder.append(ChatColor.DARK_BLUE + "\t- " + path.getFileName().toString().substring(0,
+									(path.getFileName().toString().length() - 4)) + "\n");
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 					p.sendMessage("§4[Evento] §cLista de eventos:");
 					p.sendMessage(builder.toString());
@@ -216,78 +230,11 @@ public class Comandos implements CommandExecutor {
 					} else {
 						MsgDefault(p);
 					}
-				} else if (args[0].equalsIgnoreCase("setentrada")) {
-					if (!p.hasPermission("heventos.admin"))
-						return true;
-					if (!HEventos.getHEventos().getEventosController().hasEvento(args[1])) {
-						p.sendMessage("§4[Evento] §cEvento nao encontrado na pasta.");
-						return true;
-					}
-					EventoBaseAPI evento = HEventos.getHEventos().getEventosController().loadEvento(args[1]);
-					evento.getConfig().set("Localizacoes.Entrada", this.getLocationForConfig(p.getLocation()));
-					File file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
-							+ File.separator + args[1] + ".yml");
-					try {
-						evento.getConfig().save(file);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					p.sendMessage("§4[Evento] §cEntrada do evento " + args[1] + " setada com sucesso!");
-				} else if (args[0].equalsIgnoreCase("setsaida")) {
-					if (!p.hasPermission("heventos.admin"))
-						return true;
-					if (!HEventos.getHEventos().getEventosController().hasEvento(args[1])) {
-						p.sendMessage("§4[Evento] §cEvento nao encontrado na pasta.");
-						return true;
-					}
-					EventoBaseAPI evento = HEventos.getHEventos().getEventosController().loadEvento(args[1]);
-					evento.getConfig().set("Localizacoes.Saida", this.getLocationForConfig(p.getLocation()));
-					File file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
-							+ File.separator + args[1] + ".yml");
-					try {
-						evento.getConfig().save(file);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					p.sendMessage("§4[Evento] §cSaida do evento " + args[1] + " setada com sucesso!");
-				} else if (args[0].equalsIgnoreCase("setcamarote")) {
-					if (!p.hasPermission("heventos.admin"))
-						return true;
-					if (!HEventos.getHEventos().getEventosController().hasEvento(args[1])) {
-						p.sendMessage("§4[Evento] §cEvento nao encontrado na pasta.");
-						return true;
-					}
-					EventoBaseAPI evento = HEventos.getHEventos().getEventosController().loadEvento(args[1]);
-					evento.getConfig().set("Localizacoes.Camarote", this.getLocationForConfig(p.getLocation()));
-					File file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
-							+ File.separator + args[1] + ".yml");
-					try {
-						evento.getConfig().save(file);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					p.sendMessage("§4[Evento] §cCamarote do evento " + args[1] + " setado com sucesso!");
-				} else if (args[0].equalsIgnoreCase("setaguardando")) {
-					if (!p.hasPermission("heventos.admin"))
-						return true;
-					if (HEventos.getHEventos().getEventosController().hasEvento(args[1])) {
-						EventoBaseAPI evento = HEventos.getHEventos().getEventosController().loadEvento(args[1]);
-						evento.getConfig().set("Localizacoes.Aguardando", this.getLocationForConfig(p.getLocation()));
-						File file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
-								+ File.separator + args[1] + ".yml");
-						try {
-							evento.getConfig().save(file);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						p.sendMessage("§4[Evento] §cLocal de espera do evento " + args[1] + " setado com sucesso!");
-					} else {
-						p.sendMessage("§4[Evento] §cEvento nao encontrado na pasta.");
-					}
 				} else if (args[0].equalsIgnoreCase("tool")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
-					if (args[1].equalsIgnoreCase("spleef")) {
+					switch (args[1]) {
+					case "spleef": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName("§4§lEvento Spleef");
@@ -296,7 +243,9 @@ public class Comandos implements CommandExecutor {
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
-					} else if (args[1].equalsIgnoreCase("minamortal")) {
+						break;
+					}
+					case "minamortal": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName("§4§lEvento MinaMortal");
@@ -305,7 +254,9 @@ public class Comandos implements CommandExecutor {
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
-					} else if (args[1].equalsIgnoreCase("bowspleef")) {
+						break;
+					}
+					case "bowspleef": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName("§4§lEvento BowSpleef");
@@ -314,16 +265,9 @@ public class Comandos implements CommandExecutor {
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
-					} else if (args[1].equalsIgnoreCase("paintball")) {
-						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
-						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName("§4§lEvento Paintball");
-						meta.setLore(Arrays.asList("§6* Clique com o botao direito para marcar a posicao 1 do chao",
-								"§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
-						item.setItemMeta(meta);
-						p.getInventory().addItem(item);
-						p.updateInventory();
-					} else if (args[1].equalsIgnoreCase("frog")) {
+						break;
+					}
+					case "frog": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
 						meta.setDisplayName("§4§lEvento Frog");
@@ -332,8 +276,11 @@ public class Comandos implements CommandExecutor {
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
-					} else {
-						p.sendMessage("§4[Evento] §cUtilize /evento tool <spleef/minamortal/bowspleef/paintball/frog>");
+						break;
+					}
+					default:
+						p.sendMessage("§4[Evento] §cUtilize /evento tool <spleef/minamortal/bowspleef/frog>");
+						break;
 					}
 				} else {
 					MsgDefault(p);
@@ -413,6 +360,12 @@ public class Comandos implements CommandExecutor {
 						HEventos.getHEventos().getEventosController().getEvento().setVip(Boolean.parseBoolean(args[2]));
 						HEventos.getHEventos().getEventosController().getEvento().run();
 						break;
+					case FIGHT:
+						Fight fight = new Fight(HEventos.getHEventos().getEventosController().getConfigFile(args[1]));
+						HEventos.getHEventos().getEventosController().setEvento(fight);
+						HEventos.getHEventos().getEventosController().getEvento().setVip(Boolean.parseBoolean(args[2]));
+						HEventos.getHEventos().getEventosController().getEvento().run();
+						break;
 					case NORMAL:
 						EventoNormal evento = new EventoNormal(
 								HEventos.getHEventos().getEventosController().getConfigFile(args[1]));
@@ -431,6 +384,115 @@ public class Comandos implements CommandExecutor {
 					StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(), false);
 					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 					p.sendMessage("§4[Evento] §cEvento iniciado com sucesso!");
+				} else if (args[0].equalsIgnoreCase("setloc")) {
+					if (!p.hasPermission("heventos.admin"))
+						return true;
+					if (!HEventos.getHEventos().getEventosController().hasEvento(args[2])) {
+						p.sendMessage("§4[Evento] §cEvento nao encontrado na pasta.");
+						return true;
+					}
+					EventoBaseAPI evento = HEventos.getHEventos().getEventosController().loadEvento(args[2]);
+					File file;
+					if (args[1].equalsIgnoreCase("saida") || args[1].equalsIgnoreCase("entrada")
+							|| args[1].equalsIgnoreCase("aguardando") || args[1].equalsIgnoreCase("camarote")) {
+						switch (args[1]) {
+						case "saida": {
+							evento.getConfig().set("Localizacoes.Saida", this.getLocationForConfig(p.getLocation()));
+							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
+									+ File.separator + args[2] + ".yml");
+							try {
+								evento.getConfig().save(file);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							p.sendMessage("§4[Evento] §cSaida do evento " + args[2] + " setada!");
+							break;
+						}
+						case "entrada": {
+							evento.getConfig().set("Localizacoes.Entrada", this.getLocationForConfig(p.getLocation()));
+							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
+									+ File.separator + args[2] + ".yml");
+							try {
+								evento.getConfig().save(file);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							p.sendMessage("§4[Evento] §cEntrada do evento " + args[2] + " setado!");
+							break;
+						}
+						case "aguardando": {
+							evento.getConfig().set("Localizacoes.Aguardando",
+									this.getLocationForConfig(p.getLocation()));
+							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
+									+ File.separator + args[2] + ".yml");
+							try {
+								evento.getConfig().save(file);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							p.sendMessage("§4[Evento] §cAguardando do evento " + args[2] + " setado!");
+							break;
+						}
+						case "camarote": {
+							evento.getConfig().set("Localizacoes.Camarote", this.getLocationForConfig(p.getLocation()));
+							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
+									+ File.separator + args[2] + ".yml");
+							try {
+								evento.getConfig().save(file);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							p.sendMessage("§4[Evento] §cCamarote do evento " + args[2] + " setado!");
+							break;
+						}
+						}
+					} else if (args[1].equalsIgnoreCase("pos1") || args[1].equalsIgnoreCase("pos2")) {
+						switch (evento.getEventoType()) {
+						case PAINTBALL:
+							if (args[1].equalsIgnoreCase("pos1")) {
+								evento.getConfig().set("Localizacoes.Pos_1",
+										this.getLocationForConfig(p.getLocation()));
+								p.sendMessage("§4[Evento] §cLocalizacao 1 (Vermelho) do paintball setada!");
+							} else if (args[1].equalsIgnoreCase("pos2")) {
+								evento.getConfig().set("Localizacoes.Pos_2",
+										this.getLocationForConfig(p.getLocation()));
+								p.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 (Azul) do paintball setada!");
+							}
+							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
+									+ File.separator + args[2] + ".yml");
+							try {
+								evento.getConfig().save(file);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							break;
+						case FIGHT:
+							if (args[1].equalsIgnoreCase("pos1")) {
+								evento.getConfig().set("Localizacoes.Pos_1",
+										this.getLocationForConfig(p.getLocation()));
+								p.sendMessage("§4[Evento] §cLocalizacao 1 do fight setada!");
+							} else if (args[1].equalsIgnoreCase("pos2")) {
+								evento.getConfig().set("Localizacoes.Pos_2",
+										this.getLocationForConfig(p.getLocation()));
+								p.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do fight setada!");
+							}
+							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
+									+ File.separator + args[2] + ".yml");
+							try {
+								evento.getConfig().save(file);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							break;
+						default: {
+							p.sendMessage(
+									"§4[Evento] §cLocalizações disponiveis apenas para os evento(fight/paintball).");
+							break;
+						}
+						}
+					} else {
+						MsgDefault(p);
+					}
 				} else {
 					MsgDefault(p);
 				}

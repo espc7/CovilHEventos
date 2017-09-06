@@ -33,7 +33,6 @@ public class AutoStartEvents {
 							StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(),
 									true);
 							HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-
 						}
 					} else if (split1.length == 3) {
 						if ((day == getDia(split1[0])) && (hour == getHora(split1[1].split(":")[0]))

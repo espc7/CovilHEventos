@@ -3,6 +3,7 @@ Config:
   Evento_Type: "spleef"
   Chamadas: 5
   Tempo_Entre_As_Chamadas: 10
+  Minimo_Partipantes: 2
   Regenerar_Chao: true
   Tempo_Chao_Regenera: 60
   Tempo_Comecar: 15
@@ -37,7 +38,7 @@ Mensagens:
   Aberto:
     - "  "
     - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
-    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fPara participar digite &6/evento"
     - "&9[$EventoName$] &fEsse evento e pvp &a[OFF]"
     - "&9[$EventoName$] &fRisco de morte &a[OFF]"
     - "  "
@@ -66,6 +67,11 @@ Mensagens:
     - "  "
     - "&4[$EventoName$] &cO evento &6$EventoName$ &cfoi finalizado!"
     - "&4[$EventoName$] &cNao houve vencedores!"
+    - "  "
+  Minimo_Players:
+    - "  "
+    - "&9[$EventoName$] &cEvento finalizado."
+    - "&9[$EventoName$] &cNumero de participantes menor do que $minimo$"
     - "  "
   IniciandoEm:
     - "&9[$EventoName$] &fEvento inicia em $tempo$ segundos!"

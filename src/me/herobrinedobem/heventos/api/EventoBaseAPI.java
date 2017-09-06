@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 
 import me.herobrinedobem.heventos.HEventos;
 
@@ -17,7 +18,8 @@ public class EventoBaseAPI implements EventoBaseImplements {
 	private List<Player> participantes = new ArrayList<Player>();
 	private boolean ocorrendo, aberto, parte1, vip, assistirAtivado, pvp, contarVitoria, contarParticipacao,
 			inventoryEmpty;
-	private int chamadas, tempo, id2, chamadascurrent, id;
+	private int chamadas, tempo, chamadascurrent;
+	BukkitTask id, id2;
 	private String nome;
 	private Location saida, entrada, camarote, aguarde;
 	private List<Player> camarotePlayers = new ArrayList<Player>();
@@ -31,7 +33,7 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	public void run() {
 		BukkitScheduler scheduler = HEventos.getHEventos().getServer().getScheduler();
-		this.id = scheduler.scheduleSyncRepeatingTask(HEventos.getHEventos(), new Runnable() {
+		this.id = scheduler.runTaskTimer(HEventos.getHEventos(), new Runnable() {
 			@Override
 			public void run() {
 				if (!EventoBaseAPI.this.parte1) {
@@ -40,10 +42,12 @@ public class EventoBaseAPI implements EventoBaseImplements {
 			}
 		}, 0, this.tempo * 20L);
 
-		this.id2 = scheduler.scheduleSyncRepeatingTask(HEventos.getHEventos(), new Runnable() {
+		id2 = scheduler.runTaskTimer(HEventos.getHEventos(), new Runnable() {
 			@Override
 			public void run() {
-				EventoBaseAPI.this.scheduledMethod();
+				if (!EventoBaseAPI.this.aberto && EventoBaseAPI.this.ocorrendo) {
+					EventoBaseAPI.this.scheduledMethod();
+				}
 			}
 		}, 0, 20L);
 	}
@@ -60,7 +64,8 @@ public class EventoBaseAPI implements EventoBaseImplements {
 				EventoBaseAPI.this.sendMessageList("Mensagens.Aberto");
 			}
 		} else if (EventoBaseAPI.this.chamadascurrent == 0) {
-			if (EventoBaseAPI.this.participantes.size() > 1) {
+			if (EventoBaseAPI.this.participantes.size() >= EventoBaseAPI.this.config
+					.getInt("Config.Minimo_Partipantes")) {
 				if (EventoBaseAPI.this.isContarParticipacao()) {
 					for (Player p : EventoBaseAPI.this.participantes) {
 						HEventos.getHEventos().getDatabaseManager().addParticipationPoint(p.getName(), 1);
@@ -75,8 +80,8 @@ public class EventoBaseAPI implements EventoBaseImplements {
 				}
 			} else {
 				EventoBaseAPI.this.stopEvent();
-				EventoBaseAPI.this.sendMessageList("Mensagens.Cancelado");
-				HEventos.getHEventos().getServer().getScheduler().cancelTask(EventoBaseAPI.this.id);
+				EventoBaseAPI.this.sendMessageList("Mensagens.Minimo_Players");
+				EventoBaseAPI.this.id.cancel();
 			}
 		}
 	}
@@ -90,8 +95,8 @@ public class EventoBaseAPI implements EventoBaseImplements {
 	public void resetEvent() {
 		resetAll();
 		HEventos.getHEventos().getEventosController().setEvento(null);
-		HEventos.getHEventos().getServer().getScheduler().cancelTask(this.id);
-		HEventos.getHEventos().getServer().getScheduler().cancelTask(this.id2);
+		this.id.cancel();
+		this.id2.cancel();
 	}
 
 	@Override
@@ -121,10 +126,12 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	public void sendMessageList(String list) {
 		for (String s : this.config.getStringList(list)) {
-			HEventos.getHEventos().getServer().broadcastMessage(s.replace("&", "§").replace("$EventoName$", getNome()));
+			HEventos.getHEventos().getServer()
+					.broadcastMessage(s.replace("&", "§").replace("$EventoName$", getNome()).replace("$minimo$",
+							String.valueOf(EventoBaseAPI.this.config.getInt("Config.Minimo_Partipantes"))));
 		}
 	}
-	
+
 	public void resetAll() {
 		this.nome = EventoBaseAPI.this.config.getString("Config.Nome");
 		this.chamadas = EventoBaseAPI.this.config.getInt("Config.Chamadas");
@@ -145,7 +152,7 @@ public class EventoBaseAPI implements EventoBaseImplements {
 		this.chamadascurrent = this.chamadas;
 	}
 
-	public int getId() {
+	public BukkitTask getId() {
 		return this.id;
 	}
 
@@ -231,17 +238,6 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	public void setTempo(int tempo) {
 		this.tempo = tempo;
-	}
-
-	public void setId(int id) {
-	}
-
-	public int getId2() {
-		return this.id2;
-	}
-
-	public void setId2(int id2) {
-		this.id2 = id2;
 	}
 
 	public int getChamadascurrent() {

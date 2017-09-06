@@ -22,7 +22,7 @@ import me.herobrinedobem.heventos.api.events.TeamWinEvent;
 import me.herobrinedobem.heventos.utils.ItemStackFormat;
 
 public class MainListeners implements Listener {
-
+	
 	@EventHandler
 	public void onStopEvent(StopEvent e) {
 		for (Player p : e.getEvento().getParticipantes()) {
@@ -228,40 +228,6 @@ public class MainListeners implements Listener {
 				e.setCancelled(true);
 			}
 
-		} else if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Paintball")) {
-			if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-				File fileEvento = new File(
-						HEventos.getHEventos().getDataFolder().getAbsolutePath() + "/Eventos/paintball.yml");
-				YamlConfiguration configEvento = YamlConfiguration.loadConfiguration(fileEvento);
-				configEvento.set("Localizacoes.Pos_1",
-						e.getClickedBlock().getWorld().getName() + ";" + (int) e.getClickedBlock().getLocation().getX()
-								+ ";" + (int) e.getClickedBlock().getLocation().getY() + ";"
-								+ (int) e.getClickedBlock().getLocation().getZ());
-				try {
-					configEvento.save(new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
-							+ File.separator + "paintball.yml"));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 (Vermelho) do paintball setada!");
-				e.setCancelled(true);
-			} else if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-				File fileEvento = new File(
-						HEventos.getHEventos().getDataFolder().getAbsolutePath() + "/Eventos/paintball.yml");
-				YamlConfiguration configEvento = YamlConfiguration.loadConfiguration(fileEvento);
-				configEvento.set("Localizacoes.Pos_2",
-						e.getClickedBlock().getWorld().getName() + ";" + (int) e.getClickedBlock().getLocation().getX()
-								+ ";" + (int) e.getClickedBlock().getLocation().getY() + ";"
-								+ (int) e.getClickedBlock().getLocation().getZ());
-				try {
-					configEvento.save(new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
-							+ File.separator + "paintball.yml"));
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 (Azul) do paintball setada!");
-				e.setCancelled(true);
-			}
 		} else if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Frog")) {
 			if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				File fileEvento = new File(

@@ -3,6 +3,7 @@ Config:
   Evento_Type: "minamortal"
   Chamadas: 5
   Tempo_Entre_As_Chamadas: 10
+  Minimo_Partipantes: 2
   Evento_Tempo_Minutos: 10
   Mensagens_Tempo_Minutos: 1
   PVP: true
@@ -25,14 +26,14 @@ Mensagens:
   Aberto:
     - "  "
     - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
-    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fPara participar digite &6/evento"
     - "&9[$EventoName$] &fEsse evento e pvp &c[ON]"
     - "&9[$EventoName$] &fRisco de morte &c[ON]"
     - "  "
   Aberto_VIP:
     - "  "
     - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
-    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento"
     - "&9[$EventoName$ VIP] &fEsse evento e pvp &c[ON]"
     - "&9[$EventoName$ VIP] &fRisco de morte &c[ON]"
     - "  "
@@ -48,6 +49,11 @@ Mensagens:
   Cancelado:
     - "  "
     - "&4[$EventoName$] &cEvento &6$EventoName$ &cfoi cancelado!"
+    - "  "
+  Minimo_Players:
+    - "  "
+    - "&9[$EventoName$] &cEvento finalizado."
+    - "&9[$EventoName$] &cNumero de participantes menor do que $minimo$"
     - "  "
   Status:
     - " "

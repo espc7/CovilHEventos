@@ -3,6 +3,7 @@ Config:
   Evento_Type: "paintball"
   Chamadas: 5
   Tempo_Entre_As_Chamadas: 10
+  Minimo_Partipantes: 2
   PVP: false
   VIP: false
   Assistir_Ativado: true
@@ -24,21 +25,21 @@ Localizacoes:
   Camarote: eventos;-527.0270610459977;31.0;-333.6336153755547;2.5008183;55.175438
   Entrada: eventos;-351.75283365118713;4.0;-359.1413319479384;-359.39166;14.267072
   Aguardando: eventos;-386.4793771317551;4.0;-478.25130773317403;-0.021006618;20.137926
-  Pos_1: eventos;-523;4;-274
-  Pos_2: eventos;-531;4;-358
+  Pos_1: eventos;-522.413661408901;5.0;-272.7359932564174;-181.5014;41.399994
+  Pos_2: eventos;-530.3856528438529;5.0;-358.14495288038586;-0.45129395;23.400003
 
 Mensagens:
   Aberto:
     - "  "
     - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
-    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fPara participar digite &6/evento"
     - "&9[$EventoName$] &fEsse evento e pvp &a[OFF]"
     - "&9[$EventoName$] &fRisco de morte &a[OFF]"
     - "  "
   Aberto_VIP:
     - "  "
     - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
-    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento"
     - "&9[$EventoName$ VIP] &fEsse evento e pvp &a[OFF]"
     - "&9[$EventoName$ VIP] &fRisco de morte &a[OFF]"
     - "  "
@@ -57,6 +58,11 @@ Mensagens:
     - "  "
     - "&4[$EventoName$] &cO evento &6$EventoName$ &cfoi finalizado!"
     - "&4[$EventoName$] &cNao houve vencedores!"
+    - "  "
+  Minimo_Players:
+    - "  "
+    - "&9[$EventoName$] &cEvento finalizado."
+    - "&9[$EventoName$] &cNumero de participantes menor do que $minimo$"
     - "  "
   Cancelado:
     - "  "

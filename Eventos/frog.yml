@@ -3,6 +3,7 @@ Config:
   Evento_Type: "frog"
   Chamadas: 5
   Tempo_Entre_As_Chamadas: 10
+  Minimo_Partipantes: 2
   Tempo_Rodada: 18
   Tempo_Tirar_Neve: 6
   Tempo_Voltar_Neve: 2
@@ -26,7 +27,7 @@ Localizacoes:
   Saida: world;730.2206570338049;23.0;799.5013058562763;179.5495;29.999922
   Camarote: eventos;-299.59976105454285;23.0;-453.5261703489258;-90.03866;36.291595
   Entrada: eventos;-511.0081999031537;9.0;-235.51442270332794;-272.70175;49.649952
-  Aguardando: eventos;-516.5997515118419;9.0;-236.51159551851126;-272.55188;28.799967
+  Aguardando: eventos;-386.53726043286224;4.0;-478.2949589440582;-359.40137;18.900019
   Chao_1: eventos;-527;8;-246
   Chao_2: eventos;-510;8;-228
 
@@ -34,14 +35,14 @@ Mensagens:
   Aberto:
     - "  "
     - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
-    - "&9[$EventoName$] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$] &fPara participar digite &6/evento"
     - "&9[$EventoName$] &fEsse evento e pvp &a[OFF]"
     - "&9[$EventoName$] &fRisco de morte &a[OFF]"
     - "  "
   Aberto_VIP:
     - "  "
     - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
-    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento entrar"
+    - "&9[$EventoName$ VIP] &fPara participar digite &6/evento"
     - "&9[$EventoName$ VIP] &fEsse evento e pvp &a[OFF]"
     - "&9[$EventoName$ VIP] &fRisco de morte &a[OFF]"
     - "  "
@@ -64,6 +65,11 @@ Mensagens:
     - "  "
     - "&4[$EventoName$] &cO evento &6$EventoName$ &cfoi finalizado!"
     - "&4[$EventoName$] &cNao houve vencedores!"
+    - "  "
+  Minimo_Players:
+    - "  "
+    - "&9[$EventoName$] &cEvento finalizado."
+    - "&9[$EventoName$] &cNumero de participantes menor do que $minimo$"
     - "  "
   IniciandoEm:
     - "  "

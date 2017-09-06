@@ -1,7 +1,7 @@
 package me.herobrinedobem.heventos.eventos;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -14,13 +14,14 @@ import me.herobrinedobem.heventos.api.events.PlayerWinEvent;
 import me.herobrinedobem.heventos.api.events.StopEvent;
 import me.herobrinedobem.heventos.eventos.listeners.KillerListener;
 import me.herobrinedobem.heventos.utils.BukkitEventHelper;
+import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 
 public class Killer extends EventoBaseAPI {
 
 	private KillerListener listener;
 	private int tempoMensagens, tempoMensagensCurrent, tempoPegarItens, tempoPvpOff;
 	private int etapa;
-	private Set<String> clans = new HashSet<String>();
+	private List<ClanPlayer> clans = new ArrayList<ClanPlayer>();
 
 	public Killer(YamlConfiguration config) {
 		super(config);
@@ -28,6 +29,7 @@ public class Killer extends EventoBaseAPI {
 		HEventos.getHEventos().getServer().getPluginManager().registerEvents(listener, HEventos.getHEventos());
 		tempoPegarItens = config.getInt("Config.Tempo_Pegar_Itens");
 		tempoMensagens = config.getInt("Config.Tempo_Entre_Avisos");
+		tempoPvpOff = config.getInt("Config.Tempo_PVP_Off");
 		etapa = 1;
 		tempoMensagensCurrent = tempoMensagens;
 	}
@@ -40,12 +42,7 @@ public class Killer extends EventoBaseAPI {
 			if (HEventos.getHEventos().getSc() != null) {
 				if (HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p) != null) {
 					HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).setFriendlyFire(true);
-					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
-				}
-			} else if (HEventos.getHEventos().getCore() != null) {
-				if (HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p) != null) {
-					HEventos.getHEventos().getCore().getClanPlayerManager().getClanPlayer(p).setFriendlyFire(true);
-					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p).getClan().getTag());
+					clans.add(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(p));
 				}
 			}
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
@@ -57,51 +54,49 @@ public class Killer extends EventoBaseAPI {
 
 	@Override
 	public void scheduledMethod() {
-		if ((isOcorrendo()) && (!isAberto())) {
-			if (getParticipantes().size() > 1) {
-				if (etapa == 1) {
-					if (tempoPvpOff > 0) {
-						tempoPvpOff--;
-						return;
-					} else {
-						for (Player p : getParticipantes()) {
-							for (String s1 : getConfig().getStringList("Mensagens.PVPON")) {
-								p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoPvpOff))
-										.replace("$EventoName$", getNome()));
-							}
+		if (getParticipantes().size() > 1) {
+			if (etapa == 1) {
+				if (tempoPvpOff > 0) {
+					tempoPvpOff--;
+					return;
+				} else {
+					for (Player p : getParticipantes()) {
+						for (String s1 : getConfig().getStringList("Mensagens.PVPON")) {
+							p.sendMessage(s1.replace("&", "§").replace("$tempo$", String.valueOf(tempoPvpOff))
+									.replace("$EventoName$", getNome()));
 						}
-						etapa = 2;
 					}
+					etapa = 2;
 				}
-				if (tempoMensagensCurrent == 0) {
-					for (String s : getConfig().getStringList("Mensagens.Status")) {
-						HEventos.getHEventos().getServer()
-								.broadcastMessage(s.replace("&", "§")
-										.replace("$jogadores$", String.valueOf(getParticipantes().size()))
-										.replace("$EventoName$", getNome()));
-					}
-					tempoMensagensCurrent = tempoMensagens;
+			}
+			if (tempoMensagensCurrent == 0) {
+				for (String s : getConfig().getStringList("Mensagens.Status")) {
+					HEventos.getHEventos().getServer()
+							.broadcastMessage(s.replace("&", "§")
+									.replace("$jogadores$", String.valueOf(getParticipantes().size()))
+									.replace("$EventoName$", getNome()));
 				}
-				tempoMensagensCurrent--;
-			} else if (getParticipantes().size() == 1) {
-				if (tempoPegarItens == 0) {
-					Player player = null;
+				tempoMensagensCurrent = tempoMensagens;
+			}
+			tempoMensagensCurrent--;
+		} else if (getParticipantes().size() == 1) {
+			if (tempoPegarItens == 0) {
+				Player player = null;
+				for (Player s : getParticipantes()) {
+					player = s;
+				}
+				PlayerWinEvent event = new PlayerWinEvent(player, this, false);
+				HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
+				stopEvent();
+			} else if (tempoPegarItens > 0) {
+				if (tempoPegarItens == getConfig().getInt("Config.Tempo_Pegar_Itens")) {
 					for (Player s : getParticipantes()) {
-						player = s;
-					}
-					PlayerWinEvent event = new PlayerWinEvent(player, this, false);
-					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-					stopEvent();
-				} else if (tempoPegarItens > 0) {
-					if (tempoPegarItens == getConfig().getInt("Config.Tempo_Pegar_Itens")) {
-						for (Player s : getParticipantes()) {
-							for (String p : getConfig().getStringList("Mensagens.Tempo_Pegar_Itens")) {
-								s.sendMessage(p.replace("&", "§").replace("$EventoName$", getNome()));
-							}
+						for (String p : getConfig().getStringList("Mensagens.Tempo_Pegar_Itens")) {
+							s.sendMessage(p.replace("&", "§").replace("$EventoName$", getNome()));
 						}
 					}
-					tempoPegarItens--;
 				}
+				tempoPegarItens--;
 			}
 		}
 	}
@@ -121,11 +116,9 @@ public class Killer extends EventoBaseAPI {
 
 	@Override
 	public void resetEvent() {
-		for (String string : clans) {
-			if (HEventos.getHEventos().getSc() != null) {
-				HEventos.getHEventos().getSc().getClanManager().getClan(string).setFriendlyFire(false);
-			} else if (HEventos.getHEventos().getCore() != null) {
-				HEventos.getHEventos().getCore().getClanManager().getClan(string).setFriendlyFire(false);
+		if (HEventos.getHEventos().getSc() != null) {
+			for (ClanPlayer string : clans) {
+				string.setFriendlyFire(false);
 			}
 		}
 		clans.clear();
@@ -139,6 +132,10 @@ public class Killer extends EventoBaseAPI {
 
 	public KillerListener getListener() {
 		return this.listener;
+	}
+
+	public List<ClanPlayer> getClans() {
+		return clans;
 	}
 
 }
