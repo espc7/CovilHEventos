@@ -16,6 +16,7 @@ import me.herobrinedobem.heventos.api.EventoCancellType;
 import me.herobrinedobem.heventos.api.events.StopEvent;
 import me.herobrinedobem.heventos.databases.Database;
 import me.herobrinedobem.heventos.databases.DatabaseType;
+import me.herobrinedobem.heventos.hooks.LegendChat;
 import me.herobrinedobem.heventos.utils.AutoStartEvents;
 import me.herobrinedobem.heventos.utils.ConfigUtil;
 import me.herobrinedobem.heventos.utils.EventosController;
@@ -38,6 +39,7 @@ public class HEventos extends JavaPlugin {
 	private Database databaseManager;
 	private Economy economy = null;
 	private SimpleClans sc;
+	private LegendChat lc;
 	private ConfigUtil configUtil;
 	private MainListeners mainListeners = new MainListeners();
 
@@ -79,8 +81,8 @@ public class HEventos extends JavaPlugin {
 			this.eventosController.getEvento().stopEvent();
 			eventosController.setEvento(null);
 		}
-		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fPlugin Desabilitado - (Versao §9"
-				+ this.getDescription().getVersion() + "§f)");
+		Bukkit.getConsoleSender().sendMessage(
+				"§9[HEventosReloaded] §fPlugin Desabilitado - (Versao §9" + this.getDescription().getVersion() + "§f)");
 	}
 
 	/**
@@ -96,7 +98,7 @@ public class HEventos extends JavaPlugin {
 		File eventosFile = new File(this.getDataFolder() + File.separator + "Eventos");
 		if (!eventosFile.exists()) {
 			eventosFile.mkdirs();
-			Bukkit.getConsoleSender().sendMessage("§9[HEventos-Reloaded] §fPasta 'Eventos' criada com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fPasta 'Eventos' criada com sucesso!");
 		}
 		if (this.getConfig().getBoolean("Ativar_Configs_Exemplos")) {
 			if (!new File(this.getDataFolder() + File.separator + "Eventos" + File.separator + "eventoexemplo.yml")
@@ -135,6 +137,9 @@ public class HEventos extends JavaPlugin {
 			if (!new File(this.getDataFolder() + File.separator + "Eventos" + File.separator + "fight.yml").exists()) {
 				this.saveResource("Eventos" + File.separator + "fight.yml", false);
 			}
+			if (!new File(this.getDataFolder() + File.separator + "Tags.yml").exists()) {
+				this.saveResource("Tags.yml", false);
+			}
 			if (!new File(this.getDataFolder() + File.separator + "GUIA PARA ITENS.yml").exists()) {
 				this.saveResource("GUIA PARA ITENS.yml", false);
 			}
@@ -153,7 +158,10 @@ public class HEventos extends JavaPlugin {
 		if (!setupEconomy()) {
 			log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
 			getServer().getPluginManager().disablePlugin(this);
-			return;
+		}
+		if (!setupLegendChat()) {
+			log.severe(String.format("[%s] - LegendChat não encontrado, Listeners com chat desativados!",
+					getDescription().getName()));
 		}
 	}
 
@@ -228,16 +236,20 @@ public class HEventos extends JavaPlugin {
 		return false;
 	}
 
-	public ConfigUtil getConfigUtil() {
-		return this.configUtil;
+	private boolean setupLegendChat() {
+		Plugin plug = getServer().getPluginManager().getPlugin("LegendChat");
+		if (plug != null) {
+			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fLegendChat encontrado com sucesso!");
+			this.lc = new LegendChat();
+			this.getServer().getPluginManager().registerEvents(this.lc, this);
+			return true;
+		}
+		this.lc = null;
+		return false;
 	}
 
 	public Economy getEconomy() {
 		return this.economy;
-	}
-
-	public static HEventos getHEventos() {
-		return (HEventos) Bukkit.getServer().getPluginManager().getPlugin("HEventosReloaded");
 	}
 
 	public EventosController getEventosController() {
@@ -248,11 +260,23 @@ public class HEventos extends JavaPlugin {
 		return this.sc;
 	}
 
+	public LegendChat getLc() {
+		return lc;
+	}
+	
+	public ConfigUtil getConfigUtil() {
+		return this.configUtil;
+	}
+	
 	public Database getDatabaseManager() {
 		return databaseManager;
 	}
 
 	public List<EventoBaseAPI> getExternalEventos() {
 		return externalEventos;
+	}
+	
+	public static HEventos getHEventos() {
+		return (HEventos) Bukkit.getServer().getPluginManager().getPlugin("HEventosReloaded");
 	}
 }

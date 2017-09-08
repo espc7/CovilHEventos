@@ -8,23 +8,27 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import me.herobrinedobem.heventos.HEventos;
+import me.herobrinedobem.heventos.api.EventoBaseAPI;
 import me.herobrinedobem.heventos.api.EventoBaseListener;
 import me.herobrinedobem.heventos.api.events.PlayerLoseEvent;
 import me.herobrinedobem.heventos.eventos.Paintball;
 
 public class PaintballListener extends EventoBaseListener {
 
+	private EventoBaseAPI evento;
+
 	@EventHandler
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
-		if ((HEventos.getHEventos().getEventosController().getEvento().isAberto()))
+		if (!evento.isOcorrendo())
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
+		if (evento.isAberto())
 			return;
 		if (e.getDamager() instanceof Player) {
 			Player p = (Player) e.getDamager();
-			if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p))
+			if (!evento.getParticipantes().contains(p))
 				return;
 			e.setCancelled(true);
 		} else if (e.getDamager() instanceof Arrow) {
@@ -32,10 +36,8 @@ public class PaintballListener extends EventoBaseListener {
 			if (projectile.getShooter() instanceof Player) {
 				Player atirou = (Player) projectile.getShooter();
 				Player atingido = (Player) e.getEntity();
-				Paintball paintball = (Paintball) HEventos.getHEventos().getEventosController().getEvento();
-				if (!(HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(atingido)
-						&& HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-								.contains(atirou)))
+				Paintball paintball = (Paintball) evento;
+				if (!(evento.getParticipantes().contains(atingido) && evento.getParticipantes().contains(atirou)))
 					return;
 				if (paintball.getTimeAzul().contains(atirou)) {
 					if (!paintball.getTimeVermelho().contains(atingido)) {
@@ -68,42 +70,42 @@ public class PaintballListener extends EventoBaseListener {
 
 	@EventHandler
 	public void onPlayerLoseEvent(PlayerLoseEvent e) {
-		Paintball paintball = (Paintball) HEventos.getHEventos().getEventosController().getEvento();
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		Paintball paintball = (Paintball) evento;
 		if (paintball.getTimeVermelho().contains(e.getPlayer())) {
 			paintball.getTimeVermelho().remove(e.getPlayer());
 		} else if (paintball.getTimeAzul().contains(e.getPlayer())) {
 			paintball.getTimeAzul().remove(e.getPlayer());
 		}
 		if (HEventos.getHEventos().getSc() != null) {
-			paintball.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+			paintball.getClans()
+					.remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
 			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
 		}
 	}
-	
+
 	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
-		if (HEventos.getHEventos().getEventosController().getEvento().isAberto())
+		if (!evento.getParticipantes().contains(e.getView().getPlayer()))
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getView().getPlayer()))
+		if (evento.isAberto())
 			return;
 		e.setCancelled(true);
 	}
 
 	public void eliminar(Paintball paintball, Player atirou, Player atingido) {
+		evento = HEventos.getHEventos().getEventosController().getEvento();
 		atingido.setHealth(20.0);
-		PlayerLoseEvent event = new PlayerLoseEvent(atingido,
-				HEventos.getHEventos().getEventosController().getEvento());
+		PlayerLoseEvent event = new PlayerLoseEvent(atingido, evento);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 		HEventos.getHEventos().getEconomy().depositPlayer(atirou.getName(),
 				paintball.getConfig().getDouble("Premios.Money_PerKill"));
-		atingido.sendMessage(HEventos.getHEventos().getEventosController().getEvento().getConfig()
-				.getString("Mensagens.Eliminado").replace("&", "§").replace("$player$", atirou.getName())
-				.replace("$EventoName$", paintball.getNome()));
-		atirou.sendMessage(HEventos.getHEventos().getEventosController().getEvento().getConfig()
-				.getString("Mensagens.Eliminou").replace("&", "§").replace("$player$", atingido.getName())
-				.replace("$EventoName$", paintball.getNome()));
+		atingido.sendMessage(evento.getConfig().getString("Mensagens.Eliminado").replace("&", "§")
+				.replace("$player$", atirou.getName()).replace("$EventoName$", paintball.getNome()));
+		atirou.sendMessage(evento.getConfig().getString("Mensagens.Eliminou").replace("&", "§")
+				.replace("$player$", atingido.getName()).replace("$EventoName$", paintball.getNome()));
 	}
 }

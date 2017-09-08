@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import me.herobrinedobem.heventos.HEventos;
+import me.herobrinedobem.heventos.api.EventoBaseAPI;
 import me.herobrinedobem.heventos.api.EventoBaseListener;
 import me.herobrinedobem.heventos.api.events.PlayerLoseEvent;
 import me.herobrinedobem.heventos.api.events.PlayerWinEvent;
@@ -13,26 +14,29 @@ import me.herobrinedobem.heventos.eventos.Frog;
 
 public class FrogListener extends EventoBaseListener {
 
+	private EventoBaseAPI evento;
+
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer()))
+		if (!evento.getParticipantes().contains(e.getPlayer()))
 			return;
-		if ((HEventos.getHEventos().getEventosController().getEvento().isAberto()))
+		if (!evento.isOcorrendo())
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
+		if (evento.isAberto())
 			return;
-		Frog frog = (Frog) HEventos.getHEventos().getEventosController().getEvento();
+		Frog frog = (Frog) evento;
 		if ((e.getPlayer().getLocation().getY() <= frog.getY()) && frog.getEtapa() != 1) {
-			e.getPlayer().sendMessage(frog.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "§").replace("$EventoName$", frog.getNome()));
-			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(),
-					HEventos.getHEventos().getEventosController().getEvento());
+			e.getPlayer().sendMessage(frog.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "§")
+					.replace("$EventoName$", frog.getNome()));
+			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(), evento);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 			String msg = frog.getConfig().getString("Mensagens.FoiEliminado");
 			for (Player p : frog.getParticipantes()) {
-				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", frog.getNome()).replace("$player$", e.getPlayer().getName()));
+				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", frog.getNome()).replace("$player$",
+						e.getPlayer().getName()));
 
 			}
 		}
@@ -45,11 +49,10 @@ public class FrogListener extends EventoBaseListener {
 		if (!(e.getTo().getBlock().getZ() == b.getZ())) {
 			return;
 		}
-		if (!(e.getTo().getBlock().getY() == b.getY()+1)) {
+		if (!(e.getTo().getBlock().getY() == b.getY() + 1)) {
 			return;
 		}
-		PlayerWinEvent event = new PlayerWinEvent(e.getPlayer(),
-				HEventos.getHEventos().getEventosController().getEvento(), false);
+		PlayerWinEvent event = new PlayerWinEvent(e.getPlayer(), evento, false);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 		frog.stopEvent();
 	}

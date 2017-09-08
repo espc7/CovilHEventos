@@ -160,6 +160,10 @@ public class Comandos implements CommandExecutor {
 				} else if (args[0].equalsIgnoreCase("reload")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
+					if (HEventos.getHEventos().getLc() != null) {
+						HEventos.getHEventos().getLc().carregarTags();
+						HEventos.getHEventos().getLc().carregarVencedores();
+					}
 					HEventos.getHEventos().reloadConfig();
 					HEventos.getHEventos().getConfigUtil().setupConfigUtils();
 					p.sendMessage("§4[Evento] §cConfiguracao recarregada com sucesso!");

@@ -9,9 +9,9 @@ Config:
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true
-  Tempo_Rodada: 20
-  Anuncio_Amarelo: 10
-  Anuncio_Vermelho: 5
+  Tempo_Verde: 10
+  Tempo_Amarelo: 5
+  Tempo_Vermelho: 5
   Inv_Vazio: false
 
 Premios:
@@ -34,14 +34,14 @@ Mensagens:
     - "&9[$EventoName$] &fO evento &6$EventoName$ &festa aberto!"
     - "&9[$EventoName$] &fPara participar digite &6/evento"
     - "&9[$EventoName$] &fEsse evento e pvp &a[OFF]"
-    - "&9[$EventoName$] &fRisco de morte &c[ON]"
+    - "&9[$EventoName$] &fRisco de morte &a[OFF]"
     - "  "
   Aberto_VIP:
     - "  "
     - "&9[$EventoName$ VIP] &fO evento &6$EventoName$ VIP &festa aberto!"
     - "&9[$EventoName$ VIP] &fPara participar digite &6/evento"
     - "&9[$EventoName$ VIP] &fEsse evento e pvp &a[OFF]"
-    - "&9[$EventoName$ VIP] &fRisco de morte &c[ON]"
+    - "&9[$EventoName$ VIP] &fRisco de morte &a[OFF]"
     - "  "
   Iniciando:
     - "  "

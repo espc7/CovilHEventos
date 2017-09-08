@@ -22,6 +22,7 @@ public class EventosController {
 
 	private EventoBaseAPI evento = null;
 	private HEventos instance;
+	private String filename;
 
 	public EventosController(HEventos instance) {
 		this.instance = instance;
@@ -77,6 +78,7 @@ public class EventosController {
 
 	public YamlConfiguration getConfigFile(String eventoname) {
 		File fileEvento = new File(this.instance.getDataFolder().getAbsolutePath() + "/Eventos/" + eventoname + ".yml");
+		this.filename = fileEvento.getName().substring(0, fileEvento.getName().length() - 4);
 		return YamlConfiguration.loadConfiguration(fileEvento);
 	}
 
@@ -84,6 +86,10 @@ public class EventosController {
 		File fileEvento = new File(this.instance.getDataFolder().getAbsolutePath() + "/Eventos/" + eventoname + ".yml");
 		YamlConfiguration configEvento = YamlConfiguration.loadConfiguration(fileEvento);
 		return new EventoBaseAPI(configEvento);
+	}
+
+	public String getFilename() {
+		return filename;
 	}
 
 	public boolean hasEvento(String evento) {

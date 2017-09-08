@@ -22,7 +22,7 @@ import me.herobrinedobem.heventos.api.events.TeamWinEvent;
 import me.herobrinedobem.heventos.utils.ItemStackFormat;
 
 public class MainListeners implements Listener {
-	
+
 	@EventHandler
 	public void onStopEvent(StopEvent e) {
 		for (Player p : e.getEvento().getParticipantes()) {
@@ -41,13 +41,14 @@ public class MainListeners implements Listener {
 		e.getEvento().getParticipantes().clear();
 		e.getEvento().getCamarotePlayers().clear();
 		e.getEvento().resetEvent();
-		if (e.getCancellType() == EventoCancellType.CANCELLED || e.getCancellType() == EventoCancellType.SERVER_STOPED) {
+		if (e.getCancellType() == EventoCancellType.CANCELLED
+				|| e.getCancellType() == EventoCancellType.SERVER_STOPED) {
 			e.getEvento().cancelEventMethod();
 		} else {
 			e.getEvento().stopEventMethod();
 		}
 	}
-	
+
 	@EventHandler
 	private void onEventoPlayerOutEvent(PlayerLeaveEvent e) {
 		if (e.isAssistindo()) {
@@ -76,13 +77,13 @@ public class MainListeners implements Listener {
 	@EventHandler
 	private void onTimeWinEvent(TeamWinEvent e) {
 		for (Player p : e.getList()) {
-			PlayerWinEvent event = new PlayerWinEvent(p,
-					HEventos.getHEventos().getEventosController().getEvento(), true);
+			PlayerWinEvent event = new PlayerWinEvent(p, HEventos.getHEventos().getEventosController().getEvento(),
+					true);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 		}
 		for (String s : e.getEvento().getConfig().getStringList("Mensagens.Vencedor")) {
-			HEventos.getHEventos().getServer()
-					.broadcastMessage(s.replaceAll("&", "§").replace("$player$", e.getNomeTime()).replace("$EventoName$", e.getEvento().getNome()));
+			HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "§")
+					.replace("$player$", e.getNomeTime()).replace("$EventoName$", e.getEvento().getNome()));
 		}
 	}
 
@@ -98,7 +99,7 @@ public class MainListeners implements Listener {
 		if (e.getEvento().isContarVitoria()) {
 			HEventos.getHEventos().getDatabaseManager().addWinPoint(e.getPlayer().getName(), 1);
 		}
-		for(String linha : e.getEvento().getConfig().getStringList("Premios.Itens")) {
+		for (String linha : e.getEvento().getConfig().getStringList("Premios.Itens")) {
 			e.getPlayer().getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
 		}
 		for (String comando : e.getEvento().getConfig().getStringList("Premios.Comandos")) {
@@ -111,10 +112,11 @@ public class MainListeners implements Listener {
 
 		if (!e.isTeamEvent()) {
 			for (String s : e.getEvento().getConfig().getStringList("Mensagens.Vencedor")) {
-				HEventos.getHEventos().getServer()
-						.broadcastMessage(s.replaceAll("&", "§").replace("$player$", e.getPlayer().getName()).replace("$EventoName$", e.getEvento().getNome()));
+				HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "§")
+						.replace("$player$", e.getPlayer().getName()).replace("$EventoName$", e.getEvento().getNome()));
 			}
 		}
+
 		e.getEvento().getParticipantes().remove(e.getPlayer());
 		e.getPlayer().teleport(e.getEvento().getSaida());
 	}
@@ -262,7 +264,7 @@ public class MainListeners implements Listener {
 				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do frog setada!");
 				e.setCancelled(true);
 			}
-		} 
+		}
 	}
 
 	@EventHandler

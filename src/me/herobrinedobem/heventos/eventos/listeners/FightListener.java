@@ -7,25 +7,29 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.herobrinedobem.heventos.HEventos;
+import me.herobrinedobem.heventos.api.EventoBaseAPI;
 import me.herobrinedobem.heventos.api.EventoBaseListener;
 import me.herobrinedobem.heventos.api.events.PlayerLoseEvent;
 import me.herobrinedobem.heventos.eventos.Fight;
 
 public class FightListener extends EventoBaseListener {
 
+	private EventoBaseAPI evento;
+
 	@EventHandler
 	public void onEntityDamageByEntityEventFIGHT(EntityDamageByEntityEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
 		if (!(e.getDamager() instanceof Player))
 			return;
-		if (HEventos.getHEventos().getEventosController().getEvento().isAberto())
+		if (!evento.isOcorrendo())
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
+		if (evento.isAberto())
 			return;
 		Player p = (Player) e.getDamager();
-		Fight fight = (Fight) HEventos.getHEventos().getEventosController().getEvento();
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(p))
+		Fight fight = (Fight) evento;
+		if (!evento.getParticipantes().contains(p))
 			return;
 		if (fight.getLutador1() == e.getEntity() || fight.getLutador2() == e.getEntity()) {
 			return;
@@ -38,19 +42,21 @@ public class FightListener extends EventoBaseListener {
 
 	@EventHandler
 	public void onPlayerQuitEventFIGHT(PlayerQuitEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(e.getPlayer()))
+		if (!evento.getParticipantes().contains(e.getPlayer()))
 			return;
-		if (HEventos.getHEventos().getEventosController().getEvento().isAberto())
+		if (!evento.isOcorrendo())
 			return;
-		Fight fight = (Fight) HEventos.getHEventos().getEventosController().getEvento();
+		if (evento.isAberto())
+			return;
+		Fight fight = (Fight) evento;
 		if (fight.getLutador1() != e.getPlayer() || fight.getLutador2() != e.getPlayer()) {
 			return;
 		}
 		if (fight.getLutador1() == e.getPlayer()) {
-			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(),
-					HEventos.getHEventos().getEventosController().getEvento());
+			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(), evento);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 			fight.venceuLuta(fight.getLutador2());
 			fight.taskLuta().cancel();
@@ -65,13 +71,16 @@ public class FightListener extends EventoBaseListener {
 
 	@EventHandler
 	public void onPlayerDeathEventFIGHT(PlayerDeathEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes().contains(e.getEntity()))
+		if (!evento.getParticipantes().contains(e.getEntity()))
 			return;
-		if (HEventos.getHEventos().getEventosController().getEvento().isAberto())
+		if (!evento.isOcorrendo())
 			return;
-		Fight fight = (Fight) HEventos.getHEventos().getEventosController().getEvento();
+		if (evento.isAberto())
+			return;
+		Fight fight = (Fight) evento;
 		if (fight.getLutador1() == e.getEntity().getPlayer() || fight.getLutador2() == e.getEntity().getPlayer()) {
 			fight.venceuLuta(e.getEntity().getKiller());
 			fight.taskLuta().cancel();
@@ -81,14 +90,16 @@ public class FightListener extends EventoBaseListener {
 
 	@EventHandler
 	public void onPlayerLoseEventFIGHT(PlayerLoseEvent e) {
-		Fight fight = (Fight) HEventos.getHEventos().getEventosController().getEvento();
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		Fight fight = (Fight) evento;
 		if (fight.getPrimeiraRodada().contains(e.getPlayer())) {
 			fight.getPrimeiraRodada().remove(e.getPlayer());
 		} else if (fight.getSegundaRodada().contains(e.getPlayer())) {
 			fight.getSegundaRodada().remove(e.getPlayer());
 		}
 		if (HEventos.getHEventos().getSc() != null) {
-			fight.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+			fight.getClans()
+					.remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
 			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
 		}
 	}

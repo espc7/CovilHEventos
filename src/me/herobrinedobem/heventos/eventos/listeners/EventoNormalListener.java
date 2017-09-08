@@ -7,21 +7,24 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import me.herobrinedobem.heventos.HEventos;
+import me.herobrinedobem.heventos.api.EventoBaseAPI;
 import me.herobrinedobem.heventos.api.EventoBaseListener;
 import me.herobrinedobem.heventos.api.events.PlayerWinEvent;
 
 public class EventoNormalListener extends EventoBaseListener {
 
+	private EventoBaseAPI evento;
+
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent e) {
-		if (HEventos.getHEventos().getEventosController().getEvento() == null)
+		evento = HEventos.getHEventos().getEventosController().getEvento();
+		if (evento == null)
 			return;
-		if ((HEventos.getHEventos().getEventosController().getEvento().isAberto()))
+		if (!evento.getParticipantes().contains(e.getPlayer()))
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().isOcorrendo())
+		if (!evento.isOcorrendo())
 			return;
-		if (!HEventos.getHEventos().getEventosController().getEvento().getParticipantes()
-				.contains(e.getPlayer()))
+		if ((evento.isAberto()))
 			return;
 		if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK))
 			return;
@@ -29,16 +32,14 @@ public class EventoNormalListener extends EventoBaseListener {
 				|| (e.getClickedBlock().getType() == Material.WALL_SIGN)) {
 			Sign s = (Sign) e.getClickedBlock().getState();
 			if (s.getLine(0).equalsIgnoreCase("§9[Evento]")) {
-				if (HEventos.getHEventos().getEventosController().getEvento().getParticipantes().size() >= 1) {
-					PlayerWinEvent event = new PlayerWinEvent(e.getPlayer(),
-							HEventos.getHEventos().getEventosController().getEvento(), false);
+				if (evento.getParticipantes().size() >= 1) {
+					PlayerWinEvent event = new PlayerWinEvent(e.getPlayer(), evento, false);
 					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-					HEventos.getHEventos().getEventosController().getEvento().stopEvent();
+					evento.stopEvent();
 					s.setLine(1, "§6" + e.getPlayer().getName());
 					s.update();
 				}
 			}
-
 		}
 	}
 }

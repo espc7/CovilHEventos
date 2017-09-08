@@ -51,7 +51,7 @@ public class Fight extends EventoBaseAPI {
 				}
 			}
 		}
-		Avisos();
+		statusAvisos();
 		rodada.addAll(getParticipantes());
 	}
 
@@ -86,7 +86,7 @@ public class Fight extends EventoBaseAPI {
 		}
 	}
 
-	public void Avisos() {
+	public void statusAvisos() {
 		taskAvisos = HEventos.getHEventos().getServer().getScheduler().runTaskTimer(HEventos.getHEventos(),
 				new Runnable() {
 					@Override

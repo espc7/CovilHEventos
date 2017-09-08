@@ -2,6 +2,7 @@ package me.herobrinedobem.heventos.eventos;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseAPI;
@@ -14,20 +15,17 @@ import me.herobrinedobem.heventos.utils.BukkitEventHelper;
 public class Semaforo extends EventoBaseAPI {
 
 	private SemaforoListener listener;
-	private int tempoTroca;
-	private int tempoAmarelo;
-	private int tempoVermelho;
-	private int tempoTrocaCurrent;
+	private int tempoAmarelo, tempoVerde, tempoVermelho;
+	private BukkitTask verde, amarelo, vermelho;
 	private boolean podeAndar;
 
 	public Semaforo(YamlConfiguration config) {
 		super(config);
 		listener = new SemaforoListener();
 		HEventos.getHEventos().getServer().getPluginManager().registerEvents(listener, HEventos.getHEventos());
-		tempoTroca = config.getInt("Config.Tempo_Rodada");
-		tempoTrocaCurrent = config.getInt("Config.Tempo_Rodada");
-		tempoAmarelo = config.getInt("Config.Anuncio_Amarelo");
-		tempoVermelho = config.getInt("Config.Anuncio_Vermelho");
+		tempoVerde = config.getInt("Config.Tempo_Verde");
+		tempoAmarelo = config.getInt("Config.Tempo_Amarelo");
+		tempoVermelho = config.getInt("Config.Tempo_Vermelho");
 		podeAndar = true;
 	}
 
@@ -35,40 +33,54 @@ public class Semaforo extends EventoBaseAPI {
 	public void startEventMethod() {
 		for (Player p : getParticipantes()) {
 			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
-			for (String msg : getConfig().getStringList("Mensagens.Verde")) {
-				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-			}
 		}
+		semaforoMethod();
 	}
 
 	@Override
 	public void scheduledMethod() {
-		if (tempoTrocaCurrent == 0) {
-			podeAndar = true;
-			for (Player p : getParticipantes()) {
-				for (String msg : getConfig().getStringList("Mensagens.Verde")) {
-					p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-				}
-			}
-			tempoTrocaCurrent = tempoTroca;
-		} else if (tempoTrocaCurrent == tempoAmarelo) {
-			for (Player p : getParticipantes()) {
-				for (String msg : getConfig().getStringList("Mensagens.Amarelo")) {
-					p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-				}
-			}
-			tempoTrocaCurrent--;
-		} else if (tempoTrocaCurrent == tempoVermelho) {
-			for (Player p : getParticipantes()) {
-				for (String msg : getConfig().getStringList("Mensagens.Vermelho")) {
-					p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
-				}
-			}
-			podeAndar = false;
-			tempoTrocaCurrent--;
-		} else {
-			tempoTrocaCurrent--;
+		if (getParticipantes().size() == 0) {
+			sendMessageList("Mensagens.Sem_Vencedor");
+			stopEvent();
 		}
+	}
+
+	public void semaforoMethod() {
+		podeAndar = true;
+		for (Player p : getParticipantes()) {
+			for (String msg : getConfig().getStringList("Mensagens.Verde")) {
+				p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+			}
+		}
+		verde = HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(), new Runnable() {
+			@Override
+			public void run() {
+				for (Player p : getParticipantes()) {
+					for (String msg : getConfig().getStringList("Mensagens.Amarelo")) {
+						p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+					}
+				}
+				amarelo = HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(),
+						new Runnable() {
+							@Override
+							public void run() {
+								podeAndar = false;
+								for (Player p : getParticipantes()) {
+									for (String msg : getConfig().getStringList("Mensagens.Vermelho")) {
+										p.sendMessage(msg.replace("&", "§").replace("$EventoName$", getNome()));
+									}
+								}
+								vermelho = HEventos.getHEventos().getServer().getScheduler()
+										.runTaskLater(HEventos.getHEventos(), new Runnable() {
+											@Override
+											public void run() {
+												semaforoMethod();
+											}
+										}, tempoVermelho * 20L);
+							}
+						}, tempoAmarelo * 20L);
+			}
+		}, tempoVerde * 20L);
 	}
 
 	@Override
@@ -85,10 +97,14 @@ public class Semaforo extends EventoBaseAPI {
 
 	@Override
 	public void resetEvent() {
+		if (verde != null)
+			verde.cancel();
+		if (amarelo != null)
+			amarelo.cancel();
+		if (vermelho != null) {
+			vermelho.cancel();
+		}
 		super.resetEvent();
-		tempoTroca = this.getConfig().getInt("Config.Tempo_Rodada");
-		tempoTrocaCurrent = this.getConfig().getInt("Config.Tempo_Rodada");
-		podeAndar = true;
 		BukkitEventHelper.unregisterEvents(listener, HEventos.getHEventos());
 	}
 

@@ -82,4 +82,3 @@ Mensagens:
     - "  "
   FoiEliminado: "&9[$EventoName$] &fO jogador &6$player$ &ffoi eliminado!"
   VcFoiEliminado: "&9[$EventoName$] &fVocê foi eliminado!"
-  Aguarde_Quebrar: "&9[$EventoName$] &fAguarde &6$tempo$ &fsegundos para quebrar os blocos!"

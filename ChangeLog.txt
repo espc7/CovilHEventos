@@ -1,4 +1,15 @@
-ChangeLog HEventos
+ChangeLog HEventosReloaded
+
+HEventos ChangeLog version=1.6.1
+
+06/09/2017
+Update concluido '1.6.1' concluido
+Todos códigos de Listeners dos eventos foram melhorados.
+Semaforo refeito, foi criado outro sistema para ele
+Corrigido BUG do semaforo que não encerrava se estive com 0 Players
+Nome do Plugin trocado para HEventosReloaded
+Instruções adicionado no arquivo de Tags
+Sistema de TAG para cada evento implementado
 
 HEventos ChangeLog version=1.6.0
 

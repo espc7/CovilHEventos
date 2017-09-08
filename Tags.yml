@@ -1,0 +1,31 @@
+#           <- INSTRUCOES ->
+# Use o nome do Arquivo para definir as tags
+# Nao coloque .yml no fim
+# No LegendChat coloque {heventos}
+# Players podem ter mais de uma tag
+# Para remover basta apagar a linha com o nome do arquivo
+# /evento reload para recarrega as tags
+Tags:
+  batataquente: '&e[Batata Quente] '
+  bowspleef: '&9[Bow Spleef] '
+  eventoexemplo: '&b[Parkour] '
+  fight: '&0[Fight] '
+  frog: '&c[Frog] '
+  killer: '&4[Killer] '
+  minamortal: '&2[Mina Mortal] '
+  paintball: '&a[PaintBall] '
+  semaforo: '&a[Semaforo] '
+  spleef: '&7[Spleef] '
+Vencedores:
+  batataquente: "null"
+  bowspleef: "null"
+  eventoexemplo: "null"
+  fight: "null"
+  frog: "null"
+  killer: "null"
+  minamortal: "null"
+  semaforo: "null"
+  spleef: "null"
+  paintball:
+  - deathrush
+  - kanedapain
