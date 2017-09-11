@@ -1,25 +1,29 @@
-# HEventos Reloaded
-HEventos é um plugin feito para servidores de Minecraft que querem ter eventos automáticos de forma fácil e rápida, juntamente
-com eventos especiais como Batata Quente, Spleef, Killer e outros. O plugin conta com configs fáceis e uma para cada evento assim
-tornando a configuração dos seus eventos simples e eficaz.
+# HEventosReloaded
+HEventosReloaded é um plugin feito para servidores de Minecraft que querem ter eventos automáticos de forma fácil e rápida, juntamente com eventos especiais como Batata Quente, Spleef, Killer e outros. O plugin conta com configs fáceis e uma para cada evento assim tornando a configuração dos seus eventos simples e eficaz.
 
 # Comandos
-/evento - Mostra todos os comandos do plugin<br>
-/evento entrar - Entra em um evento que esteja ocorrendo no momento<br>
-/evento sair - Sai do evento em que você está no momento<br>
-/evento assistir - Entra no evento como modo espectador para ver o evento<br>
-/evento top vencedores - Mostra os jogadores que mais venceram eventos<br>
-/evento top participacoes - Mostra os jogadores que mais partiicparam de eventos<br>
-/evento setentrada <nome arquivo> - Seta a entrada de um evento<br>
-/evento setsaida <nome arquivo> - Seta a saida de um evento<br>
-/evento setcamarote <nome arquivo> - Seta a entrada do /assistir<br>
-/evento setaguardando <nome arquivo> - Seta o local de espera do evento<br>
-/evento tool <minamortal/spleef> - Pega uma ferramenta que lhe ajuda a setar a área do spleef ou mina mortal<br>
-/evento iniciar <nome> <true/false> - Inicia um determinado evento, se colocar true apenas os vips poderam entrar no evento<br>
-/evento cancelar - Cancela o evento que está ocorrendo no momento
+/evento - Entra em um evento<br>
+/evento assistir - Assisti ao evento<br>
+/evento sair - Sai do evento<br>
+/evento top vencedores - Os que mais venceram<br>
+/evento top participacoes - Os que mais participaram<br>
+DefaultAdmin:
+/evento iniciar <nome> - Inicia um evento<br>
+/evento cancelar - Cancela um evento<br>
+/evento setloc entrada <evento> - Seta a entrada<br>
+/evento setloc saida <evento> - Seta a saida<br>
+/evento setloc camarote <evento> - Seta o camarote<br>
+/evento setloc aguardando <evento> - Seta local de espera<br>
+/evento setloc [pos1/pos2] <evento> - (fight/paintball)<br>
+/evento multiplicador - Altera o multiplicador de money<br>
+/evento multiplicador reset - Reseta o multiplicador<br>
+/evento reload - Recarrega a config do plugin<br>
+/evento tool <evento> - Ferramenta para setar loc de blocos<br>
+/evento lista - Mostra a lista de eventos<br>
+/evento report - Mostra o link do github para reportar erros<br>
 
 # Eventos Especiais
-O plugin conta com 6 eventos especiais que são: <br><br>
+O plugin conta com 10 eventos especiais que são: <br><br>
 » Batata Quente - Um jogador é definido para começar com a batata, ele deverá passa-lá para outro antes do tempo acabar ou estará elimiado, o ultimo vence.<br><br>
 » Killer - Evento de PvP onde os clans são desativados e o ultimo a sobreviver vence.<br><br>
 » Mina Mortal - Uma mina é definida com bastante minérios, os jogadores tem x tempo para pega-los antes que o evento acabe.<br><br>
