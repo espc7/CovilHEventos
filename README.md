@@ -7,7 +7,6 @@ HEventosReloaded é um plugin feito para servidores de Minecraft que querem ter 
 /evento sair - Sai do evento<br>
 /evento top vencedores - Os que mais venceram<br>
 /evento top participacoes - Os que mais participaram<br>
-DefaultAdmin:
 /evento iniciar <nome> - Inicia um evento<br>
 /evento cancelar - Cancela um evento<br>
 /evento setloc entrada <evento> - Seta a entrada<br>
