@@ -66,10 +66,10 @@ public class EventosController {
 		}
 	}
 
-	public boolean externalEvento(String name) {
+	public boolean externalEvento(String name, boolean vip) {
 		for (EventoBaseAPI e : HEventos.getHEventos().getExternalEventos()) {
 			if (e.getNome().equalsIgnoreCase(name)) {
-				e.externalPluginStart();
+				e.externalPluginStart(vip);
 				return true;
 			}
 		}

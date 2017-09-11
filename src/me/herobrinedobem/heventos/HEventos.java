@@ -29,7 +29,7 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
  * 
  * @author Herobrinedobem (Gabriel Henrique)
  * @author GabrielDev (DeathRush)
- * @version 1.6.0
+ * @version 1.6.2
  */
 public class HEventos extends JavaPlugin {
 

@@ -14,15 +14,14 @@ import me.herobrinedobem.heventos.HEventos;
 public class EventoBaseAPI implements EventoBaseImplements {
 
 	private EventoType eventoType;
-	private String horarioStart;
+	private String horarioStart, nome;
 	private List<Player> participantes = new ArrayList<Player>();
+	private List <Player> camarotePlayers = new ArrayList<Player>();
 	private boolean ocorrendo, aberto, parte1, vip, assistirAtivado, pvp, contarVitoria, contarParticipacao,
 			inventoryEmpty;
-	private int chamadas, tempo, chamadascurrent;
-	BukkitTask id, id2;
-	private String nome;
+	private int chamadas, tempo, chamadascurrent, minimoParticipantes;
+	private BukkitTask id, id2;
 	private Location saida, entrada, camarote, aguarde;
-	private List<Player> camarotePlayers = new ArrayList<Player>();
 	private YamlConfiguration config;
 
 	public EventoBaseAPI(YamlConfiguration config) {
@@ -64,8 +63,7 @@ public class EventoBaseAPI implements EventoBaseImplements {
 				EventoBaseAPI.this.sendMessageList("Mensagens.Aberto");
 			}
 		} else if (EventoBaseAPI.this.chamadascurrent == 0) {
-			if (EventoBaseAPI.this.participantes.size() >= EventoBaseAPI.this.config
-					.getInt("Config.Minimo_Partipantes")) {
+			if (EventoBaseAPI.this.participantes.size() >= EventoBaseAPI.this.minimoParticipantes) {
 				if (EventoBaseAPI.this.isContarParticipacao()) {
 					for (Player p : EventoBaseAPI.this.participantes) {
 						HEventos.getHEventos().getDatabaseManager().addParticipationPoint(p.getName(), 1);
@@ -100,10 +98,10 @@ public class EventoBaseAPI implements EventoBaseImplements {
 	}
 
 	@Override
-	public void externalPluginStart() {
+	public void externalPluginStart(boolean vip) {
 		if (HEventos.getHEventos().getEventosController().getEvento() == null) {
 			HEventos.getHEventos().getEventosController().setEvento(this);
-			HEventos.getHEventos().getEventosController().getEvento().setVip(isVip());
+			HEventos.getHEventos().getEventosController().getEvento().setVip(vip);
 			HEventos.getHEventos().getEventosController().getEvento().run();
 		}
 	}
@@ -135,17 +133,18 @@ public class EventoBaseAPI implements EventoBaseImplements {
 	public void resetAll() {
 		this.nome = EventoBaseAPI.this.config.getString("Config.Nome");
 		this.chamadas = EventoBaseAPI.this.config.getInt("Config.Chamadas");
-		this.vip = EventoBaseAPI.this.config.getBoolean("Config.VIP");
 		this.assistirAtivado = EventoBaseAPI.this.config.getBoolean("Config.Assistir_Ativado");
 		this.pvp = EventoBaseAPI.this.config.getBoolean("Config.PVP");
 		this.contarParticipacao = EventoBaseAPI.this.config.getBoolean("Config.Contar_Participacao");
 		this.contarVitoria = EventoBaseAPI.this.config.getBoolean("Config.Contar_Vitoria");
+		this.setMinimoParticipantes(EventoBaseAPI.this.config.getInt("Config.Minimo_Partipantes"));
 		this.tempo = EventoBaseAPI.this.config.getInt("Config.Tempo_Entre_As_Chamadas");
 		this.saida = EventoUtils.getLocation(config, "Localizacoes.Saida");
 		this.camarote = EventoUtils.getLocation(config, "Localizacoes.Camarote");
 		this.entrada = EventoUtils.getLocation(config, "Localizacoes.Entrada");
 		this.aguarde = EventoUtils.getLocation(config, "Localizacoes.Aguardando");
 		this.inventoryEmpty = EventoBaseAPI.this.config.getBoolean("Config.Inv_Vazio");
+		this.vip = false;
 		this.aberto = false;
 		this.ocorrendo = false;
 		this.parte1 = false;
@@ -314,5 +313,13 @@ public class EventoBaseAPI implements EventoBaseImplements {
 
 	public boolean isInventoryEmpty() {
 		return this.inventoryEmpty;
+	}
+
+	public int getMinimoParticipantes() {
+		return minimoParticipantes;
+	}
+
+	public void setMinimoParticipantes(int minimoParticipantes) {
+		this.minimoParticipantes = minimoParticipantes;
 	}
 }

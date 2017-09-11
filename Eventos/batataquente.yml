@@ -5,7 +5,6 @@ Config:
   Tempo_Entre_As_Chamadas: 10
   Minimo_Partipantes: 2
   PVP: false
-  VIP: false
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true

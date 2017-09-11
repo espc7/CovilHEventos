@@ -1,32 +1,22 @@
-#
-# COMO CONFIGURAR EVENTOS AUTOMATICOS
-# Dia - Hora:Minuto - NomeArquivo
+#           CONFIGURAÇÃO
+# Dia-Hora:Minuto-NomeArquivo;vip
 # Dia é opcional, se não tiver dia, ele vai acontecer todos dias
 # Hora:Minuto e NomeArquivo são obrigatórios
 # No NomeArquivo não é necessario .yml no fim
 # Evite marcar eventos para realizarem na mesma hora e minuto para evitar problemas
-# Para evento vip você cria uma cópia do arquivo do evento, e mude vip para true
+# Para evento vip você coloca ";vip" no fim da linha
+# Caso você queira criar um evento corrida qualquer outro que use placa no fim, crie uma cópia do eventoexemplo.yml
+# Nunca altere na configuração do evento a opção "Config.Evento_Type"
 #
 Horarios:
-  - "segunda-03:00-subida_mortal"
-  - "terca-04:00-escalada"
-  - "05:00-buraco273"
-  - "06:00-parkour"
-  - "09:00-speed"
-  - "09:30-air"
-  - "11:00-batataquente"
-  - "12:00-subida_mortal"
-  - "13:00-parkour2"
-  - "13:30-batataquente"
-  - "14:00-corrida1"
-  - "15:00-speed2"
-  - "16:00-parkour3"
-  - "17:00-batataquente"
-  - "18:00-buraco273"
-  - "19:00-parkour"
-  - "20:00-speed"
-  - "21:00-air"
-  - "22:00-corrida1"
+  - "09:00-batataquente"
+  - "10:00-bowspleef"
+  - "11:00-eventoexemplo"
+  - "12:00-parkour"
+  - "12:30-frog;vip"
+  - "13:00-paintball"
+  - "15:00-spleef"
+  - "sabado-15:10-killer"
 
 Money_Multiplicador: 1
 
@@ -74,7 +64,7 @@ Mensagens:
     - "&9/evento top vencedores &f- Os que mais venceram"
     - "&9/evento top participacoes &f- Os que mais participaram"
   DefaultAdmin:
-    - "&4/evento iniciar <nome> &c- Inicia um evento"
+    - "&4/evento iniciar <nome> <true/false> &c- Inicia um evento"
     - "&4/evento cancelar &c- Cancela um evento"
     - "&4/evento setloc entrada <evento> &c- Seta a entrada"
     - "&4/evento setloc saida <evento> &c- Seta a saida"

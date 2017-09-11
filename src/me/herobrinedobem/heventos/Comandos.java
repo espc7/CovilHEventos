@@ -301,7 +301,7 @@ public class Comandos implements CommandExecutor {
 						p.sendMessage("§4[Evento] §cUtilize /evento iniciar <nome> <true/false>");
 						return true;
 					}
-					if (HEventos.getHEventos().getEventosController().externalEvento(args[1])) {
+					if (HEventos.getHEventos().getEventosController().externalEvento(args[1], Boolean.parseBoolean(args[2]))) {
 						return true;
 					}
 					if (!HEventos.getHEventos().getEventosController().hasEvento(args[1])) {

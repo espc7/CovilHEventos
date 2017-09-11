@@ -3,6 +3,7 @@ package me.herobrinedobem.heventos.utils;
 import java.util.Calendar;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoType;
@@ -11,7 +12,7 @@ import me.herobrinedobem.heventos.api.events.StartEvent;
 public class AutoStartEvents {
 
 	public static void AutoStart() {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(HEventos.getHEventos(), new Runnable() {
+		Bukkit.getScheduler().runTaskTimer(HEventos.getHEventos(), new Runnable() {
 			@Override
 			public void run() {
 				Calendar cal = Calendar.getInstance();
@@ -19,30 +20,50 @@ public class AutoStartEvents {
 				int minute = cal.get(Calendar.MINUTE);
 				int day = cal.get(Calendar.DAY_OF_WEEK);
 				for (String s : HEventos.getHEventos().getConfig().getStringList("Horarios")) {
-					String[] split1 = s.split("-");
-					if (split1.length == 2) {
-						if ((hour == getHora(split1[0].split(":")[0]))
-								&& (minute == getMinuto(split1[0].split(":")[1]))) {
-							if (HEventos.getHEventos().getEventosController().getEvento() != null)
+					String[] separadorVip = s.split(";");
+					String[] separadorEventos = separadorVip[0].split("-");
+					if (HEventos.getHEventos().getEventosController().getEvento() != null)
+						return;
+					if (separadorEventos.length == 2) {
+						if (hour == getHora(separadorEventos[0].split(":")[0])
+								&& minute == getMinuto(separadorEventos[0].split(":")[1])
+								&& cal.get(Calendar.SECOND) <= 10) {
+							if (!HEventos.getHEventos().getEventosController().hasEvento(separadorEventos[1]))
 								return;
-							if (!HEventos.getHEventos().getEventosController().hasEvento(split1[1]))
-								return;
-							HEventos.getHEventos().getEventosController().setEvento(split1[1],
-									EventoType.getEventoType(split1[1]));
+							YamlConfiguration eventoType = HEventos.getHEventos().getEventosController()
+									.getConfigFile(separadorEventos[1]);
+							HEventos.getHEventos().getEventosController().setEvento(separadorEventos[1],
+									EventoType.getEventoType(eventoType.getString("Config.Evento_Type")));
+							if (separadorVip.length == 2) {
+								if (separadorVip[1].equals("vip")) {
+
+								}
+								HEventos.getHEventos().getEventosController().getEvento().setVip(true);
+							}
 							HEventos.getHEventos().getEventosController().getEvento().run();
 							StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(),
 									true);
 							HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 						}
-					} else if (split1.length == 3) {
-						if ((day == getDia(split1[0])) && (hour == getHora(split1[1].split(":")[0]))
-								&& (minute == getMinuto(split1[1].split(":")[1]))) {
-							if (HEventos.getHEventos().getEventosController().getEvento() != null)
+					} else if (separadorEventos.length == 3) {
+						if (day != getDia(separadorEventos[0])) {
+							return;
+						}
+						if (hour == getHora(separadorEventos[1].split(":")[0])
+								&& minute == getMinuto(separadorEventos[1].split(":")[1])
+								&& cal.get(Calendar.SECOND) <= 10) {
+							if (!HEventos.getHEventos().getEventosController().hasEvento(separadorEventos[2]))
 								return;
-							if (!HEventos.getHEventos().getEventosController().hasEvento(split1[1]))
-								return;
-							HEventos.getHEventos().getEventosController().setEvento(split1[2],
-									EventoType.getEventoType(split1[2]));
+							YamlConfiguration eventoType = HEventos.getHEventos().getEventosController()
+									.getConfigFile(separadorEventos[2]);
+							HEventos.getHEventos().getEventosController().setEvento(separadorEventos[2],
+									EventoType.getEventoType(eventoType.getString("Config.Evento_Type")));
+							if (separadorVip.length == 2) {
+								if (separadorVip[1].equals("vip")) {
+
+								}
+								HEventos.getHEventos().getEventosController().getEvento().setVip(true);
+							}
 							HEventos.getHEventos().getEventosController().getEvento().run();
 							StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(),
 									true);

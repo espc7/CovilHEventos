@@ -9,7 +9,6 @@ Config:
   Tempo_Voltar_Neve: 2
   Tempo_Comecar: 30
   PVP: false
-  VIP: false
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true

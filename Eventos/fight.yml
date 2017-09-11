@@ -8,7 +8,6 @@ Config:
   Tempo_Luta: 180
   Tempo_Entre_Lutas: 10
   PVP: true
-  VIP: false
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true

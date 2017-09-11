@@ -8,7 +8,6 @@ Config:
   Tempo_Entre_Avisos: 120
   Tempo_PVP_Off: 60
   PVP: true
-  VIP: false
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true

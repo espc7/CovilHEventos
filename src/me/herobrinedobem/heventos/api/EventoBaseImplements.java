@@ -16,6 +16,6 @@ public interface EventoBaseImplements {
 
 	public void cancelEventMethod();
 	
-	public void externalPluginStart();
+	public void externalPluginStart(boolean vip);
 
 }

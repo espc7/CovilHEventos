@@ -7,7 +7,6 @@ Config:
   Evento_Tempo_Minutos: 10
   Mensagens_Tempo_Minutos: 1
   PVP: true
-  VIP: false
   Assistir_Ativado: true
   Contar_Participacao: true
   Minerios: "56;14;15;16;73;129"

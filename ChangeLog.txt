@@ -1,5 +1,14 @@
 ChangeLog HEventosReloaded
 
+HEventos ChangeLog version=1.6.2
+
+09/09/2017
+Instruções na config.yml atualizadas
+Eventos automaticos não darão mais problemas
+Sistema de TAGS pronto para receber outros eventos de equipe
+Sistema que implementa TAG nos eventos refeito, para maior flexibilidade de eventos
+Criado novo sistema para realização de eventos vip e automaticos
+
 HEventos ChangeLog version=1.6.1
 
 06/09/2017

@@ -8,7 +8,6 @@ Config:
   Tempo_Chao_Regenera: 60
   Tempo_Comecar: 15
   PVP: false
-  VIP: false
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true

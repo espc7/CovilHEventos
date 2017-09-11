@@ -6,11 +6,11 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -25,9 +25,8 @@ import me.herobrinedobem.heventos.api.events.TeamWinEvent;
 public class LegendChat implements Listener {
 
 	private Map<String, String> tags;
-	private Map<String, String> eventos = new HashMap<>();
-	private List<String> paintball = new ArrayList<>();
-	private String paintballString;
+	private Map<String, Object> eventos = new HashMap<>();
+	private Set<String> nomeEventosList = new HashSet<>();
 
 	public LegendChat() {
 		carregarTags();
@@ -41,9 +40,8 @@ public class LegendChat implements Listener {
 			if (!configEvento.isList("Vencedores." + filename))
 				eventos.put(filename, configEvento.getString("Vencedores." + filename));
 			else {
-				paintballString = filename;
-				paintball.clear();
-				paintball.addAll(configEvento.getStringList("Vencedores." + filename));
+				eventos.put(filename, configEvento.getStringList("Vencedores." + filename));
+				nomeEventosList.add(filename);
 			}
 		}
 	}
@@ -69,18 +67,24 @@ public class LegendChat implements Listener {
 		}
 	}
 
+	public boolean procurarListString(Player e) {
+		for (String fileName : nomeEventosList) {
+			if (eventos.get(fileName).toString().contains(e.getName() + "]")
+					|| eventos.get(fileName).toString().contains(e.getName() + ",")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@EventHandler
 	private void onTimeWinEvent(TeamWinEvent e) {
 		String fileName = HEventos.getHEventos().getEventosController().getFilename();
 		if (tags.containsKey(fileName)) {
-			this.paintballString = fileName;
-			paintball.clear();
 			File fileEvento = new File(HEventos.getHEventos().getDataFolder().getAbsolutePath() + "/Tags.yml");
 			YamlConfiguration configEvento = YamlConfiguration.loadConfiguration(fileEvento);
-			for (Player player : e.getList()) {
-				paintball.add(player.getName());
-			}
-			configEvento.set("Vencedores." + fileName, paintball);
+			eventos.put(fileName, e.getList());
+			configEvento.set("Vencedores." + fileName, e.getList());
 			try {
 				configEvento.save(fileEvento);
 			} catch (Exception ex) {
@@ -107,20 +111,28 @@ public class LegendChat implements Listener {
 
 	@EventHandler
 	private void onChat(ChatMessageEvent e) {
-		String playerName = e.getSender().getName();
-		if (!eventos.containsValue(playerName) && !paintball.contains(playerName))
-			return;
 		if (e.getTags().contains("heventos")) {
+			String playerName = e.getSender().getName();
+			boolean achou = procurarListString(e.getSender());
+			if (!eventos.containsValue(playerName) && !achou)
+				return;
 			StringBuilder sBuilder = new StringBuilder();
 			if (eventos.containsValue(playerName)) {
-				for (Entry<String, String> es : eventos.entrySet()) {
-					if (e.getSender() == HEventos.getHEventos().getServer().getPlayer(es.getValue())) {
-						sBuilder.append(tags.get(es.getKey()));
+				for (Entry<String, Object> es : eventos.entrySet()) {
+					if (es.getValue() instanceof String) {
+						if (e.getSender() == HEventos.getHEventos().getServer().getPlayer((String) es.getValue())) {
+							sBuilder.append(tags.get(es.getKey()));
+						}
 					}
 				}
 			}
-			if (paintball.contains(playerName)) {
-				sBuilder.append(tags.get(paintballString));
+			if (achou) {
+				for (String fileName : nomeEventosList) {
+					if (eventos.get(fileName).toString().contains(e.getSender().getName() + "]")
+							|| eventos.get(fileName).toString().contains(e.getSender().getName() + ",")) {
+						sBuilder.append(tags.get(fileName));
+					}
+				}
 			}
 			if (sBuilder != null) {
 				e.setTagValue("heventos", sBuilder.toString());
