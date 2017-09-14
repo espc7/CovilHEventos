@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import me.herobrinedobem.heventos.HEventos;
 import me.herobrinedobem.heventos.api.EventoBaseAPI;
 import me.herobrinedobem.heventos.api.EventoBaseListener;
+import me.herobrinedobem.heventos.api.EventoType;
 import me.herobrinedobem.heventos.api.events.PlayerLoseEvent;
 import me.herobrinedobem.heventos.eventos.Spleef;
 
@@ -16,7 +17,7 @@ public class SpleefListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 
 	@EventHandler
-	public void onBlockBreakEvento(BlockBreakEvent e) {
+	public void onBlockBreakEventoSPLEEF(BlockBreakEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -33,13 +34,15 @@ public class SpleefListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onPlayerMoveEvent(PlayerMoveEvent e) {
+	public void onPlayerMoveEventSPLEEF(PlayerMoveEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
+		if (evento.getEventoType() == EventoType.SPLEEF)
+			return;
 		if (!evento.getParticipantes().contains(e.getPlayer()))
 			return;
-		if ((evento.isAberto()))
+		if (evento.isAberto())
 			return;
 		if (!evento.isOcorrendo())
 			return;

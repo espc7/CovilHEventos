@@ -18,9 +18,9 @@ public class BukkitEventHelper {
 				if (method.getAnnotation(EventHandler.class) != null) {
 					BukkitEventHelper.unregisterEvent((Class<? extends Event>) method.getParameterTypes()[0], listener, plugin);
 				}
-
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -30,6 +30,7 @@ public class BukkitEventHelper {
 				try {
 					((HandlerList) eventClass.getMethod("getHandlerList").invoke(null)).unregister(regListener);
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}

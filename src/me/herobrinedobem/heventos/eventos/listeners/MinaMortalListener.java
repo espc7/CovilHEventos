@@ -13,7 +13,7 @@ public class MinaMortalListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 	
 	@EventHandler
-	public void onPotionSplashEvent(PotionSplashEvent e) {
+	public void onPotionSplashEventMINA(PotionSplashEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento != null) {
 			if (e.getPotion().getShooter() instanceof Player) {

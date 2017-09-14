@@ -83,15 +83,9 @@ public class Spleef extends EventoBaseAPI {
 			}
 		}
 		if (getParticipantes().size() == 1) {
-			Player player = null;
-			for (Player p : getParticipantes()) {
-				player = p;
-			}
+			Player player = getParticipantes().get(0);
 			PlayerWinEvent event = new PlayerWinEvent(player, this, false);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-			for (Block b : cubo.getBlocks()) {
-				b.setType(Material.getMaterial(7));
-			}
 			stopEvent();
 		}
 	}

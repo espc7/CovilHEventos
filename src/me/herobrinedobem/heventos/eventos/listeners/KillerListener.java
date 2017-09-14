@@ -17,7 +17,7 @@ public class KillerListener extends EventoBaseListener {
 	EventoBaseAPI evento;
 	
 	@EventHandler
-	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
+	public void onEntityDamageByEntityEventKILLER(EntityDamageByEntityEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -52,7 +52,7 @@ public class KillerListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onPotionSplashEvent(PotionSplashEvent e) {
+	public void onPotionSplashEventKILLER(PotionSplashEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento != null) {
 			if (e.getPotion().getShooter() instanceof Player) {

@@ -18,7 +18,7 @@ public class PaintballListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 
 	@EventHandler
-	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
+	public void onEntityDamageByEntityEventPAINTBALL(EntityDamageByEntityEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -69,7 +69,7 @@ public class PaintballListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onPlayerLoseEvent(PlayerLoseEvent e) {
+	public void onPlayerLoseEventPAINTBALL(PlayerLoseEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		Paintball paintball = (Paintball) evento;
 		if (paintball.getTimeVermelho().contains(e.getPlayer())) {
@@ -85,7 +85,7 @@ public class PaintballListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onInventoryClickEvent(InventoryClickEvent e) {
+	public void onInventoryClickEventPAINTBALL(InventoryClickEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -96,7 +96,7 @@ public class PaintballListener extends EventoBaseListener {
 		e.setCancelled(true);
 	}
 
-	public void eliminar(Paintball paintball, Player atirou, Player atingido) {
+	private void eliminar(Paintball paintball, Player atirou, Player atingido) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		atingido.setHealth(20.0);
 		PlayerLoseEvent event = new PlayerLoseEvent(atingido, evento);

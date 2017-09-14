@@ -1,5 +1,10 @@
 ChangeLog HEventosReloaded
 
+HEventos ChangeLog version=1.6.4
+
+14/09/2017
+Bug de Listerners corrigido novamente
+
 HEventos ChangeLog version=1.6.3
 
 11/09/2017

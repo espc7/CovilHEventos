@@ -18,7 +18,7 @@ public class BatataQuenteListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 
 	@EventHandler
-	public void onPlayerInteractEvent(PlayerInteractEntityEvent e) {
+	public void onPlayerInteractEventBQUENTE(PlayerInteractEntityEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -44,7 +44,7 @@ public class BatataQuenteListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onInventoryClickEvent(InventoryClickEvent e) {
+	public void onInventoryClickEventBQUENTE(InventoryClickEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -56,7 +56,7 @@ public class BatataQuenteListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onPlayerDropItem(PlayerDropItemEvent a) {
+	public void onPlayerDropItemBQUENTE(PlayerDropItemEvent a) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;

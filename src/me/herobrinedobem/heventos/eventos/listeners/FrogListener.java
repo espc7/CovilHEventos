@@ -17,7 +17,7 @@ public class FrogListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 
 	@EventHandler
-	public void onPlayerMoveEvent(PlayerMoveEvent e) {
+	public void onPlayerMoveEventFROG(PlayerMoveEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;

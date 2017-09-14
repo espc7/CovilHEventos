@@ -15,7 +15,7 @@ public class BowSpleefListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 
 	@EventHandler
-	public void onPlayerMoveEvent(PlayerMoveEvent e) {
+	public void onPlayerMoveEventBSPLEEF(PlayerMoveEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;

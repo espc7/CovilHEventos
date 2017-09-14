@@ -20,7 +20,7 @@ public class SemaforoListener extends EventoBaseListener {
 	private EventoBaseAPI evento;
 
 	@EventHandler
-	public void onPlayerInteractEvent(PlayerInteractEvent e) {
+	public void onPlayerInteractEventSEMAFORO(PlayerInteractEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
@@ -47,7 +47,7 @@ public class SemaforoListener extends EventoBaseListener {
 	}
 
 	@EventHandler
-	public void onPlayerMoveEvent(PlayerMoveEvent e) {
+	public void onPlayerMoveEventSEMAFORO(PlayerMoveEvent e) {
 		evento = HEventos.getHEventos().getEventosController().getEvento();
 		if (evento == null)
 			return;
