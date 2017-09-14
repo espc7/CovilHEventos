@@ -21,6 +21,7 @@ Horarios:
 Money_Multiplicador: 1
 
 Ativar_Configs_Exemplos: true
+Bloquear_Teleporte: true
 
 MySQL:
   Ativado: false
@@ -41,6 +42,7 @@ Mensagens:
   Desconectou: "&9[Evento] &fO jogador &6$player$ &fdesconectou no evento!"
   Saiu: "&9[Evento] &fO jogador &6$player$ &fsaiu do evento!"
   Comando_Bloqueado: "&9[Evento] &fEsse comando e bloqueado no evento!"
+  Teleporte_Bloqueado: "&9[Evento] &fTeleporte durante o evento esta bloqueado!"
   Nenhum_Evento: "&9[Evento] &fNao ha nenhum evento ocorrendo no momento!"
   Evento_Fechado: "&9[Evento] &fO evento esta fechado, para ver digite /evento assistir"
   Ja_Participa: "&9[Evento] &fVoce ja esta participando desse evento!"

@@ -70,8 +70,8 @@ public class MainListeners implements Listener {
 			e.getPlayer().getInventory().setBoots(null);
 			e.getPlayer().getInventory().clear();
 		}
-		e.getPlayer().teleport(e.getEvento().getSaida());
 		e.getEvento().getParticipantes().remove(e.getPlayer());
+		e.getPlayer().teleport(e.getEvento().getSaida());
 	}
 
 	@EventHandler
@@ -99,12 +99,17 @@ public class MainListeners implements Listener {
 		if (e.getEvento().isContarVitoria()) {
 			HEventos.getHEventos().getDatabaseManager().addWinPoint(e.getPlayer().getName(), 1);
 		}
-		for (String linha : e.getEvento().getConfig().getStringList("Premios.Itens")) {
-			e.getPlayer().getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
+		if (e.getEvento().getConfig().getStringList("Premios.Itens") != null) {
+			for (String linha : e.getEvento().getConfig().getStringList("Premios.Itens")) {
+				e.getPlayer().getInventory().addItem(new ItemStack(ItemStackFormat.getItem(linha)));
+			}
 		}
-		for (String comando : e.getEvento().getConfig().getStringList("Premios.Comandos")) {
-			HEventos.getHEventos().getServer().dispatchCommand(HEventos.getHEventos().getServer().getConsoleSender(),
-					comando.replace("$player$", e.getPlayer().getName()));
+		if (e.getEvento().getConfig().getStringList("Premios.Comandos") != null) {
+			for (String comando : e.getEvento().getConfig().getStringList("Premios.Comandos")) {
+				HEventos.getHEventos().getServer().dispatchCommand(
+						HEventos.getHEventos().getServer().getConsoleSender(),
+						comando.replace("$player$", e.getPlayer().getName()));
+			}
 		}
 		HEventos.getHEventos().getEconomy().depositPlayer(e.getPlayer().getName(),
 				e.getEvento().getConfig().getDouble("Premios.Money")

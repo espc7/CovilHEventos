@@ -69,13 +69,13 @@ public class EventoBaseAPI implements EventoBaseImplements {
 						HEventos.getHEventos().getDatabaseManager().addParticipationPoint(p.getName(), 1);
 					}
 				}
-				EventoBaseAPI.this.aberto = false;
-				EventoBaseAPI.this.parte1 = true;
 				EventoBaseAPI.this.sendMessageList("Mensagens.Iniciando");
 				this.startEventMethod();
 				for (Player p : EventoBaseAPI.this.camarotePlayers) {
 					p.teleport(EventoBaseAPI.this.camarote);
 				}
+				EventoBaseAPI.this.aberto = false;
+				EventoBaseAPI.this.parte1 = true;
 			} else {
 				EventoBaseAPI.this.stopEvent();
 				EventoBaseAPI.this.sendMessageList("Mensagens.Minimo_Players");

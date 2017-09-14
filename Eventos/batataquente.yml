@@ -9,8 +9,8 @@ Config:
   Contar_Vitoria: true
   Contar_Participacao: true
   Tempo_Batata_Explodir: 15
-  Tempo_Batata_Avisos: [15, 10, 5, 4, 3, 2, 1]
   Inv_Vazio: true
+  Tempo_Batata_Avisos: [15, 10, 5, 4, 3, 2, 1]
 
 Premios:
   Itens:

@@ -12,7 +12,7 @@ public class ConfigUtil {
 			msgComandoBloqueado, msgNenhumEvento, msgEventoFechado,
 			msgJaParticipa, msgEntrou, msgNaoParticipa, msgJaEstaCamarote,
 			msgAssistindo, msgEventoVip, msgAssistirDesativado,
-			msgInventarioVazio, msgAssistirBloqueado;
+			msgInventarioVazio, msgAssistirBloqueado, msgTeleporteBloqueado;
 	private List<String> comandosBloqueados = new ArrayList<>();
 	private boolean mysqlAtivado;
 	
@@ -22,6 +22,7 @@ public class ConfigUtil {
 	}
 
 	public void setupConfigUtils(){
+		this.setMsgTeleporteBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Teleporte_Bloqueado").replace("&", "§"));
 		this.setMsgAssistirBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Assistir_SemPermission").replace("&", "§"));
 		this.setMsgInventarioVazio(HEventos.getHEventos().getConfig().getString("Mensagens.Inventario_Vazio").replace("&", "§"));
 		this.setMsgAssistirDesativado(HEventos.getHEventos().getConfig().getString("Mensagens.Assistir_Desativado").replace("&", "§"));
@@ -210,5 +211,13 @@ public class ConfigUtil {
 
 	public void setMsgAssistirBloqueado(String msgAssistirBloqueado) {
 		this.msgAssistirBloqueado = msgAssistirBloqueado;
+	}
+
+	public String getMsgTeleporteBloqueado() {
+		return msgTeleporteBloqueado;
+	}
+
+	public void setMsgTeleporteBloqueado(String msgTeleporteBloqueado) {
+		this.msgTeleporteBloqueado = msgTeleporteBloqueado;
 	}
 }
