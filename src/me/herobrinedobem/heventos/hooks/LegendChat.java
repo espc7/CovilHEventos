@@ -121,7 +121,7 @@ public class LegendChat implements Listener {
 			StringBuilder sBuilder = new StringBuilder();
 			if (eventosUnicoVencedor.containsValue(e.getSender().getPlayer().getName())) {
 				for (Entry<String, String> es : eventosUnicoVencedor.entrySet()) {
-					if (e.getSender().getPlayer() == HEventos.getHEventos().getServer().getPlayer(es.getValue())) {
+					if (e.getSender().getName().equalsIgnoreCase(es.getValue())) {
 						sBuilder.append(tags.get(es.getKey()));
 					}
 				}

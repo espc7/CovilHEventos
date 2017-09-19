@@ -50,7 +50,7 @@ public class MainListeners implements Listener {
 	}
 
 	@EventHandler
-	private void onEventoPlayerOutEvent(PlayerLeaveEvent e) {
+	public void onEventoPlayerOutEvent(PlayerLeaveEvent e) {
 		if (e.isAssistindo()) {
 			HEventos.getHEventos().getEventosController().getEvento().getCamarotePlayers().remove(e.getPlayer());
 			e.getPlayer().teleport(HEventos.getHEventos().getEventosController().getEvento().getSaida());
@@ -62,7 +62,7 @@ public class MainListeners implements Listener {
 	}
 
 	@EventHandler
-	private void onEventoPlayerLoseEvent(PlayerLoseEvent e) {
+	public void onEventoPlayerLoseEvent(PlayerLoseEvent e) {
 		if (e.getEvento().isInventoryEmpty()) {
 			e.getPlayer().getInventory().setHelmet(null);
 			e.getPlayer().getInventory().setChestplate(null);
@@ -75,7 +75,7 @@ public class MainListeners implements Listener {
 	}
 
 	@EventHandler
-	private void onTimeWinEvent(TeamWinEvent e) {
+	public void onTimeWinEvent(TeamWinEvent e) {
 		for (Player p : e.getList()) {
 			PlayerWinEvent event = new PlayerWinEvent(p, HEventos.getHEventos().getEventosController().getEvento(),
 					true);
@@ -88,7 +88,7 @@ public class MainListeners implements Listener {
 	}
 
 	@EventHandler
-	private void onEventoPlayerWinEvent(PlayerWinEvent e) {
+	public void onEventoPlayerWinEvent(PlayerWinEvent e) {
 		if (e.getEvento().isInventoryEmpty()) {
 			e.getPlayer().getInventory().setHelmet(null);
 			e.getPlayer().getInventory().setChestplate(null);
@@ -111,10 +111,11 @@ public class MainListeners implements Listener {
 						comando.replace("$player$", e.getPlayer().getName()));
 			}
 		}
-		HEventos.getHEventos().getEconomy().depositPlayer(e.getPlayer().getName(),
-				e.getEvento().getConfig().getDouble("Premios.Money")
-						* HEventos.getHEventos().getConfig().getInt("Money_Multiplicador"));
-
+		if (HEventos.getHEventos().getEconomy() != null) {
+			HEventos.getHEventos().getEconomy().depositPlayer(e.getPlayer(),
+					e.getEvento().getConfig().getDouble("Premios.Money")
+							* HEventos.getHEventos().getConfig().getInt("Money_Multiplicador"));
+		}
 		if (!e.isTeamEvent()) {
 			for (String s : e.getEvento().getConfig().getStringList("Mensagens.Vencedor")) {
 				HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "§")
@@ -127,7 +128,7 @@ public class MainListeners implements Listener {
 	}
 
 	@EventHandler
-	private void onPlayerInteractEvent(PlayerInteractEvent e) {
+	public void onPlayerInteractEvent(PlayerInteractEvent e) {
 		if (!e.getPlayer().hasPermission("heventos.admin"))
 			return;
 		if (!(e.getPlayer().getItemInHand().getType() == Material.IRON_AXE))

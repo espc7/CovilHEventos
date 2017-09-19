@@ -99,7 +99,7 @@ public class FightListener extends EventoBaseListener {
 		}
 		if (HEventos.getHEventos().getSc() != null) {
 			fight.getClans()
-					.remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+					.remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()));
 			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
 		}
 	}

@@ -69,7 +69,7 @@ public class KillerListener extends EventoBaseListener {
 	public void onPlayerLoseEventKILLER(PlayerLoseEvent e) {
 		Killer killer = (Killer) evento;
 		if (HEventos.getHEventos().getSc() != null) {
-			killer.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+			killer.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()));
 			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
 		}
 	}

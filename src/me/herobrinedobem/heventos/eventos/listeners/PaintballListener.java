@@ -78,8 +78,7 @@ public class PaintballListener extends EventoBaseListener {
 			paintball.getTimeAzul().remove(e.getPlayer());
 		}
 		if (HEventos.getHEventos().getSc() != null) {
-			paintball.getClans()
-					.remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer().getName()));
+			paintball.getClans().remove(HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()));
 			HEventos.getHEventos().getSc().getClanManager().getClanPlayer(e.getPlayer()).setFriendlyFire(false);
 		}
 	}
@@ -101,8 +100,10 @@ public class PaintballListener extends EventoBaseListener {
 		atingido.setHealth(20.0);
 		PlayerLoseEvent event = new PlayerLoseEvent(atingido, evento);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-		HEventos.getHEventos().getEconomy().depositPlayer(atirou.getName(),
-				paintball.getConfig().getDouble("Premios.Money_PerKill"));
+		if (HEventos.getHEventos().getEconomy() != null) {
+			HEventos.getHEventos().getEconomy().depositPlayer(atirou,
+					paintball.getConfig().getDouble("Premios.Money_PerKill"));
+		}
 		atingido.sendMessage(evento.getConfig().getString("Mensagens.Eliminado").replace("&", "§")
 				.replace("$player$", atirou.getName()).replace("$EventoName$", paintball.getNome()));
 		atirou.sendMessage(evento.getConfig().getString("Mensagens.Eliminou").replace("&", "§")

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -29,19 +28,17 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
  * 
  * @author Herobrinedobem (Gabriel Henrique)
  * @author GabrielDev (DeathRush)
- * @version 1.6.4
+ * @version 1.6.5
  */
 public class HEventos extends JavaPlugin {
 
-	private static final Logger log = Logger.getLogger("Minecraft");
 	private List<EventoBaseAPI> externalEventos = new ArrayList<>();
 	private EventosController eventosController;
 	private Database databaseManager;
 	private Economy economy = null;
-	private SimpleClans sc;
-	private LegendChat lc;
+	private SimpleClans sc = null;
+	private LegendChat lc = null;
 	private ConfigUtil configUtil;
-	private MainListeners mainListeners = new MainListeners();
 
 	/**
 	 * Método que e chamado quando o plugin iniciar, serao criadas as configs, as
@@ -51,12 +48,12 @@ public class HEventos extends JavaPlugin {
 	 */
 	@Override
 	public void onEnable() {
-		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fIniciando o plugin!");
+		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fIniciando o plugina!");
 		loadConfigs();
-		loadDependencies();
 		loadDatabase();
 		loadCommands();
 		loadListeners();
+		loadDependencies();
 		loadEventos();
 		Bukkit.getConsoleSender().sendMessage(
 				"§9[HEventosReloaded] §fPlugin Habilitado - (Versao §9" + this.getDescription().getVersion() + "§f)");
@@ -71,7 +68,7 @@ public class HEventos extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		// Verificamos se nao ha nenhum evento ocorrendo no momento
-		if (this.eventosController.getEvento() != null) {
+		if (eventosController.getEvento() != null) {
 			// Caso tenha algum evento ocorrendo criamos o listener relacionado a quando um
 			// evento e cancelado
 			StopEvent event = new StopEvent(HEventos.getHEventos().getEventosController().getEvento(),
@@ -90,7 +87,8 @@ public class HEventos extends JavaPlugin {
 	 */
 	private void loadConfigs() {
 		if (!new File(this.getDataFolder(), "config.yml").exists()) {
-			this.saveDefaultConfig();
+			getConfig().options().copyDefaults(true);
+	        saveConfig();
 			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fConfig.yml criada com sucesso!");
 		} else {
 			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fConfig.yml carregada com sucesso!");
@@ -153,15 +151,13 @@ public class HEventos extends JavaPlugin {
 	 */
 	private void loadDependencies() {
 		if (!setupSimpleClans()) {
-			log.severe(String.format("[%s] - SimpleClans não encontrado!", getDescription().getName()));
+			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §cSimpleClans não encontrado!");
 		}
 		if (!setupEconomy()) {
-			log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-			getServer().getPluginManager().disablePlugin(this);
+			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §cVault não encontrado!");
 		}
 		if (!setupLegendChat()) {
-			log.severe(String.format("[%s] - LegendChat não encontrado, Listeners com chat desativados!",
-					getDescription().getName()));
+			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §cLegendChat não encontrado!");
 		}
 	}
 
@@ -201,7 +197,7 @@ public class HEventos extends JavaPlugin {
 	 * Metodo que ira carregar os listeners do plugin.
 	 */
 	private void loadListeners() {
-		this.getServer().getPluginManager().registerEvents(this.mainListeners, this);
+		getServer().getPluginManager().registerEvents(new MainListeners(), this);
 	}
 
 	/**
@@ -222,6 +218,7 @@ public class HEventos extends JavaPlugin {
 		if (rsp == null) {
 			return false;
 		}
+		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fVault encontrado com sucesso!");
 		economy = rsp.getProvider();
 		return economy != null;
 	}
@@ -229,7 +226,7 @@ public class HEventos extends JavaPlugin {
 	private boolean setupSimpleClans() {
 		Plugin plug = this.getServer().getPluginManager().getPlugin("SimpleClans");
 		if (plug != null) {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fSimpleClans 1 encontrado com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fSimpleClans encontrado com sucesso!");
 			this.sc = ((SimpleClans) plug);
 			return true;
 		}
@@ -244,7 +241,6 @@ public class HEventos extends JavaPlugin {
 			this.getServer().getPluginManager().registerEvents(this.lc, this);
 			return true;
 		}
-		this.lc = null;
 		return false;
 	}
 

@@ -40,7 +40,7 @@ public class EventoNormal extends EventoBaseAPI {
 				EventoCancellType.FINISHED);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 	}
-	
+
 	@Override
 	public void resetEvent() {
 		super.resetEvent();

@@ -12,7 +12,7 @@ import me.herobrinedobem.heventos.api.events.StartEvent;
 public class AutoStartEvents {
 
 	public static void AutoStart() {
-		Bukkit.getScheduler().runTaskTimer(HEventos.getHEventos(), new Runnable() {
+		Bukkit.getScheduler().runTaskTimerAsynchronously(HEventos.getHEventos(), new Runnable() {
 			@Override
 			public void run() {
 				Calendar cal = Calendar.getInstance();
@@ -36,9 +36,10 @@ public class AutoStartEvents {
 									EventoType.getEventoType(eventoType.getString("Config.Evento_Type")));
 							if (separadorVip.length == 2) {
 								if (separadorVip[1].equals("vip")) {
-
+									HEventos.getHEventos().getEventosController().getEvento().setVip(true);
+								} else {
+									HEventos.getHEventos().getEventosController().getEvento().setVip(false);
 								}
-								HEventos.getHEventos().getEventosController().getEvento().setVip(true);
 							}
 							HEventos.getHEventos().getEventosController().getEvento().run();
 							StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(),
@@ -60,9 +61,10 @@ public class AutoStartEvents {
 									EventoType.getEventoType(eventoType.getString("Config.Evento_Type")));
 							if (separadorVip.length == 2) {
 								if (separadorVip[1].equals("vip")) {
-
+									HEventos.getHEventos().getEventosController().getEvento().setVip(true);
+								} else {
+									HEventos.getHEventos().getEventosController().getEvento().setVip(false);
 								}
-								HEventos.getHEventos().getEventosController().getEvento().setVip(true);
 							}
 							HEventos.getHEventos().getEventosController().getEvento().run();
 							StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(),

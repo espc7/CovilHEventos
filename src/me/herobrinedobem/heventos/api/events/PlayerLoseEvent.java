@@ -17,14 +17,6 @@ public class PlayerLoseEvent extends Event {
 		this.evento = evento;
 	}
 	
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-		 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-	
 	public Player getPlayer() {
 		return player;
 	}
@@ -33,4 +25,11 @@ public class PlayerLoseEvent extends Event {
 		return evento;
 	}
 	
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+		 
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }
