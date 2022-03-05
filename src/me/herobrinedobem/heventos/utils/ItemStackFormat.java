@@ -12,7 +12,7 @@ public class ItemStackFormat {
 
 	/*
 	 * # ID:DATA, QUANTIDADE, nome:, lore:, enchantName:level # O plugin usa o
-	 * "name:" para anunciar o nome do item # Em nome: use "_" para fazer espaço,
+	 * "name:" para anunciar o nome do item # Em nome: use "_" para fazer espaÃ§o,
 	 * exemplo: # nome:Protection_4 = Protection 4
 	 */
 	
@@ -21,15 +21,18 @@ public class ItemStackFormat {
 		String tid = lines[0];
 		int quantity = Integer.parseInt(lines[1]);
 		byte data = 0;
-		int id;
+//		int id;
+		String mat;
 		if (tid.contains(":")) {
-			id = Integer.parseInt(tid.split(":")[0]);
+//			id = Integer.parseInt(tid.split(":")[0]);
+			mat = tid.split(":")[0];
 			data = Byte.parseByte(tid.split(":")[1]);
 		} else {
-			id = Integer.parseInt(tid);
+			mat = tid;
+//			id = Integer.parseInt(tid);
 		}
 		@SuppressWarnings("deprecation")
-		ItemStack item = new ItemStack(Material.getMaterial(id), quantity, (byte) data);
+		ItemStack item = new ItemStack(Material.getMaterial(mat), quantity, (byte) data);
 		ItemMeta meta = item.getItemMeta();
 		Double chance = 100.0;
 		if (lines.length > 1) {
@@ -37,9 +40,9 @@ public class ItemStackFormat {
 			for (int i = 2; i < lines.length; ++i) {
 				String temp = lines[i];
 				if (temp.startsWith("nome:")) {
-					meta.setDisplayName(lines[i].split("nome:")[1].replace("&", "§").replace("_", " "));
+					meta.setDisplayName(lines[i].split("nome:")[1].replace("&", "Â§").replace("_", " "));
 				} else if (temp.startsWith("lore:")) {
-					lore.add(lines[i].split("lore:")[1].replace("&", "§").replace("_", " "));
+					lore.add(lines[i].split("lore:")[1].replace("&", "Â§").replace("_", " "));
 				} else if (temp.startsWith("chance:")) {
 					chance = Double.parseDouble(lines[i].split("chance:")[1]);
 				} else {

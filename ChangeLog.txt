@@ -14,46 +14,46 @@ HEventos ChangeLog version=1.6.3
 
 11/09/2017
 BUG que bugava o plugin quando terminava o evento arrumado
-Hook com legendchat novamente refeito para otimização
-Teleporte durante o evento agora é bloqueado
+Hook com legendchat novamente refeito para otimizaÂ§Â§o
+Teleporte durante o evento agora Â§ bloqueado
 
 HEventos ChangeLog version=1.6.2
 
 09/09/2017
-Instruções na config.yml atualizadas
-Eventos automaticos não darão mais problemas
+InstruÂ§Â§es na config.yml atualizadas
+Eventos automaticos nÂ§o darÂ§o mais problemas
 Sistema de TAGS pronto para receber outros eventos de equipe
 Sistema que implementa TAG nos eventos refeito, para maior flexibilidade de eventos
-Criado novo sistema para realização de eventos vip e automaticos
+Criado novo sistema para realizaÂ§Â§o de eventos vip e automaticos
 
 HEventos ChangeLog version=1.6.1
 
 06/09/2017
 Update concluido '1.6.1' concluido
-Todos códigos de Listeners dos eventos foram melhorados.
+Todos cÂ§digos de Listeners dos eventos foram melhorados.
 Semaforo refeito, foi criado outro sistema para ele
-Corrigido BUG do semaforo que não encerrava se estive com 0 Players
+Corrigido BUG do semaforo que nÂ§o encerrava se estive com 0 Players
 Nome do Plugin trocado para HEventosReloaded
-Instruções adicionado no arquivo de Tags
+InstruÂ§Â§es adicionado no arquivo de Tags
 Sistema de TAG para cada evento implementado
 
 HEventos ChangeLog version=1.6.0
 
 05/09/2017
-Corrido BUG de Comandos Liberados não funcionando
-Arrumado bug no SimpleClans que não voltava a opção de ff auto
-Comando "/evento entrar" agora se usa só "/evento"
+Corrido BUG de Comandos Liberados nÂ§o funcionando
+Arrumado bug no SimpleClans que nÂ§o voltava a opÂ§Â§o de ff auto
+Comando "/evento entrar" agora se usa sÂ§ "/evento"
 Comando /evento report adicionado para admins reportarem erros
-Implementação do LegendChat iniciada
+ImplementaÂ§Â§o do LegendChat iniciada
 Alguns comentarios foram adicionado na config, para auxiliar nos eventos automaticos e vip
-Agora o scheduledEvent só funciona se o evento estiver fechado
+Agora o scheduledEvent sÂ§ funciona se o evento estiver fechado
 Evento Fight agora esta funcionando
 BUG que registrava listener @Override corrigido
 Novo comando /evento setloc NomeArquivo ?(saida/entrada/etc...)
-Comando de alterar localizações dos eventos alterados
-Implementação do Fight iniciada
-Opção para escolher a quantidade minima de players para cada evento
-Agora SimpleClans é opcional ter ele ou não
+Comando de alterar localizaÂ§Â§es dos eventos alterados
+ImplementaÂ§Â§o do Fight iniciada
+OpÂ§Â§o para escolher a quantidade minima de players para cada evento
+Agora SimpleClans Â§ opcional ter ele ou nÂ§o
 Removido hook com SimpleClans antigo!
 
 03/09/2017
@@ -61,38 +61,38 @@ API com Vault atualizada
 
 02/09/2017
 Novo recurso no Frog, agora ele escolhe todos blocos do mesmo tipo no evento, evento mais rapido
-EventoBaseAPI otimizado, remoção de excesso de código
+EventoBaseAPI otimizado, remoÂ§Â§o de excesso de cÂ§digo
 
 HEventos ChangeLog version=1.5.1
 
 01/09/2017
-Código do Frog melhorado, agora ele funciona por etapas
+CÂ§digo do Frog melhorado, agora ele funciona por etapas
 Corrigido fogo-amigo no PaintBall
 
 HEventos ChangeLog version=1.5
 
 31/08/2017
 Frog 100% completo
-Corrigido BUG que crashava o plugin quando tentava iniciar um evento que não existe
-Metodo de parar evento agora é controlado por listener
-Mensagens dos arquivos estão mais organizados
+Corrigido BUG que crashava o plugin quando tentava iniciar um evento que nÂ§o existe
+Metodo de parar evento agora Â§ controlado por listener
+Mensagens dos arquivos estÂ§o mais organizados
 Frog 80% completo
 
 30/08/2017
-Frog iniciou sua implementação
+Frog iniciou sua implementaÂ§Â§o
 BowSpleef funcionando em partes, talvez seja removido em breve
 Killer corrigido, e agora esta funcionando 100%
 Um pequeno guia foi criado para ensinar a criar itens
-Algumas instruções adicionada para ajudar os owner
+Algumas instruÂ§Â§es adicionada para ajudar os owner
 Novo recurso ItemStackFormat adicionado para dar itens ao players
-Nome de classes e pacotes alterados, para melhor visão do código
-Uma git própria para o plugin, fork removido
+Nome de classes e pacotes alterados, para melhor visÂ§o do cÂ§digo
+Uma git prÂ§pria para o plugin, fork removido
 
 29/08/2017
-Removidas algumas listeners que não estavam sendo usadas
+Removidas algumas listeners que nÂ§o estavam sendo usadas
 Arquivos dos eventos organizados
 Evento Batata Quente agora esta funcionando
 Corrigido qualquer erro relativo ClassCastException, o plugin nao estava consegindo acessar os eventos private
 Corrigido BUG do evento semaforo que bugava o PlayerMoveEvent
-Mensagens melhoradas para melhor modificação dos server-owners
+Mensagens melhoradas para melhor modificaÂ§Â§o dos server-owners
 ChangeLog criada XD

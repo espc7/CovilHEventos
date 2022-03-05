@@ -21,20 +21,20 @@ Itens_Lutas:
       Legs: null
       Boots: null
     Inventario:
-      - 268 1
+      - WOODEN_SWORD 1
   Ultima_Luta:
     Armadura:
-      Helmet: 306 1
-      Armor: 307 1
-      Legs: 308 1
-      Boots: 309 1
+      Helmet: IRON_HELMET 1
+      Armor: IRON_CHESTPLATE 1
+      Legs: IRON_LEGGINGS 1
+      Boots: IRON_BOOTS 1
     Inventario:
-      - 267 1
+      - IRON_SWORD 1
 
 Premios:
   Itens:
-    - 263 1
-    - 384 15
+    - DIAMOND_BLOCK 1
+    - ACACIA_SIGN 15
   Comandos:
     - "say $player$ toper"
   Money: 100000.0
@@ -101,7 +101,7 @@ Mensagens:
     - " "
   Luta_Sem_Vencedor:
     - " "
-    - "&9[$EventoName$] &fO duelo n„o houve vencedores"
+    - "&9[$EventoName$] &fO duelo n√£o houve vencedores"
     - " "
   Luta_Vencedor:
     - " "

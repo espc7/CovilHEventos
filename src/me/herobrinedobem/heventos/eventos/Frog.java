@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -53,7 +55,7 @@ public class Frog extends EventoBaseAPI {
 				EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_2"));
 		for (Block b : cubo.getBlocks()) {
 			if ((b.getType() != Material.SNOW_BLOCK) && (b.getType() != Material.AIR)) {
-				String id = b.getTypeId() + ":" + b.getData();
+				String id = b.getType() + ":" + b.getData();
 				blocosIniciaisBackup.put(b.getLocation(), id);
 				blocosInciais.add(b.getLocation());
 			} else {
@@ -67,7 +69,7 @@ public class Frog extends EventoBaseAPI {
 		for (Player p : getParticipantes()) {
 			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
-				p.sendMessage(s1.replace("&", "ง").replace("$tempo$", String.valueOf(tempoComecar))
+				p.sendMessage(s1.replace("&", "ยง").replace("$tempo$", String.valueOf(tempoComecar))
 						.replace("$EventoName$", getNome()));
 			}
 		}
@@ -92,7 +94,7 @@ public class Frog extends EventoBaseAPI {
 		}
 		for (Player p : getParticipantes()) {
 			for (String s1 : getConfig().getStringList("Mensagens.Comecou")) {
-				p.sendMessage(s1.replace("&", "ง").replace("$EventoName$", getNome()));
+				p.sendMessage(s1.replace("&", "ยง").replace("$EventoName$", getNome()));
 			}
 		}
 		etapa = 2;
@@ -104,10 +106,10 @@ public class Frog extends EventoBaseAPI {
 		HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(), () -> {
 			// selecionar bloco para virar neve
 			l = blocosInciais.get(r.nextInt(blocosInciais.size()));
-			int idBlock = l.getWorld().getBlockAt(l).getTypeId();
+			String idBlock = l.getWorld().getBlockAt(l).getType().name();
 			byte dataBlock = l.getWorld().getBlockAt(l).getData();
 			for (Location b : blocosIniciaisBackup.keySet()) {
-				if (l.getWorld().getBlockAt(b).getTypeId() != idBlock) {
+				if (l.getWorld().getBlockAt(b).getType().name() != idBlock) {
 					continue;
 				}
 				if (l.getWorld().getBlockAt(b).getData() != dataBlock) {
@@ -120,12 +122,15 @@ public class Frog extends EventoBaseAPI {
 			if (blocosInciais.isEmpty()) {
 				for (Player p : getParticipantes()) {
 					for (String s1 : getConfig().getStringList("Mensagens.LaVermelha")) {
-						p.sendMessage(s1.replace("&", "ง").replace("$EventoName$", getNome()));
+						p.sendMessage(s1.replace("&", "ยง").replace("$EventoName$", getNome()));
 					}
 				}
 				laVermelha = blocosRemovidos.get(r.nextInt(blocosRemovidos.size()));
-				w.getBlockAt(laVermelha).setType(Material.WOOL);
-				w.getBlockAt(laVermelha).setData((byte) 14);
+				w.getBlockAt(laVermelha).setType(Material.LEGACY_WOOL);
+				Bukkit.getConsoleSender().sendMessage(w.getBlockAt(laVermelha).getBlockData().getAsString());
+//				BlockData bd = (byte) 14;
+				w.getBlockAt(laVermelha).setBlockData(Bukkit.createBlockData(Material.RED_WOOL));
+				//w.getBlockAt(laVermelha).setData((byte) 14);
 				etapa = 6;
 				return;
 			}
@@ -160,10 +165,11 @@ public class Frog extends EventoBaseAPI {
 	public void resetEvent() {
 		for (Block b : cubo.getBlocks()) {
 			if (blocosIniciaisBackup.containsKey(b.getLocation())) {
-				int id = Integer.parseInt(blocosIniciaisBackup.get(b.getLocation()).split(":")[0]);
+				String id = blocosIniciaisBackup.get(b.getLocation()).split(":")[0];
 				byte data = Byte.parseByte(blocosIniciaisBackup.get(b.getLocation()).split(":")[1]);
-				b.setTypeId(id);
-				b.setData(data);
+				b.setType(Material.getMaterial(id));
+				b.setBlockData(Bukkit.createBlockData(Material.RED_WOOL));
+				//	b.setData(data);
 			} else {
 				b.setType(Material.AIR);
 			}

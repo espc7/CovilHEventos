@@ -28,13 +28,13 @@ public class BowSpleefListener extends EventoBaseListener {
 		BowSpleef bows = (BowSpleef) evento;
 		if (!(e.getTo().getY() < (bows.getChao().getLowerLocation().getY() - 2)))
 			return;
-		e.getPlayer().sendMessage(bows.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "ง")
+		e.getPlayer().sendMessage(bows.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "ยง")
 				.replace("$EventoName$", bows.getNome()));
 		PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(), evento);
 		HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 		String msg = bows.getConfig().getString("Mensagens.FoiEliminado");
 		for (Player p : bows.getParticipantes()) {
-			p.sendMessage(msg.replace("&", "ง").replace("$EventoName$", bows.getNome()).replace("$player$",
+			p.sendMessage(msg.replace("&", "ยง").replace("$EventoName$", bows.getNome()).replace("$player$",
 					e.getPlayer().getName()));
 
 		}

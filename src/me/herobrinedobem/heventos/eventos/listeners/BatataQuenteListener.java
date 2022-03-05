@@ -33,11 +33,11 @@ public class BatataQuenteListener extends EventoBaseListener {
 		if (!e.getPlayer().getName().equalsIgnoreCase(batataQuente.getPlayerComBatata().getName()))
 			return;
 		batataQuente.setPlayerComBatata((Player) e.getRightClicked());
-		e.getPlayer().getInventory().remove(new ItemStack(Material.POTATO_ITEM, 1));
-		pa.getPlayer().getInventory().addItem(new ItemStack(Material.POTATO_ITEM, 1));
+		e.getPlayer().getInventory().remove(new ItemStack(Material.POTATO, 1));
+		pa.getPlayer().getInventory().addItem(new ItemStack(Material.POTATO, 1));
 		for (Player p : batataQuente.getParticipantes()) {
 			for (String s : evento.getConfig().getStringList("Mensagens.Esta_Com_Batata")) {
-				p.sendMessage(s.replace("&", "ง").replace("$player$", batataQuente.getPlayerComBatata().getName())
+				p.sendMessage(s.replace("&", "ยง").replace("$player$", batataQuente.getPlayerComBatata().getName())
 						.replace("$EventoName$", batataQuente.getNome()));
 			}
 		}

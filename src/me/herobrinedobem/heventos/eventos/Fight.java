@@ -93,7 +93,7 @@ public class Fight extends EventoBaseAPI {
 					public void run() {
 						for (String s : getConfig().getStringList("Mensagens.Status")) {
 							HEventos.getHEventos().getServer()
-									.broadcastMessage(s.replace("&", "ง")
+									.broadcastMessage(s.replace("&", "ยง")
 											.replace("$jogadores$", String.valueOf(getParticipantes().size()))
 											.replace("$EventoName$", getNome()));
 						}
@@ -134,7 +134,7 @@ public class Fight extends EventoBaseAPI {
 		lutador2 = null;
 		for (Player p : getParticipantes()) {
 			for (String s1 : getConfig().getStringList("Mensagens.Iniciando_Em")) {
-				p.sendMessage(s1.replace("&", "ง")
+				p.sendMessage(s1.replace("&", "ยง")
 						.replace("$tempo$", String.valueOf(getConfig().getInt("Config.Tempo_Entre_Lutas")))
 						.replace("$EventoName$", getNome()));
 			}
@@ -157,7 +157,7 @@ public class Fight extends EventoBaseAPI {
 				}
 				for (Player p : getParticipantes()) {
 					for (String s1 : getConfig().getStringList("Mensagens.Iniciar_Luta")) {
-						p.sendMessage(s1.replace("&", "ง").replace("$EventoName$", getNome())
+						p.sendMessage(s1.replace("&", "ยง").replace("$EventoName$", getNome())
 								.replace("$lutador1$", lutador1.getName()).replace("$lutador2$", lutador2.getName()));
 					}
 				}
@@ -175,7 +175,7 @@ public class Fight extends EventoBaseAPI {
 								perdeuLuta(lutador2);
 								for (Player p : getParticipantes()) {
 									for (String s1 : getConfig().getStringList("Mensagens.Luta_Sem_Vencedor")) {
-										p.sendMessage(s1.replace("&", "ง").replace("$EventoName$", getNome()));
+										p.sendMessage(s1.replace("&", "ยง").replace("$EventoName$", getNome()));
 									}
 								}
 								lutaOcorrendo = false;
@@ -192,7 +192,7 @@ public class Fight extends EventoBaseAPI {
 		for (Player p1 : getParticipantes()) {
 			for (String s1 : getConfig().getStringList("Mensagens.Luta_Vencedor")) {
 				p1.sendMessage(
-						s1.replace("&", "ง").replace("$EventoName$", getNome()).replace("$vencedor$", p.getName()));
+						s1.replace("&", "ยง").replace("$EventoName$", getNome()).replace("$vencedor$", p.getName()));
 			}
 		}
 		p.getInventory().clear();

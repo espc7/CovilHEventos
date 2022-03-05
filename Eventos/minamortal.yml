@@ -9,7 +9,8 @@ Config:
   PVP: true
   Assistir_Ativado: true
   Contar_Participacao: true
-  Minerios: "56;14;15;16;73;129"
+  #Minerios: "56;14;15;16;73;129"
+  Minerios: "DIAMOND_ORE;GOLD_ORE;IRON_ORE;EMERALD_ORE"
   Porcentagem_De_Minerios: 20
   Inv_Vazio: false
 

@@ -15,8 +15,8 @@ Config:
 
 Premios:
   Itens:
-    - 263 1
-    - 384 15
+    - DIAMOND_BLOCK 1
+    - ACACIA_SIGN 15
   Comandos:
     - "setmito $player$"
   Money: 100000.0

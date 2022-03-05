@@ -125,7 +125,7 @@ public class EventoBaseAPI implements EventoBaseImplements {
 	public void sendMessageList(String list) {
 		for (String s : this.config.getStringList(list)) {
 			HEventos.getHEventos().getServer()
-					.broadcastMessage(s.replace("&", "ง").replace("$EventoName$", getNome()).replace("$minimo$",
+					.broadcastMessage(s.replace("&", "ยง").replace("$EventoName$", getNome()).replace("$minimo$",
 							String.valueOf(EventoBaseAPI.this.config.getInt("Config.Minimo_Partipantes"))));
 		}
 	}

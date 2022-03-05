@@ -22,26 +22,26 @@ public class ConfigUtil {
 	}
 
 	public void setupConfigUtils(){
-		this.setMsgTeleporteBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Teleporte_Bloqueado").replace("&", "ง"));
-		this.setMsgAssistirBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Assistir_SemPermission").replace("&", "ง"));
-		this.setMsgInventarioVazio(HEventos.getHEventos().getConfig().getString("Mensagens.Inventario_Vazio").replace("&", "ง"));
-		this.setMsgAssistirDesativado(HEventos.getHEventos().getConfig().getString("Mensagens.Assistir_Desativado").replace("&", "ง"));
-		this.setMsgEventoVip(HEventos.getHEventos().getConfig().getString("Mensagens.Evento_VIP").replace("&", "ง"));
-		this.setMsgMorreu(HEventos.getHEventos().getConfig().getString("Mensagens.Morreu").replace("&", "ง"));
-		this.setMsgDesconect(HEventos.getHEventos().getConfig().getString("Mensagens.Desconectou").replace("&", "ง"));
-		this.setMsgSaiu(HEventos.getHEventos().getConfig().getString("Mensagens.Saiu").replace("&", "ง"));
-		this.setMsgComandoBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Comando_Bloqueado").replace("&", "ง"));
-		this.setMsgNenhumEvento(HEventos.getHEventos().getConfig().getString("Mensagens.Nenhum_Evento").replace("&", "ง"));
-		this.setMsgEventoFechado(HEventos.getHEventos().getConfig().getString("Mensagens.Evento_Fechado").replace("&", "ง"));
-		this.setMsgJaParticipa(HEventos.getHEventos().getConfig().getString("Mensagens.Ja_Participa").replace("&", "ง"));
-		this.setMsgEntrou(HEventos.getHEventos().getConfig().getString("Mensagens.Entrou").replace("&", "ง"));
-		this.setMsgNaoParticipa(HEventos.getHEventos().getConfig().getString("Mensagens.Nao_Participa").replace("&", "ง"));
-		this.setMsgJaEstaCamarote(HEventos.getHEventos().getConfig().getString("Mensagens.Ja_Esta_Camarote").replace("&", "ง"));
-		this.setMsgAssistindo(HEventos.getHEventos().getConfig().getString("Mensagens.Assistindo").replace("&", "ง"));
-		this.setTopParticipacoes(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Participacoes").replace("&", "ง"));
-		this.setTopParticipacoesPosicao(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Participacoes_Posicao").replace("&", "ง"));
-		this.setTopVencedores(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Vencedores").replace("&", "ง"));
-		this.setTopVencedoresPosicao(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Vencedores_Posicao").replace("&", "ง"));
+		this.setMsgTeleporteBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Teleporte_Bloqueado").replace("&", "ยง"));
+		this.setMsgAssistirBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Assistir_SemPermission").replace("&", "ยง"));
+		this.setMsgInventarioVazio(HEventos.getHEventos().getConfig().getString("Mensagens.Inventario_Vazio").replace("&", "ยง"));
+		this.setMsgAssistirDesativado(HEventos.getHEventos().getConfig().getString("Mensagens.Assistir_Desativado").replace("&", "ยง"));
+		this.setMsgEventoVip(HEventos.getHEventos().getConfig().getString("Mensagens.Evento_VIP").replace("&", "ยง"));
+		this.setMsgMorreu(HEventos.getHEventos().getConfig().getString("Mensagens.Morreu").replace("&", "ยง"));
+		this.setMsgDesconect(HEventos.getHEventos().getConfig().getString("Mensagens.Desconectou").replace("&", "ยง"));
+		this.setMsgSaiu(HEventos.getHEventos().getConfig().getString("Mensagens.Saiu").replace("&", "ยง"));
+		this.setMsgComandoBloqueado(HEventos.getHEventos().getConfig().getString("Mensagens.Comando_Bloqueado").replace("&", "ยง"));
+		this.setMsgNenhumEvento(HEventos.getHEventos().getConfig().getString("Mensagens.Nenhum_Evento").replace("&", "ยง"));
+		this.setMsgEventoFechado(HEventos.getHEventos().getConfig().getString("Mensagens.Evento_Fechado").replace("&", "ยง"));
+		this.setMsgJaParticipa(HEventos.getHEventos().getConfig().getString("Mensagens.Ja_Participa").replace("&", "ยง"));
+		this.setMsgEntrou(HEventos.getHEventos().getConfig().getString("Mensagens.Entrou").replace("&", "ยง"));
+		this.setMsgNaoParticipa(HEventos.getHEventos().getConfig().getString("Mensagens.Nao_Participa").replace("&", "ยง"));
+		this.setMsgJaEstaCamarote(HEventos.getHEventos().getConfig().getString("Mensagens.Ja_Esta_Camarote").replace("&", "ยง"));
+		this.setMsgAssistindo(HEventos.getHEventos().getConfig().getString("Mensagens.Assistindo").replace("&", "ยง"));
+		this.setTopParticipacoes(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Participacoes").replace("&", "ยง"));
+		this.setTopParticipacoesPosicao(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Participacoes_Posicao").replace("&", "ยง"));
+		this.setTopVencedores(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Vencedores").replace("&", "ยง"));
+		this.setTopVencedoresPosicao(HEventos.getHEventos().getConfig().getString("Mensagens.Top_Vencedores_Posicao").replace("&", "ยง"));
 		this.setMysqlAtivado(HEventos.getHEventos().getConfig().getBoolean("MySQL.Ativado"));
 	}
 	
