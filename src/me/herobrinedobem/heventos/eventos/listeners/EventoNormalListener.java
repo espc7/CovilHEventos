@@ -28,15 +28,15 @@ public class EventoNormalListener extends EventoBaseListener {
 			return;
 		if (!(e.getAction() == Action.RIGHT_CLICK_BLOCK))
 			return;
-		if ((e.getClickedBlock().getType() == Material.SIGN_POST)
-				|| (e.getClickedBlock().getType() == Material.WALL_SIGN)) {
+		if ((e.getClickedBlock().getType() == Material.LEGACY_SIGN_POST)
+				|| (e.getClickedBlock().getType() == Material.LEGACY_WALL_SIGN)) {
 			Sign s = (Sign) e.getClickedBlock().getState();
-			if (s.getLine(0).equalsIgnoreCase("ง9[Evento]")) {
+			if (s.getLine(0).equalsIgnoreCase("ยง9[Evento]")) {
 				if (evento.getParticipantes().size() >= 1) {
 					PlayerWinEvent event = new PlayerWinEvent(e.getPlayer(), evento, false);
 					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 					evento.stopEvent();
-					s.setLine(1, "ง6" + e.getPlayer().getName());
+					s.setLine(1, "ยง6" + e.getPlayer().getName());
 					s.update();
 				}
 			}

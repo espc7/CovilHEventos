@@ -112,13 +112,13 @@ public class Comandos implements CommandExecutor {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
 					if (HEventos.getHEventos().getEventosController().getEvento() == null) {
-						p.sendMessage("§4[Evento] §cNao existe um evento ocorrendo no momento!");
+						p.sendMessage("Â§4[Evento] Â§cNao existe um evento ocorrendo no momento!");
 						return true;
 					}
 					StopEvent event = new StopEvent(HEventos.getHEventos().getEventosController().getEvento(),
 							EventoCancellType.CANCELLED);
 					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-					p.sendMessage("§4[Evento] §cEvento cancelado com sucesso!");
+					p.sendMessage("Â§4[Evento] Â§cEvento cancelado com sucesso!");
 				} else if (args[0].equalsIgnoreCase("assistir")) {
 					if (HEventos.getHEventos().getEventosController().getEvento() == null) {
 						p.sendMessage(HEventos.getHEventos().getConfigUtil().getMsgNenhumEvento());
@@ -166,12 +166,12 @@ public class Comandos implements CommandExecutor {
 					}
 					HEventos.getHEventos().reloadConfig();
 					HEventos.getHEventos().getConfigUtil().setupConfigUtils();
-					p.sendMessage("§4[Evento] §cConfiguracao recarregada com sucesso!");
+					p.sendMessage("Â§4[Evento] Â§cConfiguracao recarregada com sucesso!");
 				} else if (args[0].equalsIgnoreCase("report")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
-					p.sendMessage("  §c§l* - Reporte qualquer bug que aparecer xD * -");
-					p.sendMessage("§b§nhttps://github.com/DeathrushW/HEventos-Reloaded/issues");
+					p.sendMessage("  Â§cÂ§l* - Reporte qualquer bug que aparecer xD * -");
+					p.sendMessage("Â§bÂ§nhttps://github.com/DeathrushW/HEventos-Reloaded/issues");
 					p.sendMessage(" ");
 				} else if (args[0].equalsIgnoreCase("lista")) {
 					if (!p.hasPermission("heventos.admin"))
@@ -186,16 +186,16 @@ public class Comandos implements CommandExecutor {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					p.sendMessage("§4[Evento] §cLista de eventos:");
+					p.sendMessage("Â§4[Evento] Â§cLista de eventos:");
 					p.sendMessage(builder.toString());
 				} else if (args[0].equalsIgnoreCase("multiplicador")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
-					p.sendMessage("§4[Evento] §cUtilize /evento multiplicador <valor>");
+					p.sendMessage("Â§4[Evento] Â§cUtilize /evento multiplicador <valor>");
 				} else if (args[0].equalsIgnoreCase("iniciar")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
-					p.sendMessage("§4[Evento] §cUtilize /evento iniciar <nome> <true/false>");
+					p.sendMessage("Â§4[Evento] Â§cUtilize /evento iniciar <nome> <true/false>");
 				} else {
 					MsgDefault(p);
 				}
@@ -203,28 +203,28 @@ public class Comandos implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("iniciar")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
-					p.sendMessage("§4[Evento] §cUtilize /evento iniciar <nome> <true/false>");
+					p.sendMessage("Â§4[Evento] Â§cUtilize /evento iniciar <nome> <true/false>");
 				} else if (args[0].equalsIgnoreCase("multiplicador") && !(args[1].equalsIgnoreCase("reset"))) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
 					try {
 						this.instance.getConfig().set("Money_Multiplicador", Integer.parseInt(args[1]));
 						this.instance.saveConfig();
-						p.sendMessage("§4[Evento] §cRate alterado com sucesso!");
+						p.sendMessage("Â§4[Evento] Â§cRate alterado com sucesso!");
 						HEventos.getHEventos().getServer().broadcastMessage(
-								"§4[Eventos] §cMultiplicador de money dos eventos alterado para §4" + args[1] + "*");
+								"Â§4[Eventos] Â§cMultiplicador de money dos eventos alterado para Â§4" + args[1] + "*");
 					} catch (NumberFormatException e) {
-						p.sendMessage("§4[Evento] §cUtilize apenas numeros no rate.");
+						p.sendMessage("Â§4[Evento] Â§cUtilize apenas numeros no rate.");
 					}
 				} else if (args[0].equalsIgnoreCase("multiplicador") && (args[1].equalsIgnoreCase("reset"))) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
 					this.instance.getConfig().set("Money_Multiplicador", 1);
 					this.instance.saveConfig();
-					p.sendMessage("§4[Evento] §cRate alterado com sucesso!");
+					p.sendMessage("Â§4[Evento] Â§cRate alterado com sucesso!");
 					HEventos.getHEventos().getServer().broadcastMessage("  ");
 					HEventos.getHEventos().getServer()
-							.broadcastMessage("§4[Eventos] §cRate de money dos eventos voltou ao normal!");
+							.broadcastMessage("Â§4[Eventos] Â§cRate de money dos eventos voltou ao normal!");
 					HEventos.getHEventos().getServer().broadcastMessage("  ");
 				} else if (args[0].equalsIgnoreCase("top")) {
 					if (args[1].equalsIgnoreCase("participacoes")) {
@@ -241,9 +241,9 @@ public class Comandos implements CommandExecutor {
 					case "spleef": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName("§4§lEvento Spleef");
-						meta.setLore(Arrays.asList("§6* Clique com o botao direito para marcar a posicao 1 do chao",
-								"§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
+						meta.setDisplayName("Â§4Â§lEvento Spleef");
+						meta.setLore(Arrays.asList("Â§6* Clique com o botao direito para marcar a posicao 1 do chao",
+								"Â§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
@@ -252,9 +252,9 @@ public class Comandos implements CommandExecutor {
 					case "minamortal": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName("§4§lEvento MinaMortal");
-						meta.setLore(Arrays.asList("§6* Clique com o botao direito para marcar a posicao 1 da mina",
-								"§6* Clique com o botao esquerdo para marcar a posicao 2 da mina"));
+						meta.setDisplayName("Â§4Â§lEvento MinaMortal");
+						meta.setLore(Arrays.asList("Â§6* Clique com o botao direito para marcar a posicao 1 da mina",
+								"Â§6* Clique com o botao esquerdo para marcar a posicao 2 da mina"));
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
@@ -263,9 +263,9 @@ public class Comandos implements CommandExecutor {
 					case "bowspleef": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName("§4§lEvento BowSpleef");
-						meta.setLore(Arrays.asList("§6* Clique com o botao direito para marcar a posicao 1 do chao",
-								"§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
+						meta.setDisplayName("Â§4Â§lEvento BowSpleef");
+						meta.setLore(Arrays.asList("Â§6* Clique com o botao direito para marcar a posicao 1 do chao",
+								"Â§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
@@ -274,16 +274,16 @@ public class Comandos implements CommandExecutor {
 					case "frog": {
 						ItemStack item = new ItemStack(Material.IRON_AXE, 1);
 						ItemMeta meta = item.getItemMeta();
-						meta.setDisplayName("§4§lEvento Frog");
-						meta.setLore(Arrays.asList("§6* Clique com o botao direito para marcar a posicao 1 do chao",
-								"§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
+						meta.setDisplayName("Â§4Â§lEvento Frog");
+						meta.setLore(Arrays.asList("Â§6* Clique com o botao direito para marcar a posicao 1 do chao",
+								"Â§6* Clique com o botao esquerdo para marcar a posicao 2 do chao"));
 						item.setItemMeta(meta);
 						p.getInventory().addItem(item);
 						p.updateInventory();
 						break;
 					}
 					default:
-						p.sendMessage("§4[Evento] §cUtilize /evento tool <spleef/minamortal/bowspleef/frog>");
+						p.sendMessage("Â§4[Evento] Â§cUtilize /evento tool <spleef/minamortal/bowspleef/frog>");
 						break;
 					}
 				} else {
@@ -294,18 +294,18 @@ public class Comandos implements CommandExecutor {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
 					if (HEventos.getHEventos().getEventosController().getEvento() != null) {
-						p.sendMessage("§4[Evento] §cJa existe um evento ocorrendo no momento!");
+						p.sendMessage("Â§4[Evento] Â§cJa existe um evento ocorrendo no momento!");
 						return true;
 					}
 					if (!(args[2].equalsIgnoreCase("true") || args[2].equalsIgnoreCase("false"))) {
-						p.sendMessage("§4[Evento] §cUtilize /evento iniciar <nome> <true/false>");
+						p.sendMessage("Â§4[Evento] Â§cUtilize /evento iniciar <nome> <true/false>");
 						return true;
 					}
 					if (HEventos.getHEventos().getEventosController().externalEvento(args[1], Boolean.parseBoolean(args[2]))) {
 						return true;
 					}
 					if (!HEventos.getHEventos().getEventosController().hasEvento(args[1])) {
-						p.sendMessage("§4[Evento] §cEvento nao encontrado!");
+						p.sendMessage("Â§4[Evento] Â§cEvento nao encontrado!");
 						return true;
 					}
 					switch (EventoType.getEventoType(args[1])) {
@@ -387,12 +387,12 @@ public class Comandos implements CommandExecutor {
 					}
 					StartEvent event = new StartEvent(HEventos.getHEventos().getEventosController().getEvento(), false);
 					HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
-					p.sendMessage("§4[Evento] §cEvento iniciado com sucesso!");
+					p.sendMessage("Â§4[Evento] Â§cEvento iniciado com sucesso!");
 				} else if (args[0].equalsIgnoreCase("setloc")) {
 					if (!p.hasPermission("heventos.admin"))
 						return true;
 					if (!HEventos.getHEventos().getEventosController().hasEvento(args[2])) {
-						p.sendMessage("§4[Evento] §cEvento nao encontrado na pasta.");
+						p.sendMessage("Â§4[Evento] Â§cEvento nao encontrado na pasta.");
 						return true;
 					}
 					EventoBaseAPI evento = HEventos.getHEventos().getEventosController().loadEvento(args[2]);
@@ -409,7 +409,7 @@ public class Comandos implements CommandExecutor {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-							p.sendMessage("§4[Evento] §cSaida do evento " + args[2] + " setada!");
+							p.sendMessage("Â§4[Evento] Â§cSaida do evento " + args[2] + " setada!");
 							break;
 						}
 						case "entrada": {
@@ -421,7 +421,7 @@ public class Comandos implements CommandExecutor {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-							p.sendMessage("§4[Evento] §cEntrada do evento " + args[2] + " setado!");
+							p.sendMessage("Â§4[Evento] Â§cEntrada do evento " + args[2] + " setado!");
 							break;
 						}
 						case "aguardando": {
@@ -434,7 +434,7 @@ public class Comandos implements CommandExecutor {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-							p.sendMessage("§4[Evento] §cAguardando do evento " + args[2] + " setado!");
+							p.sendMessage("Â§4[Evento] Â§cAguardando do evento " + args[2] + " setado!");
 							break;
 						}
 						case "camarote": {
@@ -446,7 +446,7 @@ public class Comandos implements CommandExecutor {
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-							p.sendMessage("§4[Evento] §cCamarote do evento " + args[2] + " setado!");
+							p.sendMessage("Â§4[Evento] Â§cCamarote do evento " + args[2] + " setado!");
 							break;
 						}
 						}
@@ -456,11 +456,11 @@ public class Comandos implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("pos1")) {
 								evento.getConfig().set("Localizacoes.Pos_1",
 										this.getLocationForConfig(p.getLocation()));
-								p.sendMessage("§4[Evento] §cLocalizacao 1 (Vermelho) do paintball setada!");
+								p.sendMessage("Â§4[Evento] Â§cLocalizacao 1 (Vermelho) do paintball setada!");
 							} else if (args[1].equalsIgnoreCase("pos2")) {
 								evento.getConfig().set("Localizacoes.Pos_2",
 										this.getLocationForConfig(p.getLocation()));
-								p.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 (Azul) do paintball setada!");
+								p.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 2 (Azul) do paintball setada!");
 							}
 							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
 									+ File.separator + args[2] + ".yml");
@@ -474,11 +474,11 @@ public class Comandos implements CommandExecutor {
 							if (args[1].equalsIgnoreCase("pos1")) {
 								evento.getConfig().set("Localizacoes.Pos_1",
 										this.getLocationForConfig(p.getLocation()));
-								p.sendMessage("§4[Evento] §cLocalizacao 1 do fight setada!");
+								p.sendMessage("Â§4[Evento] Â§cLocalizacao 1 do fight setada!");
 							} else if (args[1].equalsIgnoreCase("pos2")) {
 								evento.getConfig().set("Localizacoes.Pos_2",
 										this.getLocationForConfig(p.getLocation()));
-								p.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do fight setada!");
+								p.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 2 do fight setada!");
 							}
 							file = new File(HEventos.getHEventos().getDataFolder() + File.separator + "Eventos"
 									+ File.separator + args[2] + ".yml");
@@ -490,7 +490,7 @@ public class Comandos implements CommandExecutor {
 							break;
 						default: {
 							p.sendMessage(
-									"§4[Evento] §cLocalizações disponiveis apenas para os evento(fight/paintball).");
+									"Â§4[Evento] Â§cLocalizaÂ§Â§es disponiveis apenas para os evento(fight/paintball).");
 							break;
 						}
 						}
@@ -509,11 +509,11 @@ public class Comandos implements CommandExecutor {
 
 	private void MsgDefault(Player p) {
 		for (String s : HEventos.getHEventos().getConfig().getStringList("Mensagens.Default")) {
-			p.sendMessage(s.replace("&", "§"));
+			p.sendMessage(s.replace("&", "Â§"));
 		}
 		if (p.hasPermission("heventos.admin")) {
 			for (String s : HEventos.getHEventos().getConfig().getStringList("Mensagens.DefaultAdmin")) {
-				p.sendMessage(s.replace("&", "§"));
+				p.sendMessage(s.replace("&", "Â§"));
 			}
 		}
 	}

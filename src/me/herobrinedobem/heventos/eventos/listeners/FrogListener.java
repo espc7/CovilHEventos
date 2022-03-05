@@ -29,13 +29,13 @@ public class FrogListener extends EventoBaseListener {
 			return;
 		Frog frog = (Frog) evento;
 		if ((e.getPlayer().getLocation().getY() <= frog.getY()) && frog.getEtapa() != 1) {
-			e.getPlayer().sendMessage(frog.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "ง")
+			e.getPlayer().sendMessage(frog.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "ยง")
 					.replace("$EventoName$", frog.getNome()));
 			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(), evento);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 			String msg = frog.getConfig().getString("Mensagens.FoiEliminado");
 			for (Player p : frog.getParticipantes()) {
-				p.sendMessage(msg.replace("&", "ง").replace("$EventoName$", frog.getNome()).replace("$player$",
+				p.sendMessage(msg.replace("&", "ยง").replace("$EventoName$", frog.getNome()).replace("$player$",
 						e.getPlayer().getName()));
 
 			}

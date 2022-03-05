@@ -46,7 +46,7 @@ public class PaintballListener extends EventoBaseListener {
 					}
 					eliminar(paintball, atirou, atingido);
 					for (Player p1 : paintball.getParticipantes()) {
-						p1.sendMessage(paintball.getConfig().getString("Mensagens.FoiEliminado").replace("&", "ง")
+						p1.sendMessage(paintball.getConfig().getString("Mensagens.FoiEliminado").replace("&", "ยง")
 								.replace("$atirador$", ChatColor.DARK_BLUE + atirou.getName())
 								.replace("$eliminado$", ChatColor.DARK_RED + atingido.getName())
 								.replace("$EventoName$", paintball.getNome()));
@@ -58,7 +58,7 @@ public class PaintballListener extends EventoBaseListener {
 					}
 					eliminar(paintball, atirou, atingido);
 					for (Player p1 : paintball.getParticipantes()) {
-						p1.sendMessage(paintball.getConfig().getString("Mensagens.FoiEliminado").replace("&", "ง")
+						p1.sendMessage(paintball.getConfig().getString("Mensagens.FoiEliminado").replace("&", "ยง")
 								.replace("$atirador$", ChatColor.DARK_RED + atirou.getName())
 								.replace("$eliminado$", ChatColor.DARK_BLUE + atingido.getName())
 								.replace("$EventoName$", paintball.getNome()));
@@ -104,9 +104,9 @@ public class PaintballListener extends EventoBaseListener {
 			HEventos.getHEventos().getEconomy().depositPlayer(atirou,
 					paintball.getConfig().getDouble("Premios.Money_PerKill"));
 		}
-		atingido.sendMessage(evento.getConfig().getString("Mensagens.Eliminado").replace("&", "ง")
+		atingido.sendMessage(evento.getConfig().getString("Mensagens.Eliminado").replace("&", "ยง")
 				.replace("$player$", atirou.getName()).replace("$EventoName$", paintball.getNome()));
-		atirou.sendMessage(evento.getConfig().getString("Mensagens.Eliminou").replace("&", "ง")
+		atirou.sendMessage(evento.getConfig().getString("Mensagens.Eliminou").replace("&", "ยง")
 				.replace("$player$", atingido.getName()).replace("$EventoName$", paintball.getNome()));
 	}
 }

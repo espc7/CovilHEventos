@@ -16,8 +16,8 @@ Config:
 
 Premios:
   Itens:
-    - 263 1
-    - 384 15
+    - COAL 1
+    - EXPERIENCE_BOTTLE 15
   Comandos:
     - "give $player$ diamond 3"
   Money: 5000.0
@@ -80,7 +80,7 @@ Mensagens:
     - "  "
   LaVermelha:
     - "  "
-    - "&9[$EventoName$] &fA Lã vermelha apareceu!"
+    - "&9[$EventoName$] &fA LÃ£ vermelha apareceu!"
     - "  "
   FoiEliminado: "&9[$EventoName$] &fO jogador &6$player$ &ffoi eliminado!"
-  VcFoiEliminado: "&9[$EventoName$] &fVocê foi eliminado!"
+  VcFoiEliminado: "&9[$EventoName$] &fVocÃª foi eliminado!"

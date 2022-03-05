@@ -41,7 +41,7 @@ public class MinaMortal extends EventoBaseAPI {
 			Random r = new Random();
 			if (r.nextInt(100) <= getConfig().getInt("Config.Porcentagem_De_Minerios")) {
 				String bloco = blocosConfig.get(r.nextInt(blocosConfig.size()));
-				b.setType(Material.getMaterial(Integer.parseInt(bloco)));
+				b.setType(Material.getMaterial(bloco));
 			} else {
 				b.setType(Material.STONE);
 			}
@@ -62,7 +62,7 @@ public class MinaMortal extends EventoBaseAPI {
 				tempoDeEventoCurrent--;
 				if (tempoMensagensCurrent == 0) {
 					for (String s : getConfig().getStringList("Mensagens.Status")) {
-						HEventos.getHEventos().getServer().broadcastMessage(s.replace("&", "ง")
+						HEventos.getHEventos().getServer().broadcastMessage(s.replace("&", "ยง")
 								.replace("$tempo$", tempoDeEventoCurrent + "").replace("$EventoName$", getNome()));
 					}
 					tempoMensagensCurrent = tempoMensagens;

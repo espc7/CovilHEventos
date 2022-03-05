@@ -46,7 +46,7 @@ public class Killer extends EventoBaseAPI {
 				}
 			}
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
-				p.sendMessage(s1.replace("&", "ง").replace("$tempo$", String.valueOf(tempoPvpOff))
+				p.sendMessage(s1.replace("&", "ยง").replace("$tempo$", String.valueOf(tempoPvpOff))
 						.replace("$EventoName$", getNome()));
 			}
 		}
@@ -62,7 +62,7 @@ public class Killer extends EventoBaseAPI {
 				} else {
 					for (Player p : getParticipantes()) {
 						for (String s1 : getConfig().getStringList("Mensagens.PVPON")) {
-							p.sendMessage(s1.replace("&", "ง").replace("$tempo$", String.valueOf(tempoPvpOff))
+							p.sendMessage(s1.replace("&", "ยง").replace("$tempo$", String.valueOf(tempoPvpOff))
 									.replace("$EventoName$", getNome()));
 						}
 					}
@@ -72,7 +72,7 @@ public class Killer extends EventoBaseAPI {
 			if (tempoMensagensCurrent == 0) {
 				for (String s : getConfig().getStringList("Mensagens.Status")) {
 					HEventos.getHEventos().getServer()
-							.broadcastMessage(s.replace("&", "ง")
+							.broadcastMessage(s.replace("&", "ยง")
 									.replace("$jogadores$", String.valueOf(getParticipantes().size()))
 									.replace("$EventoName$", getNome()));
 				}
@@ -92,7 +92,7 @@ public class Killer extends EventoBaseAPI {
 				if (tempoPegarItens == getConfig().getInt("Config.Tempo_Pegar_Itens")) {
 					for (Player s : getParticipantes()) {
 						for (String p : getConfig().getStringList("Mensagens.Tempo_Pegar_Itens")) {
-							s.sendMessage(p.replace("&", "ง").replace("$EventoName$", getNome()));
+							s.sendMessage(p.replace("&", "ยง").replace("$EventoName$", getNome()));
 						}
 					}
 				}

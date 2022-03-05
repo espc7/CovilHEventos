@@ -35,7 +35,7 @@ public class BowSpleef extends EventoBaseAPI {
 		chao = new Cuboid(EventoUtils.getLocation(config, "Localizacoes.Chao_1"),
 				EventoUtils.getLocation(config, "Localizacoes.Chao_2"));
 		for (Block b : chao.getBlocks()) {
-			b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
+			b.setType(Material.getMaterial(getConfig().getString("Config.Chao_ID")));
 		}
 	}
 
@@ -63,7 +63,7 @@ public class BowSpleef extends EventoBaseAPI {
 			tempoRegenera--;
 		} else {
 			for (Block b : chao.getBlocks()) {
-				b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
+				b.setType(Material.getMaterial(getConfig().getString("Config.Chao_ID")));
 			}
 			tempoRegenera = getConfig().getInt("Config.Tempo_Chao_Regenera");
 		}

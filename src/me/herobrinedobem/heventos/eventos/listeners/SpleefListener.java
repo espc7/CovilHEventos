@@ -48,13 +48,13 @@ public class SpleefListener extends EventoBaseListener {
 			return;
 		Spleef spleef = (Spleef) evento;
 		if ((e.getPlayer().getLocation().getY() <= spleef.getY())) {
-			e.getPlayer().sendMessage(spleef.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "ง")
+			e.getPlayer().sendMessage(spleef.getConfig().getString("Mensagens.VcFoiEliminado").replace("&", "ยง")
 					.replace("$EventoName$", spleef.getNome()));
 			PlayerLoseEvent event = new PlayerLoseEvent(e.getPlayer(), evento);
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 			String msg = spleef.getConfig().getString("Mensagens.FoiEliminado");
 			for (Player p : spleef.getParticipantes()) {
-				p.sendMessage(msg.replace("&", "ง").replace("$EventoName$", spleef.getNome()).replace("$player$",
+				p.sendMessage(msg.replace("&", "ยง").replace("$EventoName$", spleef.getNome()).replace("$player$",
 						e.getPlayer().getName()));
 			}
 		}

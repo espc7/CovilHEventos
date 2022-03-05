@@ -1,8 +1,9 @@
 main: me.herobrinedobem.heventos.HEventos
-name: HEventosReloaded
+name: CovilHEventos
 version: 1.6.5
-author: GabrielDev
+author: Espc7
 description: Plugin de eventos automaticos
+api-version: 1.18
 
 commands:
     evento:

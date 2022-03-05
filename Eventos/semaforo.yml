@@ -15,8 +15,8 @@ Config:
 
 Premios:
   Itens:
-    - 263 1
-    - 384 15
+    - DIAMOND_BLOCK 1
+    - ACACIA_SIGN 15
   Comandos:
     - "give $player$ diamond 3"
   Money: 5000.0
@@ -80,4 +80,4 @@ Mensagens:
     - "&9[$EventoName$] &fO sinal esta &averde &fpode andar!"
     - "  "
   FoiEliminado: "&9[$EventoName$] &fO jogador &6$player$ &ffoi eliminado!"
-  VcFoiEliminado: "&9[$EventoName$] &fVocê foi eliminado!"
+  VcFoiEliminado: "&9[$EventoName$] &fVocÃª foi eliminado!"

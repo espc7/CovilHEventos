@@ -82,7 +82,7 @@ public class MainListeners implements Listener {
 			HEventos.getHEventos().getServer().getPluginManager().callEvent(event);
 		}
 		for (String s : e.getEvento().getConfig().getStringList("Mensagens.Vencedor")) {
-			HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "§")
+			HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "Â§")
 					.replace("$player$", e.getNomeTime()).replace("$EventoName$", e.getEvento().getNome()));
 		}
 	}
@@ -118,7 +118,7 @@ public class MainListeners implements Listener {
 		}
 		if (!e.isTeamEvent()) {
 			for (String s : e.getEvento().getConfig().getStringList("Mensagens.Vencedor")) {
-				HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "§")
+				HEventos.getHEventos().getServer().broadcastMessage(s.replaceAll("&", "Â§")
 						.replace("$player$", e.getPlayer().getName()).replace("$EventoName$", e.getEvento().getNome()));
 			}
 		}
@@ -148,7 +148,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 do chao do spleef setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 1 do chao do spleef setada!");
 				e.setCancelled(true);
 			} else if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				File fileEvento = new File(
@@ -164,7 +164,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do chao do spleef setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 2 do chao do spleef setada!");
 				e.setCancelled(true);
 			}
 		} else if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Evento MinaMortal")) {
@@ -182,7 +182,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 da mina setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 1 da mina setada!");
 				e.setCancelled(true);
 			} else if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				File fileEvento = new File(
@@ -198,7 +198,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 da mina setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 2 da mina setada!");
 				e.setCancelled(true);
 			}
 		} else if (e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("BowSpleef")) {
@@ -216,7 +216,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 do bowspleef setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 1 do bowspleef setada!");
 				e.setCancelled(true);
 			} else if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				File fileEvento = new File(
@@ -232,7 +232,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do bowspleef setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 2 do bowspleef setada!");
 				e.setCancelled(true);
 			}
 
@@ -251,7 +251,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 1 do frog setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 1 do frog setada!");
 				e.setCancelled(true);
 			} else if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				File fileEvento = new File(
@@ -267,7 +267,7 @@ public class MainListeners implements Listener {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				e.getPlayer().sendMessage("§4[Evento] §cLocalizacao 2 do frog setada!");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cLocalizacao 2 do frog setada!");
 				e.setCancelled(true);
 			}
 		}
@@ -277,8 +277,8 @@ public class MainListeners implements Listener {
 	public void onSignChangeEvent(SignChangeEvent e) {
 		if (e.getPlayer().hasPermission("heventos.admin")) {
 			if (e.getLine(0).equalsIgnoreCase("[Evento]")) {
-				e.setLine(0, "§9[Evento]");
-				e.getPlayer().sendMessage("§4[Evento] §cPlaca criada com sucesso!");
+				e.setLine(0, "Â§9[Evento]");
+				e.getPlayer().sendMessage("Â§4[Evento] Â§cPlaca criada com sucesso!");
 			}
 		}
 	}

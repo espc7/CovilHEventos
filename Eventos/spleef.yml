@@ -11,19 +11,19 @@ Config:
   Assistir_Ativado: true
   Contar_Vitoria: true
   Contar_Participacao: true
-  Chao_ID: 80
+  Chao_ID: SNOW_BLOCK
   Inv_Vazio: false
 
 Premios:
   Itens:
-    - 263 1
-    - 384 15
+    - DIAMOND_BLOCK 1
+    - ACACIA_SIGN 15
   Comandos:
     - "give $player$ diamond 3"
   Money: 5000.0
 
 Itens_Ao_Iniciar:
-  - 256 1
+  - IRON_SHOVEL 1
 
 Localizacoes:
   Saida: world;730.5459035905383;23.0;799.3592766825633;-180.41382;18.932465
@@ -80,4 +80,4 @@ Mensagens:
     - "&9[$EventoName$] &fEvento iniciado!"
     - "  "
   FoiEliminado: "&9[$EventoName$] &fO jogador &6$player$ &ffoi eliminado!"
-  VcFoiEliminado: "&9[$EventoName$] &fVocê foi eliminado!"
+  VcFoiEliminado: "&9[$EventoName$] &fVocÃª foi eliminado!"

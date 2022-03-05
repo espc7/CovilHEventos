@@ -40,7 +40,7 @@ public class Spleef extends EventoBaseAPI {
 		cubo = new Cuboid(EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_1"),
 				EventoUtils.getLocation(getConfig(), "Localizacoes.Chao_2"));
 		for (Block b : cubo.getBlocks()) {
-			b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
+			b.setType(Material.getMaterial(getConfig().getString("Config.Chao_ID")));
 		}
 	}
 
@@ -52,7 +52,7 @@ public class Spleef extends EventoBaseAPI {
 			}
 			p.teleport(EventoUtils.getLocation(getConfig(), "Localizacoes.Entrada"));
 			for (String s1 : getConfig().getStringList("Mensagens.IniciandoEm")) {
-				p.sendMessage(s1.replace("&", "ง").replace("$tempo$", String.valueOf(tempoComecar))
+				p.sendMessage(s1.replace("&", "ยง").replace("$tempo$", String.valueOf(tempoComecar))
 						.replace("$EventoName$", getNome()));
 			}
 		}
@@ -64,7 +64,7 @@ public class Spleef extends EventoBaseAPI {
 		if (tempoComecarCurrent == 0 && !podeQuebrar) {
 			for (Player p : getParticipantes()) {
 				for (String s1 : getConfig().getStringList("Mensagens.Pode_Quebrar")) {
-					p.sendMessage(s1.replace("&", "ง").replace("$tempo$", String.valueOf(tempoComecar))
+					p.sendMessage(s1.replace("&", "ยง").replace("$tempo$", String.valueOf(tempoComecar))
 							.replace("$EventoName$", getNome()));
 				}
 			}
@@ -75,7 +75,7 @@ public class Spleef extends EventoBaseAPI {
 		if (regenerarChao) {
 			if (tempoChaoRegeneraCurrent == 0) {
 				for (Block b : cubo.getBlocks()) {
-					b.setType(Material.getMaterial(getConfig().getInt("Config.Chao_ID")));
+					b.setType(Material.getMaterial(getConfig().getString("Config.Chao_ID")));
 				}
 				tempoChaoRegeneraCurrent = tempoChaoRegenera;
 			} else {

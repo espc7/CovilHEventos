@@ -12,8 +12,8 @@ Config:
 
 Premios:
   Itens:
-    - 263 1
-    - 384 15
+    - DIAMOND_BLOCK 1
+    - ACACIA_SIGN 15
   Comandos:
     - "give $player$ diamond 3"
   Money: 5000.0

@@ -49,7 +49,7 @@ public class Semaforo extends EventoBaseAPI {
 		podeAndar = true;
 		for (Player p : getParticipantes()) {
 			for (String msg : getConfig().getStringList("Mensagens.Verde")) {
-				p.sendMessage(msg.replace("&", "ง").replace("$EventoName$", getNome()));
+				p.sendMessage(msg.replace("&", "ยง").replace("$EventoName$", getNome()));
 			}
 		}
 		verde = HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(), new Runnable() {
@@ -57,7 +57,7 @@ public class Semaforo extends EventoBaseAPI {
 			public void run() {
 				for (Player p : getParticipantes()) {
 					for (String msg : getConfig().getStringList("Mensagens.Amarelo")) {
-						p.sendMessage(msg.replace("&", "ง").replace("$EventoName$", getNome()));
+						p.sendMessage(msg.replace("&", "ยง").replace("$EventoName$", getNome()));
 					}
 				}
 				amarelo = HEventos.getHEventos().getServer().getScheduler().runTaskLater(HEventos.getHEventos(),
@@ -67,7 +67,7 @@ public class Semaforo extends EventoBaseAPI {
 								podeAndar = false;
 								for (Player p : getParticipantes()) {
 									for (String msg : getConfig().getStringList("Mensagens.Vermelho")) {
-										p.sendMessage(msg.replace("&", "ง").replace("$EventoName$", getNome()));
+										p.sendMessage(msg.replace("&", "ยง").replace("$EventoName$", getNome()));
 									}
 								}
 								vermelho = HEventos.getHEventos().getServer().getScheduler()
