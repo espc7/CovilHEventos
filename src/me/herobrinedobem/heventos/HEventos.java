@@ -24,10 +24,11 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 
 /**
  * Classe principal do projeto, aqui onde o plugin sera iniciado e todas as suas
- * funcoes serao chamadas! Refeito por GabrielDev (DeathRush)!
+ * funcoes serao chamadas! Refeito por Espc7 para Covil Server!
  * 
  * @author Herobrinedobem (Gabriel Henrique)
  * @author GabrielDev (DeathRush)
+ * @author Espc7 (Covil)
  * @version 1.6.5
  */
 public class HEventos extends JavaPlugin {
@@ -41,14 +42,14 @@ public class HEventos extends JavaPlugin {
 	private ConfigUtil configUtil;
 
 	/**
-	 * Método que e chamado quando o plugin iniciar, serao criadas as configs, as
+	 * MÂ§todo que e chamado quando o plugin iniciar, serao criadas as configs, as
 	 * dependencias serao ligadas a database sera selecionada, os comandos e
 	 * listeners serao criados e a instancia das classes {@link EventosController} e
 	 * {@link AutoStartEvents} serao criadas.
 	 */
 	@Override
 	public void onEnable() {
-		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fIniciando o plugina!");
+		Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fIniciando o plugina!");
 		loadConfigs();
 		loadDatabase();
 		loadCommands();
@@ -56,8 +57,8 @@ public class HEventos extends JavaPlugin {
 		loadDependencies();
 		loadEventos();
 		Bukkit.getConsoleSender().sendMessage(
-				"§9[HEventosReloaded] §fPlugin Habilitado - (Versao §9" + this.getDescription().getVersion() + "§f)");
-		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fRefeito por §aGabrielDev");
+				"Â§9[CovilHEventos] Â§fPlugin Habilitado - (Versao Â§9" + this.getDescription().getVersion() + "Â§f)");
+		Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fRefeito por Â§aEspc7 (Covil)");
 	}
 
 	/**
@@ -79,7 +80,7 @@ public class HEventos extends JavaPlugin {
 			eventosController.setEvento(null);
 		}
 		Bukkit.getConsoleSender().sendMessage(
-				"§9[HEventosReloaded] §fPlugin Desabilitado - (Versao §9" + this.getDescription().getVersion() + "§f)");
+				"Â§9[CovilHEventos] Â§fPlugin Desabilitado - (Versao Â§9" + this.getDescription().getVersion() + "Â§f)");
 	}
 
 	/**
@@ -89,14 +90,14 @@ public class HEventos extends JavaPlugin {
 		if (!new File(this.getDataFolder(), "config.yml").exists()) {
 			getConfig().options().copyDefaults(true);
 	        saveConfig();
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fConfig.yml criada com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fConfig.yml criada com sucesso!");
 		} else {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fConfig.yml carregada com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fConfig.yml carregada com sucesso!");
 		}
 		File eventosFile = new File(this.getDataFolder() + File.separator + "Eventos");
 		if (!eventosFile.exists()) {
 			eventosFile.mkdirs();
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fPasta 'Eventos' criada com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fPasta 'Eventos' criada com sucesso!");
 		}
 		if (this.getConfig().getBoolean("Ativar_Configs_Exemplos")) {
 			if (!new File(this.getDataFolder() + File.separator + "Eventos" + File.separator + "eventoexemplo.yml")
@@ -141,7 +142,7 @@ public class HEventos extends JavaPlugin {
 			if (!new File(this.getDataFolder() + File.separator + "GUIA PARA ITENS.yml").exists()) {
 				this.saveResource("GUIA PARA ITENS.yml", false);
 			}
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fConfigs de exemplos criadas!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fConfigs de exemplos criadas!");
 		}
 		this.configUtil = new ConfigUtil();
 	}
@@ -151,13 +152,13 @@ public class HEventos extends JavaPlugin {
 	 */
 	private void loadDependencies() {
 		if (!setupSimpleClans()) {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §cSimpleClans não encontrado!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§cSimpleClans nÂ§o encontrado!");
 		}
 		if (!setupEconomy()) {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §cVault não encontrado!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§cVault nÂ§o encontrado!");
 		}
 		if (!setupLegendChat()) {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §cLegendChat não encontrado!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§cLegendChat nÂ§o encontrado!");
 		}
 	}
 
@@ -169,7 +170,7 @@ public class HEventos extends JavaPlugin {
 			databaseManager = new Database(DatabaseType.MYSQL, this.getConfig().getString("MySQL.Usuario"),
 					this.getConfig().getString("MySQL.Senha"), this.getConfig().getString("MySQL.Database"),
 					this.getConfig().getString("MySQL.Host"));
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fMySQL Habilitado!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fMySQL Habilitado!");
 		} else {
 			File databaseFile;
 			databaseFile = new File(this.getDataFolder() + File.separator + "database.db");
@@ -179,10 +180,10 @@ public class HEventos extends JavaPlugin {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fDatabase.db criada com sucesso!");
+				Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fDatabase.db criada com sucesso!");
 			}
 			databaseManager = new Database(DatabaseType.SQLITE);
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fSQLite Habilitado!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fSQLite Habilitado!");
 		}
 	}
 
@@ -218,7 +219,7 @@ public class HEventos extends JavaPlugin {
 		if (rsp == null) {
 			return false;
 		}
-		Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fVault encontrado com sucesso!");
+		Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fVault encontrado com sucesso!");
 		economy = rsp.getProvider();
 		return economy != null;
 	}
@@ -226,7 +227,7 @@ public class HEventos extends JavaPlugin {
 	private boolean setupSimpleClans() {
 		Plugin plug = this.getServer().getPluginManager().getPlugin("SimpleClans");
 		if (plug != null) {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fSimpleClans encontrado com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fSimpleClans encontrado com sucesso!");
 			this.sc = ((SimpleClans) plug);
 			return true;
 		}
@@ -236,7 +237,7 @@ public class HEventos extends JavaPlugin {
 	private boolean setupLegendChat() {
 		Plugin plug = getServer().getPluginManager().getPlugin("LegendChat");
 		if (plug != null) {
-			Bukkit.getConsoleSender().sendMessage("§9[HEventosReloaded] §fLegendChat encontrado com sucesso!");
+			Bukkit.getConsoleSender().sendMessage("Â§9[CovilHEventos] Â§fLegendChat encontrado com sucesso!");
 			this.lc = new LegendChat();
 			this.getServer().getPluginManager().registerEvents(this.lc, this);
 			return true;
@@ -273,6 +274,6 @@ public class HEventos extends JavaPlugin {
 	}
 	
 	public static HEventos getHEventos() {
-		return (HEventos) Bukkit.getServer().getPluginManager().getPlugin("HEventosReloaded");
+		return (HEventos) Bukkit.getServer().getPluginManager().getPlugin("CovilHEventos");
 	}
 }
